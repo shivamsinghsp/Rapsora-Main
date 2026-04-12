@@ -8,6 +8,7 @@ export interface IWork extends Document {
     categories: string[];
     tags: string[];
     image: string;
+    video?: string;
     isFeatured: boolean;
     testimonial?: {
         quote: string;
@@ -29,6 +30,7 @@ const WorkSchema: Schema = new Schema(
         categories: { type: [String], required: true },
         tags: { type: [String], required: true },
         image: { type: String, required: true },
+        video: { type: String },
         isFeatured: { type: Boolean, default: false },
         testimonial: {
             quote: { type: String },

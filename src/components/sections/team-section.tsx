@@ -203,7 +203,7 @@ export function TeamSection() {
                             initial={{ opacity: 0, x: -20 }}
                             animate={isHeaderInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                             transition={{ duration: 1, ease: EASE, delay: 0.1 }}
-                            className="flex items-center gap-3 text-white/60 font-bold tracking-tight text-[14px] lg:text-[15px] mb-5 lg:mb-6"
+                            className="flex items-center gap-3 text-foreground/60 font-bold tracking-tight text-[14px] lg:text-[15px] mb-5 lg:mb-6"
                         >
                             <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                             Our Team
@@ -213,11 +213,11 @@ export function TeamSection() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                             transition={{ duration: 1.2, ease: EASE, delay: 0.2 }}
-                            className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.05] tracking-[-0.03em] text-white"
+                            className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.05] tracking-[-0.03em] text-foreground"
                         >
                             The minds behind
                             <br className="hidden sm:block" />
-                            <span className="text-white/40"> — the obsession</span>
+                            <span className="text-foreground/40"> — the obsession</span>
                         </motion.h2>
                     </div>
 
@@ -251,15 +251,15 @@ export function TeamSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-5% 0px' }}
                     transition={{ duration: 1, ease: EASE }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 lg:mt-20 pt-10 border-t border-white/[0.06]"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 lg:mt-20 pt-10 border-t border-foreground/[0.06]"
                 >
-                    <p className="text-[14px] lg:text-[16px] text-white/40 font-medium text-center">
+                    <p className="text-[14px] lg:text-[16px] text-foreground/40 font-medium text-center">
                         A lean team of <span className="text-primary font-bold">{TEAM_MEMBERS.length}+ specialists</span> obsessed with your growth.
                     </p>
                     <Magnetic strength={0.3}>
                         <Link
                             href="/team"
-                            className="group flex items-center gap-2.5 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm text-white text-[13px] sm:text-[14px] font-bold tracking-tight hover:bg-white/[0.08] hover:border-primary/30 transition-all duration-500 hover:scale-105 active:scale-95"
+                            className="group flex items-center gap-2.5 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border border-foreground/[0.08] bg-foreground/[0.03] backdrop-blur-sm text-foreground text-[13px] sm:text-[14px] font-bold tracking-tight hover:bg-foreground/[0.08] hover:border-primary/30 transition-all duration-500 hover:scale-105 active:scale-95"
                         >
                             View all team members
                             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:rotate-45" />

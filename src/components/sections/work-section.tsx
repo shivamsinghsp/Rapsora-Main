@@ -6,79 +6,11 @@ import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-/* ─────────────────────────────────────────────────────────────
-   PROJECTS DATA
-───────────────────────────────────────────────────────────── */
-const PROJECTS = [
-    {
-        year: '2024',
-        client: 'Indoshyama Fertilizers',
-        title: "Transforming a traditional fertilizer business into a modern digital brand",
-        tags: ['Website', 'Branding', 'Lead Generation'],
-        metric: '↑ 220% leads',
-        image: 'https://res.cloudinary.com/dswzqgdf3/image/upload/v1775830394/Screenshot_2026-04-10_131934_vyc7mg.png',
-        href: '/work/indoshyama-fertilizers',
-    },
-    {
-        year: '2024',
-        client: 'Shynr',
-        title: "Building a modern hiring & consultancy experience",
-        tags: ['Website', 'UI/UX', 'Automation'],
-        metric: '↑ 180% applications',
-        image: 'https://res.cloudinary.com/dswzqgdf3/image/upload/v1775830491/Screenshot_2026-04-10_194442_pb0g8z.png',
-        href: '/work/shynr-consultancy',
-    },
-    {
-        year: '2024',
-        client: 'Enticing Jatin',
-        title: "Crafting a bold digital presence for a creative agency",
-        tags: ['Website', 'Branding', 'Creative'],
-        metric: '↑ 2.5x inquiries',
-        image: 'https://res.cloudinary.com/dswzqgdf3/image/upload/v1775830468/Screenshot_2026-04-10_194344_zbsaop.png',
-        href: '/work/enticing-jatin',
-    },
-    {
-        year: '2024',
-        client: 'Aaoseekhe',
-        title: "Building a career-focused learning platform",
-        tags: ['EdTech', 'Website', 'SEO'],
-        metric: '↑ 3x student inquiries',
-        image: 'https://res.cloudinary.com/dswzqgdf3/image/upload/v1775830469/Screenshot_2026-04-10_194359_be97kl.png',
-        href: '/work/aaoseekhe',
-    },
-    {
-        year: '2024',
-        client: 'Dr. Balwant Singh',
-        title: "Establishing a trust-driven digital presence for a neurosurgeon",
-        tags: ['Healthcare', 'Website'],
-        metric: '↑ 150% appointments',
-        image: 'https://res.cloudinary.com/dswzqgdf3/image/upload/v1775830468/Screenshot_2026-04-10_194412_cn6veg.png',
-        href: '/work/dr-balwant-singh',
-    },
-    {
-        year: '2024',
-        client: 'Taksmarts.com',
-        title: "Digitizing a modern grocery supply chain business",
-        tags: ['Platform', 'Automation', 'Operations'],
-        metric: '↑ 3x order efficiency',
-        image: 'https://res.cloudinary.com/dswzqgdf3/image/upload/v1775830467/Screenshot_2026-04-10_194327_iovu8h.png',
-        href: '/work/taksmarts',
-    },
-    {
-        year: '2024',
-        client: 'Hridika Jewellers',
-        title: "Crafting a premium digital experience for a jewellery brand",
-        tags: ['E-commerce', 'Branding', 'Luxury'],
-        metric: '↑ 2x conversions',
-        image: 'https://res.cloudinary.com/dswzqgdf3/image/upload/v1775830631/Screenshot_2026-04-10_194702_xghxy8.png',
-        href: '/work/hridika-jewellers',
-    },
-];
-
+import { PROJECTS } from '@/data/projects';
 
 /* ─────────────────────────────────────────────────────────────
    ANIMATED PROJECT CARD
+   Updated to support video and "center & fit"
 ───────────────────────────────────────────────────────────── */
 function ProjectCard({ project, index }: { project: typeof PROJECTS[0]; index: number }) {
     const ref = useRef(null);
@@ -91,16 +23,28 @@ function ProjectCard({ project, index }: { project: typeof PROJECTS[0]; index: n
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: index % 2 === 1 ? 0.15 : 0 }}
         >
-            <Link href={project.href} className="group block">
-                {/* Image Container — top-right has no radius since notch sits there */}
+            <Link href={project.link} className="group block">
+                {/* Image/Video Container — top-right has no radius since notch sits there */}
                 <div className="relative overflow-hidden rounded-[2rem] lg:rounded-[2.5rem] rounded-tr-none aspect-[5/4] bg-muted shadow-2xl">
-                    <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                    />
+                    
+                    {project.video ? (
+                        <video
+                            src={project.video}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+                        />
+                    ) : (
+                        <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                    )}
 
                     {/* Subtle gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/30 opacity-50 transition-opacity duration-500 group-hover:opacity-70" />
@@ -112,7 +56,7 @@ function ProjectCard({ project, index }: { project: typeof PROJECTS[0]; index: n
                                 <span
                                     key={tag}
                                     className={cn(
-                                        "px-3.5 py-1.5 rounded-full bg-foreground/90 text-background font-bold text-[9px] lg:text-[10px] uppercase tracking-wider hover:bg-primary hover:text-white transition-colors duration-300",
+                                        "px-3.5 py-1.5 rounded-full bg-background/90 text-foreground font-bold text-[9px] lg:text-[10px] uppercase tracking-wider hover:bg-primary hover:text-white transition-colors duration-300",
                                         i >= 2 && "hidden sm:inline-block"
                                     )}
                                 >
@@ -125,8 +69,8 @@ function ProjectCard({ project, index }: { project: typeof PROJECTS[0]; index: n
                     {/* Metric floating inside image */}
                     {project.metric && (
                         <div className="absolute bottom-5 left-5 z-20">
-                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold tracking-wide shadow-xl">
-                                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/90 backdrop-blur-md border border-white/20 text-black text-[11px] font-bold tracking-wide shadow-xl">
+                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                                 {project.metric}
                             </div>
                         </div>
@@ -162,6 +106,10 @@ export function WorkSection() {
     const headerRef = useRef(null);
     const isHeaderInView = useInView(headerRef, { once: true, margin: "-10% 0px" });
 
+    // Split projects into left and right columns for staggered effect
+    const leftProjects = PROJECTS.filter((_, i) => i % 2 === 0);
+    const rightProjects = PROJECTS.filter((_, i) => i % 2 === 1);
+
     return (
         <section className="relative w-full bg-background pt-12 pb-16 lg:pt-16 lg:pb-24">
             <div className="w-full max-w-[1920px] mx-auto px-6 sm:px-12 lg:px-24">
@@ -169,10 +117,11 @@ export function WorkSection() {
                 {/* ── Staggered 2-Column Grid ── */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-start">
 
-                    {/* LEFT COLUMN: First project + third project + CTA */}
+                    {/* LEFT COLUMN: Even projects + CTA at the end */}
                     <div className="flex flex-col gap-16 lg:gap-24">
-                        <ProjectCard project={PROJECTS[0]} index={0} />
-                        <ProjectCard project={PROJECTS[2]} index={2} />
+                        {leftProjects.map((project, idx) => (
+                            <ProjectCard key={project.id} project={project} index={idx * 2} />
+                        ))}
 
                         {/* "Like what you see?" CTA */}
                         <motion.div
@@ -206,7 +155,7 @@ export function WorkSection() {
                         </motion.div>
                     </div>
 
-                    {/* RIGHT COLUMN: Section header + second project + fourth project */}
+                    {/* RIGHT COLUMN: Section header + Odd projects */}
                     <div className="flex flex-col gap-16 lg:gap-24 md:pt-24 lg:pt-40">
                         {/* Section Header */}
                         <motion.div
@@ -224,8 +173,9 @@ export function WorkSection() {
                             </h2>
                         </motion.div>
 
-                        <ProjectCard project={PROJECTS[1]} index={1} />
-                        <ProjectCard project={PROJECTS[3]} index={3} />
+                        {rightProjects.map((project, idx) => (
+                            <ProjectCard key={project.id} project={project} index={idx * 2 + 1} />
+                        ))}
                     </div>
 
                 </div>

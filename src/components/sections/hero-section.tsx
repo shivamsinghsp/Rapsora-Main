@@ -83,8 +83,8 @@ export function HeroSection() {
                             <GooeyCTA 
                                 href="/contact" 
                                 text="Request a quote" 
-                                pillColorClass="bg-black" 
-                                textColorClass="text-white"
+                                pillColorClass="bg-white" 
+                                textColorClass="text-black"
                             />
 
                             {/* Center Scroll Icon */}

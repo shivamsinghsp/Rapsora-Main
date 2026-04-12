@@ -50,12 +50,23 @@ export function WorkGrid({ works }: { works: any[] }) {
                                 href={`/work/${work.slug}`}
                                 className="relative w-full aspect-[4/3] lg:aspect-auto lg:h-[450px] overflow-hidden rounded-[2.5rem] bg-foreground/5"
                             >
-                                <img
-                                    src={work.image}
-                                    alt={work.title}
-                                    className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 40vw"
-                                />
+                                {work.video ? (
+                                    <video 
+                                        src={work.video} 
+                                        autoPlay 
+                                        loop 
+                                        muted 
+                                        playsInline 
+                                        className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105" 
+                                    />
+                                ) : (
+                                    <img
+                                        src={work.image}
+                                        alt={work.title}
+                                        className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 40vw"
+                                    />
+                                )}
 
                                 {/* Custom Hover text/overlay can go here if needed */}
                                 <div className="absolute inset-0 z-20 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity bg-black/10 mix-blend-overlay" />

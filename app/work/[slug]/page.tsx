@@ -58,14 +58,7 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
                             {project.subtitle}
                         </motion.p>
 
-                        <div className="grid grid-cols-2 gap-12 pt-12 border-t border-border/50">
-                            <div>
-                                <p className="text-[11px] font-black uppercase tracking-widest text-muted-foreground mb-4">Metric</p>
-                                <p className="text-4xl font-black tracking-tight" style={{ color: project.color }}>
-                                    {project.metric}
-                                </p>
-                                <p className="text-sm font-bold text-muted-foreground mt-1">{project.metricLabel}</p>
-                            </div>
+                        <div className="grid grid-cols-1 gap-12 pt-12 border-t border-border/50">
                             <div>
                                 <p className="text-[11px] font-black uppercase tracking-widest text-muted-foreground mb-4">Category</p>
                                 <p className="text-xl font-bold tracking-tight">{project.category}</p>
@@ -124,7 +117,7 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
                         </h3>
                         <Link
                             href="/contact"
-                            className="group flex items-center gap-4 bg-primary text-white px-8 py-4 rounded-full font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg relative z-10"
+                            className="group flex items-center gap-4 bg-primary text-primary-foreground px-8 py-4 rounded-full font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg relative z-10"
                         >
                             Start Your Project
                             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 group-hover:rotate-45 transition-transform">

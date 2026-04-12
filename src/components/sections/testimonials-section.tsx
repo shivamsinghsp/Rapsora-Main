@@ -203,7 +203,7 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof TESTIMONI
             initial={{ opacity: 0, y: 50 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 1, ease: EASE, delay: index * 0.15 }}
-            className="group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl lg:rounded-3xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm hover:border-primary/30 hover:bg-white/[0.06] transition-all duration-700 min-h-[320px]"
+            className="group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl lg:rounded-3xl border border-foreground/[0.06] bg-foreground/[0.03] backdrop-blur-sm hover:border-primary/30 hover:bg-foreground/[0.06] transition-all duration-700 min-h-[320px]"
         >
             {/* Ambient glow on hover */}
             <div className="absolute inset-0 rounded-2xl lg:rounded-3xl bg-primary/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -214,22 +214,22 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof TESTIMONI
                     {isInView && <StarRating count={testimonial.stars} delay={0.3 + index * 0.15} />}
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
                         <span className="text-[13px] font-bold text-primary">{testimonial.metric}</span>
-                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-wider">{testimonial.metricLabel}</span>
+                        <span className="text-[10px] font-bold text-foreground/40 uppercase tracking-wider">{testimonial.metricLabel}</span>
                     </div>
                 </div>
 
                 {/* Quote */}
                 <div className="relative">
                     <Quote className="absolute -top-1 -left-1 w-6 h-6 text-primary/20 rotate-180" />
-                    <p className="font-heading text-[1rem] sm:text-[1.1rem] lg:text-[1.2rem] font-medium leading-[1.5] text-white/80 pl-6">
+                    <p className="font-heading text-[1rem] sm:text-[1.1rem] lg:text-[1.2rem] font-medium leading-[1.5] text-foreground/80 pl-6">
                         {testimonial.quote}
                     </p>
                 </div>
             </div>
 
             {/* Bottom: Author */}
-            <div className="relative z-10 flex items-center gap-3 mt-8 pt-6 border-t border-white/[0.06]">
-                <div className="relative w-11 h-11 rounded-full overflow-hidden ring-2 ring-white/10 group-hover:ring-primary/30 transition-all duration-500">
+            <div className="relative z-10 flex items-center gap-3 mt-8 pt-6 border-t border-foreground/[0.06]">
+                <div className="relative w-11 h-11 rounded-full overflow-hidden ring-2 ring-foreground/10 group-hover:ring-primary/30 transition-all duration-500">
                     <Image
                         src={testimonial.avatar}
                         alt={testimonial.name}
@@ -238,8 +238,8 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof TESTIMONI
                     />
                 </div>
                 <div>
-                    <p className="text-[14px] font-bold text-white leading-tight">{testimonial.name}</p>
-                    <p className="text-[12px] font-medium text-white/40 leading-tight">
+                    <p className="text-[14px] font-bold text-foreground leading-tight">{testimonial.name}</p>
+                    <p className="text-[12px] font-medium text-foreground/40 leading-tight">
                         {testimonial.role}, {testimonial.company}
                     </p>
                 </div>
@@ -280,7 +280,7 @@ export function TestimonialsSection() {
                             initial={{ opacity: 0, x: -20 }}
                             animate={isHeaderInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                             transition={{ duration: 1, ease: EASE, delay: 0.1 }}
-                            className="flex items-center gap-3 text-white/60 font-bold tracking-tight text-[14px] lg:text-[15px] mb-5 lg:mb-6"
+                            className="flex items-center gap-3 text-foreground/60 font-bold tracking-tight text-[14px] lg:text-[15px] mb-5 lg:mb-6"
                         >
                             <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                             Client Stories
@@ -290,11 +290,11 @@ export function TestimonialsSection() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                             transition={{ duration: 1.2, ease: EASE, delay: 0.2 }}
-                            className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.05] tracking-[-0.03em] text-white"
+                            className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.05] tracking-[-0.03em] text-foreground"
                         >
                             Don&apos;t take our word
                             <br className="hidden sm:block" />
-                            <span className="text-white/40"> — hear from theirs</span>
+                            <span className="text-foreground/40"> — hear from theirs</span>
                         </motion.h2>
                     </div>
 
@@ -331,7 +331,7 @@ export function TestimonialsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-5% 0px" }}
                     transition={{ duration: 1, ease: EASE }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 mt-12 lg:mt-20 pt-10 border-t border-white/[0.06]"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 mt-12 lg:mt-20 pt-10 border-t border-foreground/[0.06]"
                 >
                     {[
                         { value: '50+', label: 'Projects Delivered' },
@@ -348,7 +348,7 @@ export function TestimonialsSection() {
                             className="flex items-center gap-3 text-center sm:text-left"
                         >
                             <span className="font-heading text-2xl lg:text-3xl font-bold text-primary">{stat.value}</span>
-                            <span className="text-[12px] lg:text-[13px] font-bold text-white/30 uppercase tracking-wider">{stat.label}</span>
+                            <span className="text-[12px] lg:text-[13px] font-bold text-foreground/30 uppercase tracking-wider">{stat.label}</span>
                         </motion.div>
                     ))}
                 </motion.div>

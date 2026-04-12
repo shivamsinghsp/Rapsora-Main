@@ -55,23 +55,23 @@ function ServiceRow({ service, index }: { service: typeof SERVICES[0]; index: nu
         >
             <Link href={service.href} className="group block">
                 {/* Top separator line */}
-                <div className="w-full h-px bg-white/[0.08] group-hover:bg-white/[0.15] transition-colors duration-700" />
+                <div className="w-full h-px bg-foreground/[0.08] group-hover:bg-foreground/[0.15] transition-colors duration-700" />
 
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between py-8 lg:py-10 gap-4 lg:gap-8">
                     {/* Service Name */}
                     <motion.h3
-                        className="font-heading text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem] xl:text-[5.5rem] font-bold leading-[1] tracking-[-0.03em] text-white transition-all duration-700 group-hover:text-primary group-hover:translate-x-4"
+                        className="font-heading text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem] xl:text-[5.5rem] font-bold leading-[1] tracking-[-0.03em] text-foreground transition-all duration-700 group-hover:text-primary group-hover:translate-x-4"
                     >
                         {service.name}
                     </motion.h3>
 
                     {/* Right side: Description + Arrow */}
                     <div className="flex items-center gap-6 lg:gap-10 lg:max-w-md shrink-0">
-                        <p className="text-white/40 text-sm lg:text-[15px] font-medium leading-relaxed hidden lg:block group-hover:text-white/60 transition-colors duration-700">
+                        <p className="text-foreground/40 text-sm lg:text-[15px] font-medium leading-relaxed hidden lg:block group-hover:text-foreground/60 transition-colors duration-700">
                             {service.description}
                         </p>
-                        <div className="flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-full border border-white/[0.08] group-hover:border-primary group-hover:bg-primary/10 transition-all duration-700 shrink-0">
-                            <ArrowUpRight className="w-5 h-5 lg:w-6 lg:h-6 text-white/30 group-hover:text-primary group-hover:rotate-45 transition-all duration-700" />
+                        <div className="flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-full border border-foreground/[0.08] group-hover:border-primary group-hover:bg-primary/10 transition-all duration-700 shrink-0">
+                            <ArrowUpRight className="w-5 h-5 lg:w-6 lg:h-6 text-foreground/30 group-hover:text-primary group-hover:rotate-45 transition-all duration-700" />
                         </div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@ export function ExpertiseSection() {
                             initial={{ opacity: 0, x: -20 }}
                             animate={isHeaderInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                             transition={{ duration: 1.2, ease: EASE, delay: 0.2 }}
-                            className="flex items-center gap-3 text-white/60 font-bold tracking-tight text-[14px] lg:text-[15px]"
+                            className="flex items-center gap-3 text-foreground/60 font-bold tracking-tight text-[14px] lg:text-[15px]"
                         >
                             <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                             Our Expertise
@@ -125,7 +125,7 @@ export function ExpertiseSection() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                             transition={{ duration: 1.4, ease: EASE, delay: 0.3 }}
-                            className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] font-medium italic leading-[1.1] tracking-[-0.02em] text-white"
+                            className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] font-medium italic leading-[1.1] tracking-[-0.02em] text-foreground"
                         >
                             How we take
                             <br />
@@ -141,7 +141,7 @@ export function ExpertiseSection() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                             transition={{ duration: 1.3, ease: EASE, delay: 0.45 }}
-                            className="text-white/50 text-[15px] lg:text-[16px] font-medium leading-[1.7] max-w-md"
+                            className="text-foreground/50 text-[15px] lg:text-[16px] font-medium leading-[1.7] max-w-md"
                         >
                             We are a digital agency with expertise, and we&apos;re on a mission to help you
                             take the next step in your business. From brand identity to high-converting
@@ -156,7 +156,7 @@ export function ExpertiseSection() {
                             <Magnetic strength={0.3}>
                                 <Link
                                     href="/services"
-                                    className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-white/[0.12] hover:border-primary/60 bg-transparent hover:bg-primary/5 transition-all duration-700 text-white text-[14px] lg:text-[15px] font-bold tracking-tight"
+                                    className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-foreground/[0.12] hover:border-primary/60 bg-transparent hover:bg-primary/5 transition-all duration-700 text-foreground text-[14px] lg:text-[15px] font-bold tracking-tight"
                                 >
                                     See all services
                                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:rotate-45" />
@@ -172,7 +172,7 @@ export function ExpertiseSection() {
                         <ServiceRow key={service.name} service={service} index={index} />
                     ))}
                     {/* Final bottom line */}
-                    <div className="w-full h-px bg-white/[0.08]" />
+                    <div className="w-full h-px bg-foreground/[0.08]" />
                 </div>
 
             </div>

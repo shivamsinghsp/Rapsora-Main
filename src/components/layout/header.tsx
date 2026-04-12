@@ -777,15 +777,15 @@ export function Header() {
                             />
 
                             <div className="relative flex flex-col items-start mr-1">
-                                <span className="text-[10px] font-extrabold uppercase tracking-widest text-white/50 leading-none mb-1">
+                                <span className="text-[10px] font-extrabold uppercase tracking-widest text-black/50 leading-none mb-1">
                                     THE GROWTH BLUEPRINT
                                 </span>
-                                <p className="text-[14px] font-bold text-white tracking-tight leading-none whitespace-nowrap">
-                                    Unlock My <span className="text-white underline decoration-white/40 underline-offset-4 font-black italic">5X Revenue</span> Plan.
+                                <p className="text-[14px] font-bold text-black tracking-tight leading-none whitespace-nowrap">
+                                    Unlock My <span className="text-black underline decoration-black/40 underline-offset-4 font-black italic">5X Revenue</span> Plan.
                                 </p>
                             </div>
 
-                            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-md border border-white/10 transition-all duration-500 group-hover:bg-white group-hover:text-primary group-hover:rotate-12 group-hover:scale-110">
+                            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-black/10 text-black backdrop-blur-md border border-black/10 transition-all duration-500 group-hover:bg-black group-hover:text-white group-hover:rotate-12 group-hover:scale-110">
                                 <ArrowUpRight className="h-5 w-5" strokeWidth={2.5} />
                             </div>
                         </Link>

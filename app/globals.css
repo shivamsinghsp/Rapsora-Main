@@ -93,8 +93,8 @@
   /* Primary — exact logo violet */
   --primary: oklch(0.60 0.24 300);
   /* #9061F9 — logo purple */
-  --primary-foreground: oklch(1 0 0);
-  /* white */
+  --primary-foreground: oklch(0.12 0.010 280);
+  /* black */
 
   /* Secondary — very light violet wash */
   --secondary: oklch(0.96 0.025 300);

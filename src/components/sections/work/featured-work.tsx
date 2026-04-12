@@ -17,12 +17,23 @@ export function FeaturedWork({ work }: { work: any }) {
                     className="group relative w-full lg:w-[65%] shrink-0 block overflow-hidden rounded-[2.5rem] bg-foreground/5 shadow-xl transition-all hover:shadow-2xl hover:scale-[1.01] duration-500 will-change-transform"
                 >
                     <div className="aspect-[4/3] w-full relative">
-                        <img 
-                            src={work.image} 
-                            alt={work.title} 
-                            className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105" 
-                            sizes="(max-width: 1024px) 100vw, 65vw"
-                        />
+                        {work.video ? (
+                            <video 
+                                src={work.video} 
+                                autoPlay 
+                                loop 
+                                muted 
+                                playsInline 
+                                className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105" 
+                            />
+                        ) : (
+                            <img 
+                                src={work.image} 
+                                alt={work.title} 
+                                className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105" 
+                                sizes="(max-width: 1024px) 100vw, 65vw"
+                            />
+                        )}
                     </div>
                 </Link>
 
