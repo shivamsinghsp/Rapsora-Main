@@ -1,12 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
-import { ArrowUpRight, Linkedin, Twitter, Github } from 'lucide-react';
-import { Magnetic } from '@/components/shared/magnetic';
-import { GooeyCTA } from '@/components/shared/gooey-cta';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -15,193 +10,101 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 ───────────────────────────────────────────────────────────── */
 export const TEAM_MEMBERS = [
     {
-        name: 'Andy',
-        role: 'Co-Founder & CEO',
-        hook: 'VIRAL ARCHITECT',
-        bio: 'Building digital empires that break the internet. 10+ years of strategic growth.',
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800',
-        socials: {
-            linkedin: '#',
-            twitter: '#',
-        },
+        name: 'Shivam Singh',
+        role: 'Frontend Developer',
+        hook: 'CRAFTING MODERN INTERFACES',
+        bio: 'Frontend developer building fast, responsive, and visually engaging web experiences.',
+        image: '/images/andy-portrait.jpg',
+        socials: { linkedin: '#', twitter: '#' },
     },
     {
-        name: 'Jason',
-        role: 'Co-Founder & CTO',
-        hook: 'RETENTION SURGEON',
-        bio: 'Code alchemist turning complex systems into silky-smooth user experiences.',
-        image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800',
-        socials: {
-            linkedin: '#',
-            twitter: '#',
-            github: '#',
-        },
+        name: 'Vipin Yadav',
+        role: 'Software Developer',
+        hook: 'BUILDING SYSTEMS THAT SCALE',
+        bio: 'Code craftsman turning complex problems into elegant, user-centric digital solutions.',
+        image: '/images/jason-portrait.jpg',
+        socials: { linkedin: '#', twitter: '#', github: '#' },
     },
     {
-        name: 'Natasia',
-        role: 'Lead Architect',
-        hook: 'NEURAL NARRATIVE',
-        bio: 'She architects experiences that make users feel, not just click.',
-        image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800',
-        socials: {
-            linkedin: '#',
-            twitter: '#',
-        },
+        name: 'Ashish Singh',
+        role: 'Founder',
+        hook: 'BUILDING THE FUTURE',
+        bio: 'Leading product vision and business growth while transforming ideas into scalable, real-world solutions.',
+        image: '/images/natasia-portrait.jpg',
+        socials: { linkedin: '#', twitter: '#' },
     },
     {
-        name: 'Ruby',
-        role: 'Growth Lead',
-        hook: 'GROWTH CATALYST',
-        bio: 'Data-driven strategist who turns traffic into conversions, and conversions into loyalty.',
-        image: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80&w=800',
-        socials: {
-            linkedin: '#',
-        },
+        name: 'Aditya Sharma',
+        role: 'AI/ML Engineer',
+        hook: 'BUILDING INTELLIGENT SYSTEMS',
+        bio: 'AI/ML engineer focused on transforming data into scalable solutions, predictive insights, and real-world impact.',
+        image: '/images/hero-portrait.jpg',
+        socials: { linkedin: '#' },
     },
     {
-        name: 'Joe',
-        role: 'Behavioral Dev',
-        hook: 'PATTERN BREAKER',
-        bio: 'Frontend wizard who bends pixels to his will. If it moves, he probably built it.',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800',
-        socials: {
-            linkedin: '#',
-            github: '#',
-        },
+        name: 'Shreyansh Gupta',
+        role: 'Fullstack Developer',
+        hook: 'BUILDING END-TO-END SYSTEMS',
+        bio: 'Fullstack developer crafting scalable backend systems and seamless, high-performance user interfaces.',
+        image: '/images/joe-portrait.jpg',
+        socials: { linkedin: '#', github: '#' },
     },
     {
-        name: 'Mia',
-        role: 'Creative Director',
-        hook: 'VISUAL ORACLE',
-        bio: 'Turning brand visions into visual spectacles that stop you mid-scroll.',
-        image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=800',
-        socials: {
-            linkedin: '#',
-            twitter: '#',
-        },
+        name: 'Prachi Shahu',
+        role: 'Human Resources',
+        hook: 'PEOPLE & CULTURE BUILDER',
+        bio: 'HR professional focused on talent acquisition, employee engagement, and building a positive workplace culture.',
+        image: '/images/prachi-portrait.jpg',
+        socials: { linkedin: '#', twitter: '#' },
+    },
+    {
+        name: 'Shivani Dixit',
+        role: 'AI/ML Engineer',
+        hook: 'POWERING DECISIONS WITH AI',
+        bio: 'AI/ML engineer focused on developing data-driven models and scalable intelligent solutions.',
+        image: '/images/shivani-portrait.jpg',
+        socials: { linkedin: '#' },
     },
 ];
 
 /* ─────────────────────────────────────────────────────────────
-   TEAM MEMBER CARD
-───────────────────────────────────────────────────────────── */
-function TeamMemberCard({ member, index }: { member: typeof TEAM_MEMBERS[0]; index: number }) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: '-5% 0px' });
-
-    const socialIcons: Record<string, React.ComponentType<{ className?: string }>> = {
-        linkedin: Linkedin,
-        twitter: Twitter,
-        github: Github,
-    };
-
-    return (
-        <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 60 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-            transition={{ duration: 1, ease: EASE, delay: index * 0.1 }}
-            className="group relative"
-        >
-            {/* Card */}
-            <div className="relative overflow-hidden rounded-[1.5rem] lg:rounded-[2rem] bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm hover:border-primary/30 transition-all duration-700">
-
-                {/* Image Container */}
-                <div className="relative aspect-[3/4] overflow-hidden">
-                    <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover transition-all duration-1000 grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105"
-                    />
-
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                    {/* Hook badge */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                        transition={{ duration: 0.6, ease: EASE, delay: 0.3 + index * 0.1 }}
-                        className="absolute top-4 left-4 lg:top-5 lg:left-5"
-                    >
-                        <span className="text-[8px] lg:text-[9px] font-black bg-primary text-primary-foreground px-2.5 py-1 rounded-md tracking-[0.2em] uppercase shadow-lg shadow-primary/25">
-                            {member.hook}
-                        </span>
-                    </motion.div>
-
-                    {/* Social icons — appear on hover */}
-                    <div className="absolute top-4 right-4 lg:top-5 lg:right-5 flex flex-col gap-2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
-                        {Object.entries(member.socials).map(([platform, url], i) => {
-                            const Icon = socialIcons[platform];
-                            if (!Icon) return null;
-                            return (
-                                <a
-                                    key={platform}
-                                    href={url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center justify-center w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white hover:bg-primary hover:border-primary transition-all duration-300 hover:scale-110"
-                                    style={{ transitionDelay: `${i * 60}ms` }}
-                                >
-                                    <Icon className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
-                                </a>
-                            );
-                        })}
-                    </div>
-
-                    {/* Name & Role — pinned to bottom */}
-                    <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
-                        <h3 className="font-heading text-xl lg:text-2xl font-bold text-white leading-none mb-1 tracking-tight">
-                            {member.name}
-                        </h3>
-                        <p className="text-[11px] lg:text-[12px] font-bold text-white/50 uppercase tracking-[0.15em]">
-                            {member.role}
-                        </p>
-                    </div>
-
-                    {/* Animated glow line at bottom */}
-                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                </div>
-            </div>
-        </motion.div>
-    );
-}
-
-/* ─────────────────────────────────────────────────────────────
-   MAIN TEAM SECTION (Landing Page)
+   MAIN TEAM SECTION — Exact reference layout
+   
+   ┌─────────────────────────────────────────────────┐
+   │  (play)  Heading Text Here    (avatars)         │  ← top bar
+   │                                                 │
+   │  ┌──┐  ┌────┐       ┌────┐  ┌──┐               │
+   │  │  │  │    │ ┌────┐ │    │  │  │               │  ← mosaic
+   │  │  │  │    │ │    │ │    │  │  │               │
+   │  └──┘  │    │ │    │ │    │  ├──┤               │
+   │  ┌──┐  └────┘ └────┘ └────┘  │  │               │
+   │  └──┘                        └──┘               │
+   │              [Explore Team ↗]                    │  ← CTA
+   └─────────────────────────────────────────────────┘
 ───────────────────────────────────────────────────────────── */
 export function TeamSection() {
     const sectionRef = useRef(null);
-    const headerRef = useRef(null);
-    const isHeaderInView = useInView(headerRef, { once: true, margin: '-10% 0px' });
+    const isInView = useInView(sectionRef, { once: true, margin: '-8% 0px' });
 
-    // Show only first 4 members on the landing page
-    const displayMembers = TEAM_MEMBERS.slice(0, 4);
+    const m = TEAM_MEMBERS;
 
     return (
         <section
             ref={sectionRef}
             id="team"
-            className="relative w-full bg-background dark:bg-black pt-8 pb-24 lg:pt-16 lg:pb-32 overflow-hidden"
+            className="relative w-full bg-background py-16 lg:py-24 overflow-hidden"
         >
-            {/* Ambient glow effects */}
-            <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/[0.03] blur-[180px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-primary/[0.04] blur-[150px] rounded-full pointer-events-none" />
+            <div className="w-full max-w-[1400px] mx-auto px10 sm:px15 lg:px20 translate-y-[-10%]">
 
-            <div className="w-full max-w-[1920px] mx-auto px-6 sm:px-12 lg:px-24">
-
-                {/* ── HEADER ── */}
-                <motion.div
-                    ref={headerRef}
-                    initial={{ opacity: 0 }}
-                    animate={isHeaderInView ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ duration: 1.4, ease: EASE }}
-                    className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12 lg:mb-20"
-                >
+                {/* ═══════════════════════════════════════════
+                    HEADER — Matching Client Stories layout
+                ═══════════════════════════════════════════ */}
+                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12 lg:mb-20">
                     <div>
+                        {/* Section label */}
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
-                            animate={isHeaderInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : {}}
                             transition={{ duration: 1, ease: EASE, delay: 0.1 }}
                             className="flex items-center gap-3 text-foreground/60 font-bold tracking-tight text-[14px] lg:text-[15px] mb-5 lg:mb-6"
                         >
@@ -209,63 +112,196 @@ export function TeamSection() {
                             Our Team
                         </motion.div>
 
+                        {/* Heading */}
                         <motion.h2
                             initial={{ opacity: 0, y: 30 }}
-                            animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                            animate={isInView ? { opacity: 1, y: 0 } : {}}
                             transition={{ duration: 1.2, ease: EASE, delay: 0.2 }}
                             className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.05] tracking-[-0.03em] text-foreground"
                         >
-                            The minds behind
+                            The Minds Behind
                             <br className="hidden sm:block" />
-                            <span className="text-foreground/40"> — the obsession</span>
+                            <span className="text-foreground/40"> Our Bold Vision</span>
                         </motion.h2>
                     </div>
+                </div>
 
+                {/* ═══════════════════════════════════════════
+                    DESKTOP MOSAIC GRID (lg+)
+                    5 columns, CSS Grid with explicit row sizing
+                    Matches the reference stagger pattern exactly
+                ═══════════════════════════════════════════ */}
+                <div
+                    className="hidden lg:grid gap-3 xl:gap-4"
+                    style={{
+                        gridTemplateColumns: '1fr 1.3fr 1.35fr 1.3fr 1fr',
+                        gridTemplateRows: '80px 1fr 1fr 1fr 60px 80px',
+                        height: 'clamp(560px, 44vw, 760px)',
+                    }}
+                >
+                    {/* ── Col 1 top: Tall card (Andy) — starts row 2, spans 2 rows ── */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                        transition={{ duration: 1, ease: EASE, delay: 0.4 }}
-                        className="shrink-0"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 1, ease: EASE, delay: 0.15 }}
+                        className="group rounded-[1.2rem] overflow-hidden relative"
+                        style={{ gridColumn: '1', gridRow: '1 / 4' }}
                     >
-                        <Magnetic strength={0.4}>
-                            <GooeyCTA
-                                href="/team"
-                                text="Meet the full team"
-                                pillColorClass="bg-primary"
-                                textColorClass="text-primary-foreground"
-                            />
-                        </Magnetic>
+                        <img src={m[0].image} alt={m[0].name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p className="text-[8px] font-black tracking-[0.2em] uppercase text-primary mb-0.5">{m[0].hook}</p>
+                            <h3 className="text-base font-bold text-white leading-none">{m[0].name}</h3>
+                            <p className="text-[9px] text-white/50 uppercase tracking-wider font-bold">{m[0].role}</p>
+                        </div>
                     </motion.div>
-                </motion.div>
 
-                {/* ── TEAM GRID ── */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-                    {displayMembers.map((member, index) => (
-                        <TeamMemberCard key={member.name} member={member} index={index} />
+                    {/* ── Col 1 bottom: Small card (Mia) — row 4-5 ── */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 1, ease: EASE, delay: 0.3 }}
+                        className="group rounded-[1.2rem] overflow-hidden relative"
+                        style={{ gridColumn: '1', gridRow: '4 / 7' }}
+                    >
+                        <img src={m[5].image} alt={m[5].name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 className="text-sm font-bold text-white leading-none">{m[5].name}</h3>
+                            <p className="text-[9px] text-white/50 uppercase tracking-wider font-bold">{m[5].role}</p>
+                        </div>
+                    </motion.div>
+
+                    {/* ── Col 2: Very tall card (Jason) — full height ── */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 1, ease: EASE, delay: 0.2 }}
+                        className="group rounded-[1.2rem] overflow-hidden relative"
+                        style={{ gridColumn: '2', gridRow: '2 / 7' }}
+                    >
+                        <img src={m[1].image} alt={m[1].name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p className="text-[8px] font-black tracking-[0.2em] uppercase text-primary mb-0.5">{m[1].hook}</p>
+                            <h3 className="text-lg font-bold text-white leading-none">{m[1].name}</h3>
+                            <p className="text-[9px] text-white/50 uppercase tracking-wider font-bold">{m[1].role}</p>
+                        </div>
+                    </motion.div>
+
+                    {/* ── Col 3: Center card (Natasia / your suit photo) — offset, rows 2-5 ── */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 1, ease: EASE, delay: 0.3 }}
+                        className="group rounded-[1.2rem] overflow-hidden relative"
+                        style={{ gridColumn: '3', gridRow: '1 / 5' }}
+                    >
+
+                        <img src={m[2].image} alt={m[2].name} className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p className="text-[8px] font-black tracking-[0.2em] uppercase text-primary mb-0.5">{m[2].hook}</p>
+                            <h3 className="text-xl font-bold text-white leading-none">{m[2].name}</h3>
+                            <p className="text-[9px] text-white/50 uppercase tracking-wider font-bold">{m[2].role}</p>
+                        </div>
+                    </motion.div>
+
+                    {/* ── Col 4: Tall card (Ruby) — full height ── */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 1, ease: EASE, delay: 0.4 }}
+                        className="group rounded-[1.2rem] overflow-hidden relative"
+                        style={{ gridColumn: '4', gridRow: '2 / 7' }}
+                    >
+                        <img src={m[3].image} alt={m[3].name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p className="text-[8px] font-black tracking-[0.2em] uppercase text-primary mb-0.5">{m[3].hook}</p>
+                            <h3 className="text-lg font-bold text-white leading-none">{m[3].name}</h3>
+                            <p className="text-[9px] text-white/50 uppercase tracking-wider font-bold">{m[3].role}</p>
+                        </div>
+                    </motion.div>
+
+                    {/* ── Col 5 top: Tall card (Joe) — rows 1-4 ── */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 1, ease: EASE, delay: 0.45 }}
+                        className="group rounded-[1.2rem] overflow-hidden relative"
+                        style={{ gridColumn: '5', gridRow: '1 / 4' }}
+                    >
+                        <img src={m[4].image} alt={m[4].name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p className="text-[8px] font-black tracking-[0.2em] uppercase text-primary mb-0.5">{m[4].hook}</p>
+                            <h3 className="text-base font-bold text-white leading-none">{m[4].name}</h3>
+                            <p className="text-[9px] text-white/50 uppercase tracking-wider font-bold">{m[4].role}</p>
+                        </div>
+                    </motion.div>
+
+                    {/* ── Col 5 bottom: 7th member image — rows 4-6 ── */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 1, ease: EASE, delay: 0.55 }}
+                        className="group rounded-[1.2rem] overflow-hidden relative"
+                        style={{ gridColumn: '5', gridRow: '4 / 7' }}
+                    >
+                        <img src={m[6].image} alt={m[6].name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 className="text-sm font-bold text-white leading-none">{m[6].name}</h3>
+                            <p className="text-[9px] text-white/50 uppercase tracking-wider font-bold">{m[6].role}</p>
+                        </div>
+                    </motion.div>
+
+                    {/* ── Col 3 bottom: View all members CTA — row 5-6 (center bottom) ── */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 1, ease: EASE, delay: 0.6 }}
+                        className="rounded-[1.2rem] overflow-hidden relative"
+                        style={{ gridColumn: '3', gridRow: '5 / 7' }}
+                    >
+                        <a href="/team" className="group flex flex-col items-center justify-center gap-2 w-full h-full bg-primary/[0.06] border border-primary/15 rounded-[1.2rem] hover:bg-primary/[0.12] transition-all duration-500">
+                            <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center border border-primary/20 group-hover:bg-primary/25 transition-colors">
+                                <svg className="w-4 h-4 text-primary group-hover:rotate-45 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+                            </div>
+                            <p className="text-[12px] font-bold text-foreground/50 text-center leading-tight">View all<br />members</p>
+                        </a>
+                    </motion.div>
+                </div>
+
+                {/* ═══════════════════════════════════════════
+                    MOBILE GRID (< lg)
+                ═══════════════════════════════════════════ */}
+                <div className="grid lg:hidden grid-cols-2 gap-2.5 sm:gap-3">
+                    {m.slice(0, 6).map((member, index) => (
+                        <motion.div
+                            key={member.name}
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={isInView ? { opacity: 1, y: 0 } : {}}
+                            transition={{ duration: 0.8, ease: EASE, delay: index * 0.08 }}
+                            className={`group relative overflow-hidden rounded-2xl
+                                ${index === 2 ? 'col-span-2 aspect-[2/1]' : index % 2 === 0 ? 'aspect-[3/4]' : 'aspect-square'}
+                            `}
+                        >
+                            <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                            <div className="absolute top-3 left-3">
+                                <span className="text-[7px] font-black bg-primary text-white px-2 py-0.5 rounded tracking-[0.15em] uppercase shadow-lg">{member.hook}</span>
+                            </div>
+                            <div className="absolute bottom-0 left-0 right-0 p-3.5">
+                                <h3 className="text-base font-bold text-white leading-none mb-0.5">{member.name}</h3>
+                                <p className="text-[9px] font-bold text-white/50 uppercase tracking-wider">{member.role}</p>
+                            </div>
+                        </motion.div>
                     ))}
                 </div>
 
-                {/* ── BOTTOM CTA STRIP ── */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-5% 0px' }}
-                    transition={{ duration: 1, ease: EASE }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 lg:mt-20 pt-10 border-t border-foreground/[0.06]"
-                >
-                    <p className="text-[14px] lg:text-[16px] text-foreground/40 font-medium text-center">
-                        A lean team of <span className="text-primary font-bold">{TEAM_MEMBERS.length}+ specialists</span> obsessed with your growth.
-                    </p>
-                    <Magnetic strength={0.3}>
-                        <Link
-                            href="/team"
-                            className="group flex items-center gap-2.5 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border border-foreground/[0.08] bg-foreground/[0.03] backdrop-blur-sm text-foreground text-[13px] sm:text-[14px] font-bold tracking-tight hover:bg-foreground/[0.08] hover:border-primary/30 transition-all duration-500 hover:scale-105 active:scale-95"
-                        >
-                            View all team members
-                            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:rotate-45" />
-                        </Link>
-                    </Magnetic>
-                </motion.div>
+
             </div>
         </section>
     );

@@ -10,7 +10,7 @@ export function Logo({ className }: { className?: string }) {
             aria-label="RapSora — Home"
             className={cn("group shrink-0 focus-visible:outline-none flex items-center", className)}
         >
-            <div className="relative h-20 w-20 sm:h-15 sm:w-15 transition-transform duration-500 group-hover:scale-105">
+            <div className="relative h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 transition-transform duration-500 group-hover:scale-105">
                 <img
                     src="/logo.png"
                     alt="RapSora"

@@ -73,14 +73,17 @@ import { GooeyCTA } from '@/components/shared/gooey-cta';
 /* ─────────────────────────────────────────────────────────────
    THEME TOGGLE
 ───────────────────────────────────────────────────────────── */
-function ThemeToggle() {
+function ThemeToggle({ isScrolled, isHome }: { isScrolled?: boolean; isHome?: boolean }) {
     const { theme, toggleTheme, mounted } = useTheme();
     if (!mounted) return <div className="h-9 w-9" aria-hidden />;
 
     return (
         <button
             onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-foreground/50 transition-all duration-200 hover:bg-foreground/[0.06] hover:text-foreground active:scale-90"
+            className={cn(
+                "flex h-9 w-9 items-center justify-center rounded-full transition-all duration-200 hover:bg-foreground/[0.06] active:scale-90",
+                (isScrolled || !isHome) ? "text-foreground/50 hover:text-foreground" : "text-white/70 hover:text-white"
+            )}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
             <AnimatePresence mode="wait" initial={false}>
@@ -138,10 +141,12 @@ function DropdownRow({ child, index }: { child: NavChild; index: number }) {
    DESKTOP DROPDOWN PANEL — wide two-column like MadeByShape
 ───────────────────────────────────────────────────────────── */
 function DesktopDropdown({
-    link, isOpen, onOpen, onClose, onMouseEnter,
+    link, isOpen, isScrolled, isHome, onOpen, onClose, onMouseEnter,
 }: {
     link: NavLinkItem & { children: NavChild[] };
     isOpen: boolean;
+    isScrolled: boolean;
+    isHome?: boolean;
     onOpen: () => void;
     onClose: () => void;
     onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
@@ -165,9 +170,13 @@ function DesktopDropdown({
                 aria-expanded={isOpen}
                 aria-haspopup="true"
                 className={cn(
-                    'relative flex items-center gap-1 text-[17px] font-medium tracking-tight',
-                    'transition-colors duration-150 hover:text-foreground focus-visible:outline-none',
-                    isActive ? 'text-foreground' : 'text-foreground/70'
+                    'relative flex items-center gap-1 text-[17px] font-medium tracking-tight px-4 py-2 rounded-full z-10',
+                    'transition-colors duration-150 focus-visible:outline-none',
+                    isActive 
+                        ? 'text-primary' 
+                        : (isScrolled || !isHome) 
+                            ? 'text-foreground/70 hover:text-foreground' 
+                            : 'text-white/80 hover:text-white'
                 )}
             >
                 {link.label}
@@ -258,11 +267,13 @@ function DesktopNavLink({
     link,
     isActive,
     isScrolled,
+    isHome,
     onMouseEnter,
 }: {
     link: NavLinkItem;
     isActive: boolean;
     isScrolled: boolean;
+    isHome?: boolean;
     onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
 }) {
     return (
@@ -274,14 +285,16 @@ function DesktopNavLink({
                 'transition-all duration-300 focus-visible:outline-none',
                 isActive
                     ? 'text-primary'
-                    : 'text-foreground/75 hover:text-foreground'
+                    : (isScrolled || !isHome) 
+                        ? 'text-foreground/75 hover:text-foreground' 
+                        : 'text-white/80 hover:text-white'
             )}
         >
             {link.label}
             {isActive && link.label !== 'Home' && (
                 <motion.span
                     layoutId="nav-active-underline"
-                    className="absolute -bottom-0.5 left-0 right-0 h-[1.5px] rounded-full bg-foreground"
+                    className={cn("absolute -bottom-0.5 left-0 right-0 h-[1.5px] rounded-full", (isScrolled || !isHome) ? "bg-foreground" : "bg-white")}
                     transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                 />
             )}
@@ -469,7 +482,7 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 /* ─────────────────────────────────────────────────────────────
    USER AUTH BUTTON — Sign In / Avatar dropdown
 ───────────────────────────────────────────────────────────── */
-function UserAuthButton() {
+function UserAuthButton({ isScrolled, isHome }: { isScrolled?: boolean; isHome?: boolean }) {
     const { data: session, status } = useSession();
     const [open, setOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
@@ -490,7 +503,10 @@ function UserAuthButton() {
         return (
             <Link
                 href="/auth/signin"
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-bold tracking-tight text-foreground/70 hover:text-foreground hover:bg-foreground/[0.06] transition-all duration-300"
+                className={cn(
+                    "hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-bold tracking-tight hover:bg-foreground/[0.06] transition-all duration-300",
+                    (isScrolled || !isHome) ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"
+                )}
             >
                 <UserCircle className="w-4 h-4" />
                 Sign In
@@ -568,7 +584,8 @@ function UserAuthButton() {
 ═══════════════════════════════════════════════════════════════ */
 export function Header() {
     const pathname = usePathname();
-    const { isScrolled, isHidden } = useScrollPosition(40, 0.6);
+    const isHome = pathname === '/';
+    const { isScrolled, isHidden, isAtBottom } = useScrollPosition(40, 0.6);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [mobileOpen, setMobileOpen] = useState(false);
     const closeMobile = useCallback(() => setMobileOpen(false), []);
@@ -607,8 +624,8 @@ export function Header() {
                 animate={navHidden ? { y: '-100%' } : { y: 0 }}
                 transition={{ duration: 0.5, ease: EASE }}
                 className={cn(
-                    'fixed inset-x-0 top-0 z-50 mx-auto flex w-full max-w-[1600px] justify-center transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu',
-                    isScrolled ? 'px-4 sm:px-6' : 'px-0'
+                    'fixed inset-x-0 top-0 z-50 mx-auto flex w-full justify-center transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu',
+                    isScrolled ? 'px-4 sm:px-6' : 'px-4 md:px-8 lg:px-12'
                 )}
             >
                 <motion.header
@@ -645,7 +662,7 @@ export function Header() {
                 >
                     <div className={cn(
                         'flex h-full items-center justify-between transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
-                        isScrolled ? 'px-6 sm:px-7' : 'px-8 sm:px-12'
+                        isScrolled ? 'px-4 sm:px-7' : 'px-4 sm:px-8 md:px-12'
                     )}>
 
                         {/* ── LEFT: Logo ────────────────────────────── */}
@@ -685,6 +702,8 @@ export function Header() {
                                         key={link.href}
                                         link={link as Parameters<typeof DesktopDropdown>[0]['link']}
                                         isOpen={openDropdown === link.label}
+                                        isScrolled={isScrolled}
+                                        isHome={isHome}
                                         onOpen={() => setOpenDropdown(link.label)}
                                         onClose={() => setOpenDropdown(null)}
                                         onMouseEnter={handleLinkHover}
@@ -695,6 +714,7 @@ export function Header() {
                                         link={link}
                                         isActive={pathname === link.href}
                                         isScrolled={isScrolled}
+                                        isHome={isHome}
                                         onMouseEnter={handleLinkHover}
                                     />
                                 );
@@ -703,10 +723,10 @@ export function Header() {
 
                         {/* ── RIGHT: Controls ──────────────────────── */}
                         <div className="flex items-center gap-3">
-                            <ThemeToggle />
+                            <ThemeToggle isScrolled={isScrolled} isHome={isHome} />
 
                             {/* Auth Button */}
-                            <UserAuthButton />
+                            <UserAuthButton isScrolled={isScrolled} isHome={isHome} />
 
                             {/* CTA — desktop */}
                             <div className="hidden lg:block lg:scale-[0.85] origin-right ml-2">
@@ -715,7 +735,10 @@ export function Header() {
 
                             {/* Hamburger — mobile — World Class Animated Toggle */}
                             <button
-                                className="relative z-[60] flex h-10 w-10 items-center justify-center rounded-full text-foreground/60 transition-colors hover:bg-foreground/[0.06] hover:text-foreground lg:hidden"
+                                className={cn(
+                                    "relative z-[60] flex h-10 w-10 items-center justify-center rounded-full transition-colors lg:hidden",
+                                    (isScrolled || !isHome) ? "text-foreground/60 hover:text-foreground hover:bg-foreground/[0.06]" : "text-white/80 hover:text-white hover:bg-white/10"
+                                )}
                                 onClick={() => setMobileOpen(!mobileOpen)}
                                 aria-label="Toggle menu"
                             >
@@ -752,7 +775,7 @@ export function Header() {
 
             {/* ── Sticky Conversion Hook — mobile ── */}
             <AnimatePresence>
-                {!mobileOpen && (
+                {!mobileOpen && isScrolled && !isAtBottom && (
                     <motion.div
                         initial={{ y: 80, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
@@ -763,7 +786,7 @@ export function Header() {
                             damping: 38,
                             delay: 0.8
                         }}
-                        className="fixed bottom-6 lg:bottom-8 left-1/2 lg:left-auto lg:right-8 -translate-x-1/2 lg:translate-x-0 z-[60] w-auto max-w-[92%] pointer-events-auto"
+                        className="fixed bottom-6 lg:bottom-8 left-1/2 lg:left-auto lg:right-8 -translate-x-1/2 lg:translate-x-0 z-[60] w-auto max-w-[92%] pointer-events-auto hidden md:block"
                     >
                         <Link
                             href="/diagnostic"

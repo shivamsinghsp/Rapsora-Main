@@ -25,7 +25,7 @@ export function GooeyCTA({
     text = 'Start a project',
     className,
     pillColorClass = "bg-primary",
-    textColorClass = "text-primary-foreground",
+    textColorClass = "text-white",
     as = 'link',
     type = 'button',
     onClick,
@@ -36,7 +36,7 @@ export function GooeyCTA({
     const filterId = useId();
 
     const baseClasses = cn(
-        "relative flex items-center h-[56px] w-[240px] group focus-visible:outline-none",
+        "relative flex items-center h-[56px] w-fit min-w-[240px] group focus-visible:outline-none",
         disabled ? "opacity-70 cursor-not-allowed" : "cursor-pointer",
         className
     );
@@ -48,7 +48,7 @@ export function GooeyCTA({
                 <filter id={filterId}>
                     <feGaussianBlur in="SourceGraphic" stdDeviation="4.5" result="blur" />
                     <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
-                    <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+                    <feComposite in="SourceGraphic" in2="goo" operator="atop" />
                 </filter>
             </svg>
 
@@ -57,12 +57,12 @@ export function GooeyCTA({
                 <div className="relative w-full h-full flex items-center">
                     {/* Base Pill */}
                     <div className={cn("absolute left-0 right-[48px] h-full rounded-full transition-transform", pillColorClass)} />
-                    
+
                     {/* Ejecting Circle */}
-                    <motion.div 
+                    <motion.div
                         initial={false}
-                        animate={{ 
-                            right: isHovered && !disabled ? 0 : 36 
+                        animate={{
+                            right: isHovered && !disabled ? 0 : 36
                         }}
                         transition={{ type: "spring", stiffness: 450, damping: 20 }}
                         className={cn("absolute w-[56px] h-[56px] rounded-full", pillColorClass)}
@@ -72,15 +72,15 @@ export function GooeyCTA({
 
             {/* Sharp Foreground Layer */}
             <div className="relative z-10 flex w-full h-full items-center">
-                <span className={cn("pl-7 pr-12 text-[18px] font-bold leading-none tracking-tight w-full pointer-events-none selection:bg-transparent", textColorClass)}>
+                <span className={cn("pl-7 pr-[84px] text-[18px] font-bold leading-none tracking-tight w-full pointer-events-none selection:bg-transparent whitespace-nowrap", textColorClass)}>
                     {text}
                 </span>
-                
-                <motion.div 
+
+                <motion.div
                     initial={false}
-                    animate={{ 
-                        right: isHovered && !disabled ? 0 : 36, 
-                        rotate: isHovered && !disabled ? 45 : 0 
+                    animate={{
+                        right: isHovered && !disabled ? 0 : 36,
+                        rotate: isHovered && !disabled ? 45 : 0
                     }}
                     transition={{ type: "spring", stiffness: 450, damping: 20 }}
                     className={cn("absolute z-10 w-[56px] h-[56px] flex items-center justify-center pointer-events-none", textColorClass)}
