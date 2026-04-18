@@ -7,6 +7,7 @@ interface ScrollPosition {
     scrollDirection: 'up' | 'down' | null;
     isScrolled: boolean;
     isHidden: boolean;
+    isAtBottom: boolean;
 }
 
 const HIDE_DELTA = 30; // must scroll down this many px before hiding
@@ -17,6 +18,7 @@ export function useScrollPosition(threshold: number = 50, hideAfterVh: number = 
         scrollDirection: null,
         isScrolled: false,
         isHidden: false,
+        isAtBottom: false,
     });
 
     useEffect(() => {
@@ -48,11 +50,14 @@ export function useScrollPosition(threshold: number = 50, hideAfterVh: number = 
                         hidden = false;
                     }
 
+                    const isAtBottom = currentScrollY + window.innerHeight >= document.documentElement.scrollHeight - 100;
+                    
                     setScrollPosition({
                         scrollY: currentScrollY,
                         scrollDirection: direction,
                         isScrolled: currentScrollY > threshold,
                         isHidden: hidden,
+                        isAtBottom: isAtBottom,
                     });
 
                     lastScrollY = currentScrollY;

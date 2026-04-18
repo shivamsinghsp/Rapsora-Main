@@ -9,7 +9,7 @@ export function AboutIntro() {
         <section className="relative w-full pt-16 pb-32 lg:pt-24 lg:pb-48 bg-background overflow-hidden border-t border-foreground/[0.05]">
             <div className="container mx-auto px-6 lg:px-12 xl:px-20 2xl:px-32">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-                    
+
                     {/* Left Column: The Vision Statement */}
                     <div className="lg:col-span-7">
                         <motion.div
@@ -22,7 +22,7 @@ export function AboutIntro() {
                             <Sparkles className="w-3 h-3" />
                             ABOUT US
                         </motion.div>
-                        
+
                         <motion.h2
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -30,7 +30,7 @@ export function AboutIntro() {
                             transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                             className="text-4xl md:text-6xl lg:text-[72px] font-bold leading-[1] tracking-tight text-foreground"
                         >
-                            Architects of <span className="text-foreground/40 italic">attention</span>. We engineer psychological triggers that convert.
+                            Architects of <span className="text-foreground/40 italic">performance</span>. We engineer digital systems that scale, optimize, and convert.
                         </motion.h2>
                     </div>
 
@@ -44,15 +44,15 @@ export function AboutIntro() {
                             className="flex flex-col gap-6"
                         >
                             <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed font-semibold">
-                                RapSora is a high-performance branding and design lab based in Manchester, specializing in <span className="text-foreground relative after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:bg-primary/40">Conversion Psychology</span>, <span className="text-foreground relative after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:bg-primary/40">Strategic Branding</span>, and <span className="text-foreground relative after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:bg-primary/40">Digital Growth</span>.
-                            </p>
-                            
-                            <p className="text-base lg:text-lg text-muted-foreground/80 leading-relaxed font-medium">
-                                We've mastered the <span className="text-foreground">science of the 'First 3 Seconds'</span>—the critical window where a brand either becomes a core memory or noise. Our mission is to transform elite founders into market-dominating leaders through design that demands respect.
+                                Rapsora Technologies is a high-performance technology partner specializing in <span className="text-foreground relative after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:bg-primary/40">scalable development</span>, <span className="text-foreground relative after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:bg-primary/40">AI-driven solutions</span>,<span className="text-foreground relative after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:bg-primary/40"> enterprise systems</span> and <span className="text-foreground relative after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:bg-primary/40">Digital Growth</span>.
                             </p>
 
                             <p className="text-base lg:text-lg text-muted-foreground/80 leading-relaxed font-medium">
-                                From disruptive startups like <span className="text-foreground font-bold">Blackberry</span> and <span className="text-foreground font-bold">L'Occitane</span> to global institutions such as the <span className="text-foreground font-bold">NHS</span>, we've delivered growth for those who refuse to settle for average. Our weapon of choice? <span className="italic text-primary font-bold tracking-tight uppercase text-sm lg:text-base">Unfiltered Precision.</span>
+                                We’ve mastered the <span className="text-foreground">art of building in the first few seconds</span>—where a product either proves its value or gets ignored. Our focus is simple: create systems that don’t just look good, but work flawlessly under pressure.
+                            </p>
+
+                            <p className="text-base lg:text-lg text-muted-foreground/80 leading-relaxed font-medium">
+                                From startups to growing enterprises, we transform ideas into <span className="text-foreground font-bold">reliable digital infrastructure</span> —products that improve efficiency, elevate user experience, and drive measurable results.
                             </p>
                         </motion.div>
 

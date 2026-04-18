@@ -234,9 +234,15 @@ export default function TeamPageContent() {
 
                     {/* Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-8">
-                        {TEAM_MEMBERS.map((member, index) => (
-                            <FullTeamCard key={member.name} member={member} index={index} />
-                        ))}
+                        {(() => {
+                            const members = [...TEAM_MEMBERS];
+                            if (members.length >= 3) {
+                                [members[0], members[2]] = [members[2], members[0]];
+                            }
+                            return members.map((member, index) => (
+                                <FullTeamCard key={member.name} member={member} index={index} />
+                            ));
+                        })()}
                     </div>
                 </div>
             </section>

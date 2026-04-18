@@ -16,7 +16,7 @@ const TEAM = [
         hook: 'RETENTION SURGEON',
         name: 'Jason',
         role: 'Co-Founder',
-        image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800',
+        image: '/images/jason-portrait.jpg',
     },
     {
         hook: 'NEURAL NARRATIVE',
@@ -63,21 +63,21 @@ export function AboutTeam() {
             <div className="container mx-auto px-6">
                 {/* Minimalist Header */}
                 <div className="flex flex-col items-center text-center mb-16 lg:mb-24">
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         className="px-4 py-1.5 rounded-full border border-black/5 dark:border-white/5 bg-gray-50 dark:bg-[#111] mb-8"
                     >
                         <span className="text-[10px] font-black tracking-[0.3em] uppercase text-foreground/60">THE ADVISORS</span>
                     </motion.div>
-                    
-                    <motion.h3 
+
+                    <motion.h3
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                         className="text-5xl lg:text-8xl font-black text-foreground leading-[0.9] tracking-tighter"
                     >
-                        Multiple personalities, <br/> 
+                        Multiple personalities, <br />
                         <span className="text-[#9061F9] italic">Zero egos.</span>
                     </motion.h3>
                 </div>
@@ -85,7 +85,7 @@ export function AboutTeam() {
 
             {/* Draggable Infinite Carousel */}
             <div className="relative w-full flex overflow-hidden py-32 lg:py-40 px-4 cursor-grab active:cursor-grabbing">
-                <motion.div 
+                <motion.div
                     animate={controls}
                     drag="x"
                     dragConstraints={{ left: -5000, right: 0 }}
@@ -100,12 +100,12 @@ export function AboutTeam() {
                                 ${i % 2 === 0 ? 'translate-y-20' : '-translate-y-20'} shadow-[0_40px_80px_rgba(0,0,0,0.04)] hover:shadow-[0_60px_120px_rgba(144,97,249,0.1)] transition-all duration-700`}
                         >
                             {/* Portrait (No scale, high clarity) */}
-                            <img 
-                                src={member.image} 
+                            <img
+                                src={member.image}
                                 alt={member.name}
                                 className="w-full h-full object-cover transition-all duration-1000 grayscale-[0.2] group-hover:grayscale-0"
                             />
-                            
+
                             {/* Hooky Micro-Copy (Always Visible) */}
                             <div className="absolute inset-0 p-6 lg:p-8 flex flex-col justify-between pointer-events-none z-10">
                                 <div className="flex justify-between items-start">
@@ -142,7 +142,7 @@ export function AboutTeam() {
 
             {/* Official Brand Gooey CTA */}
             <div className="container mx-auto px-6 mt-4 lg:mt-8 flex justify-center pb-12 lg:pb-16">
-                <GooeyCTA 
+                <GooeyCTA
                     href="/diagnostic"
                     text="Join the Lab"
                     pillColorClass="bg-[#9061F9]"

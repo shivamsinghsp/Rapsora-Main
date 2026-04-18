@@ -11,7 +11,7 @@ import { Logo } from '@/components/layout/logo';
 export function Footer() {
     const currentYear = new Date().getFullYear();
 
-    const ANIMATED_UNDERLINE = "relative inline-block after:absolute after:-bottom-[2px] after:left-0 after:w-full after:h-[1px] after:bg-current after:origin-bottom-right after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left after:transition-transform after:duration-300 after:ease-out";
+    const ANIMATED_UNDERLINE = "relative after:absolute after:-bottom-[2px] after:left-0 after:w-full after:h-[1px] after:bg-current after:origin-bottom-right after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left after:transition-transform after:duration-300 after:ease-out";
 
 
     const socialLinks = [
@@ -33,8 +33,8 @@ export function Footer() {
                     {/* ── Top Right Decorative Tab ── */}
                     <div className="absolute top-0 right-4 lg:right-12 flex items-end -translate-y-[99%] z-20">
                         {/* Inverse corner connecting tab to left */}
-                        <svg viewBox="0 0 52 52" fill="currentColor" className="w-[32px] h-[32px] text-black dark:text-[#1A1B1E] rotate-180 translate-x-[1px]">
-                            <path d="M51.9 0v1.9c-27.6 0-50 22.4-50 50H0V0h51.9z" />
+                        <svg viewBox="0 0 100 100" fill="currentColor" className="w-[32px] h-[32px] text-black dark:text-[#1A1B1E] rotate-180 translate-x-[1px]">
+                            <path d="M0 100 C0 44.77 44.77 0 100 0 L0 0 Z" />
                         </svg>
 
                         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="bg-black dark:bg-[#1A1B1E] h-12 px-6 flex items-center justify-center rounded-t-3xl cursor-pointer hover:bg-black/90 dark:hover:bg-[#1A1B1E]/90 transition-colors">
@@ -44,14 +44,14 @@ export function Footer() {
                         </button>
 
                         {/* Inverse corner connecting tab to right */}
-                        <svg viewBox="0 0 52 52" fill="currentColor" className="w-[32px] h-[32px] text-black dark:text-[#1A1B1E] -rotate-90 -translate-x-[1px]">
-                            <path d="M51.9 0v1.9c-27.6 0-50 22.4-50 50H0V0h51.9z" />
+                        <svg viewBox="0 0 100 100" fill="currentColor" className="w-[32px] h-[32px] text-black dark:text-[#1A1B1E] -rotate-90 -translate-x-[1px]">
+                            <path d="M0 100 C0 44.77 44.77 0 100 0 L0 0 Z" />
                         </svg>
                     </div>
 
                     {/* ── Top Left Cutout (Social Pill) ── */}
                     {/* Replicates the 'Shape' style floating fixed block on the left by 'cutting out' the footer background. */}
-                    <div className="absolute top-0 left-0 bg-background rounded-br-[2.5rem] lg:rounded-br-[3rem] w-16 lg:w-24 hidden md:flex flex-col items-center py-6 gap-4 z-10 border-r border-b border-transparent">
+                    <div className="absolute top-0 left-0 bg-background rounded-br-[35px] lg:rounded-br-[50px] w-[70px] lg:w-[100px] hidden md:flex flex-col items-center py-6 gap-4 z-10">
                         {socialLinks.map(link => (
                             <a
                                 key={link.label}
@@ -68,12 +68,12 @@ export function Footer() {
                         ))}
 
                         {/* INVERSE CORNER: Blends cutout bottom edge to footer left vertical edge */}
-                        <svg viewBox="0 0 52 52" fill="currentColor" className="absolute -bottom-[31.9px] lg:-bottom-[51.9px] left-0 w-[32px] h-[32px] lg:w-[52px] lg:h-[52px] text-background rotate-0">
-                            <path d="M51.9 0v1.9c-27.6 0-50 22.4-50 50H0V0h51.9z" />
+                        <svg viewBox="0 0 100 100" fill="currentColor" className="absolute -bottom-[35px] lg:-bottom-[50px] left-0 w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] text-background -translate-y-[1px]">
+                            <path d="M0 100 C0 44.77 44.77 0 100 0 L0 0 Z" />
                         </svg>
                         {/* INVERSE CORNER: Blends cutout right edge to footer top horizontal edge */}
-                        <svg viewBox="0 0 52 52" fill="currentColor" className="absolute top-0 -right-[31.9px] lg:-right-[51.9px] w-[32px] h-[32px] lg:w-[52px] lg:h-[52px] text-background rotate-0">
-                            <path d="M51.9 0v1.9c-27.6 0-50 22.4-50 50H0V0h51.9z" />
+                        <svg viewBox="0 0 100 100" fill="currentColor" className="absolute top-0 -right-[35px] lg:-right-[50px] w-[35px] h-[35px] lg:w-[50px] lg:h-[50px] text-background -translate-x-[1px]">
+                            <path d="M0 100 C0 44.77 44.77 0 100 0 L0 0 Z" />
                         </svg>
                     </div>
 
@@ -115,7 +115,7 @@ export function Footer() {
                                     { name: 'Blog', href: '/blog' }
                                 ].map(item => (
                                     <li key={item.name}>
-                                        <Link href={item.href} className={cn("text-[17px] font-medium text-white hover:text-primary transition-colors", ANIMATED_UNDERLINE)}>{item.name}</Link>
+                                        <Link href={item.href} className={cn("inline-block text-[17px] font-medium text-white hover:text-primary transition-colors", ANIMATED_UNDERLINE)}>{item.name}</Link>
                                     </li>
                                 ))}
                             </ul>
@@ -135,9 +135,6 @@ export function Footer() {
                                     <li key={item.name}>
                                         <Link href={item.href} className={cn("flex items-center gap-3 text-[17px] font-medium text-white hover:text-primary transition-colors w-fit", ANIMATED_UNDERLINE)}>
                                             {item.name}
-                                            {item.name === 'Work' && (
-                                                <span className="bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">New</span>
-                                            )}
                                         </Link>
                                     </li>
                                 ))}
@@ -196,7 +193,7 @@ export function Footer() {
                                 <span className="text-white/20">|</span>
                                 <span>All Rights Reserved</span>
                                 <span className="text-white/20">|</span>
-                                <Link href="/privacy" className={cn("hover:text-white transition-colors", ANIMATED_UNDERLINE)}>Privacy Policy</Link>
+                                <Link href="/privacy" className={cn("inline-block hover:text-white transition-colors", ANIMATED_UNDERLINE)}>Privacy Policy</Link>
                             </div>
                         </div>
 
@@ -206,7 +203,7 @@ export function Footer() {
                             <span className="hidden sm:inline text-white/20">|</span>
                             <span>All Rights Reserved</span>
                             <span className="hidden sm:inline text-white/20">|</span>
-                            <Link href="/privacy" className={cn("hover:text-white transition-colors", ANIMATED_UNDERLINE)}>Privacy Policy</Link>
+                            <Link href="/privacy" className={cn("inline-block hover:text-white transition-colors", ANIMATED_UNDERLINE)}>Privacy Policy</Link>
                         </div>
                     </div>
 
