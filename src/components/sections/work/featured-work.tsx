@@ -12,8 +12,7 @@ export function FeaturedWork({ work }: { work: any }) {
             <div className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-16">
                 
                 {/* Image Section */}
-                <Link
-                    href={`/work/${work.slug}`}
+                <div
                     className="group relative w-full lg:w-[65%] shrink-0 block overflow-hidden rounded-[2.5rem] bg-foreground/5 shadow-xl transition-all hover:shadow-2xl hover:scale-[1.01] duration-500 will-change-transform"
                 >
                     <div className="aspect-[4/3] w-full relative">
@@ -35,7 +34,7 @@ export function FeaturedWork({ work }: { work: any }) {
                             />
                         )}
                     </div>
-                </Link>
+                </div>
 
                 {/* Details Section */}
                 <div className="w-full lg:w-[32%] flex flex-col justify-between self-stretch pt-4 lg:pt-0 pb-12">
@@ -77,7 +76,7 @@ export function FeaturedWork({ work }: { work: any }) {
                             <h2 className="text-4xl lg:text-5xl font-heading font-bold text-foreground leading-[1.1] tracking-tight mb-6">
                                 {work.title}
                             </h2>
-                            <Link href={`/work/${work.slug}`} className="inline-flex items-center gap-2 text-primary font-bold hover:underline underline-offset-4 w-fit">
+                            <Link href="/work" className="inline-flex items-center gap-2 text-primary font-bold hover:underline underline-offset-4 w-fit">
                                 View Case Study <ArrowUpRight className="w-4 h-4" />
                             </Link>
                         </div>
