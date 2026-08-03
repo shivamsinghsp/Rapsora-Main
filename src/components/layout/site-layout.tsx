@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { usePathname } from 'next/navigation';
 import { Header } from './header';
 import { Footer } from './footer';
 
@@ -10,16 +9,9 @@ interface SiteLayoutProps {
 }
 
 export function SiteLayout({ children }: SiteLayoutProps) {
-    const pathname = usePathname();
-    const isHome = pathname === '/';
-    const isDiagnostic = pathname?.startsWith('/diagnostic');
-    const isAdmin = pathname?.startsWith('/admin');
-    const isAuth = pathname?.startsWith('/auth');
-    const hideChrome = isDiagnostic || isAdmin || isAuth;
-
     return (
         <div className="flex min-h-screen w-full flex-col bg-background relative">
-            {!hideChrome && <Header />}
+            <Header />
             <motion.main
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -28,7 +20,7 @@ export function SiteLayout({ children }: SiteLayoutProps) {
             >
                 {children}
             </motion.main>
-            {!hideChrome && <Footer />}
+            <Footer />
         </div>
     );
 }

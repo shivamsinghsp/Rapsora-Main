@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
 import dbConnect from '@/lib/mongodb';
 import Work from '@/models/Work';
 
@@ -7,11 +6,11 @@ import Work from '@/models/Work';
 export async function GET(req: NextRequest) {
     try {
         await dbConnect();
-        
+
         const { searchParams } = new URL(req.url);
         const limitParam = searchParams.get('limit');
         let query = Work.find().sort({ order: 1, createdAt: -1 });
-        
+
         if (limitParam) {
             query = query.limit(parseInt(limitParam, 10));
         }
@@ -25,18 +24,12 @@ export async function GET(req: NextRequest) {
     }
 }
 
-// POST /api/works — create new work (admin)
+// POST /api/works — create new work
 export async function POST(req: NextRequest) {
     try {
-        const session = await auth();
-        const role = (session?.user as any)?.role;
-        if (!session || (role !== 'admin' && role !== 'superadmin')) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         await dbConnect();
         const body = await req.json();
-        
+
         const slug = body.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
         const existing = await Work.findOne({ slug });
         if (existing) {

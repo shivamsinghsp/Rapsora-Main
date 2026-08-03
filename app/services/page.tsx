@@ -3,9 +3,7 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight, ArrowRight } from 'lucide-react';
-import { Magnetic } from '@/components/shared/magnetic';
-import { GooeyCTA } from '@/components/shared/gooey-cta';
+import { ArrowUpRight } from 'lucide-react';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -61,20 +59,12 @@ const SERVICE_CATEGORIES = [
     },
 ];
 
-const TRUST_STATS = [
-    { value: '150+', label: 'Projects Delivered' },
-    { value: '98%', label: 'Client Retention' },
-    { value: '5X', label: 'Avg. Revenue Growth' },
-    { value: '24/7', label: 'Dedicated Support' },
-];
-
 /* ─────────────────────────────────────────────────────────────
-   ANIMATED SERVICE ROW
+   ANIMATED SERVICE ROW (Non-clickable static list)
 ───────────────────────────────────────────────────────────── */
-function ServiceRow({ service, index, categoryIndex }: {
-    service: { number: string; name: string; href: string };
+function ServiceRow({ service, index }: {
+    service: { number: string; name: string };
     index: number;
-    categoryIndex: number;
 }) {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: '-5% 0px' });
@@ -86,21 +76,16 @@ function ServiceRow({ service, index, categoryIndex }: {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.9, ease: EASE, delay: index * 0.08 }}
         >
-            <Link href={service.href} className="group block">
-                <div className="flex items-center justify-between py-5 lg:py-6 border-b border-foreground/[0.06] dark:border-white/[0.06] group-hover:border-primary/30 transition-colors duration-700">
-                    <div className="flex items-center gap-6 lg:gap-10">
-                        <span className="text-muted-foreground/40 dark:text-white/20 text-[13px] font-bold tabular-nums tracking-wider w-6">
-                            {service.number}
-                        </span>
-                        <h4 className="text-foreground dark:text-white text-[1.1rem] lg:text-[1.25rem] font-bold tracking-tight group-hover:text-primary transition-colors duration-500">
-                            {service.name}
-                        </h4>
-                    </div>
-                    <div className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary/[0.08] group-hover:bg-primary group-hover:scale-110 transition-all duration-500">
-                        <ArrowUpRight className="w-4 h-4 lg:w-[18px] lg:h-[18px] text-primary group-hover:text-white group-hover:rotate-45 transition-all duration-500" />
-                    </div>
+            <div className="flex items-center justify-between py-5 lg:py-6 border-b border-foreground/[0.06]">
+                <div className="flex items-center gap-6 lg:gap-10">
+                    <span className="text-muted-foreground/40 text-[13px] font-bold tabular-nums tracking-wider w-6">
+                        {service.number}
+                    </span>
+                    <h4 className="text-foreground text-[1.1rem] lg:text-[1.25rem] font-bold tracking-tight">
+                        {service.name}
+                    </h4>
                 </div>
-            </Link>
+            </div>
         </motion.div>
     );
 }
@@ -126,7 +111,7 @@ function CategoryBlock({ category, index }: {
                     initial={{ opacity: 0, y: 60 }}
                     animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
                     transition={{ duration: 1.4, ease: EASE }}
-                    className="font-heading text-[5.5rem] sm:text-[8rem] lg:text-[11rem] xl:text-[14rem] 2xl:text-[18rem] font-bold leading-[0.8] tracking-[-0.051em] text-foreground dark:text-white"
+                    className="font-heading text-[3.2rem] xs:text-[4.5rem] sm:text-[7rem] lg:text-[11rem] xl:text-[14rem] 2xl:text-[18rem] font-bold leading-[0.95] tracking-[-0.051em] text-foreground pb-2 lg:pb-4"
                 >
                     {category.title}
                 </motion.h2>
@@ -140,7 +125,7 @@ function CategoryBlock({ category, index }: {
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 1.2, ease: EASE, delay: 0.2 }}
-                        className="text-foreground/80 dark:text-white/80 text-[1.8rem] sm:text-[2rem] lg:text-[2.2rem] font-medium leading-[1.3] tracking-tight max-w-sm"
+                        className="text-foreground/80  text-[1.8rem] sm:text-[2rem] lg:text-[2.2rem] font-medium leading-[1.3] tracking-tight max-w-sm"
                     >
                         {category.description}
                     </motion.p>
@@ -153,7 +138,6 @@ function CategoryBlock({ category, index }: {
                             key={service.name}
                             service={service}
                             index={i}
-                            categoryIndex={index}
                         />
                     ))}
                 </div>
@@ -162,30 +146,7 @@ function CategoryBlock({ category, index }: {
     );
 }
 
-/* ─────────────────────────────────────────────────────────────
-   STAT COUNTER
-───────────────────────────────────────────────────────────── */
-function StatBlock({ stat, index }: { stat: typeof TRUST_STATS[0]; index: number }) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
 
-    return (
-        <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 1, ease: EASE, delay: index * 0.1 }}
-            className="text-center lg:text-left"
-        >
-            <p className="font-heading text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-primary">
-                {stat.value}
-            </p>
-            <p className="mt-2 text-muted-foreground dark:text-white/40 text-[14px] font-medium">
-                {stat.label}
-            </p>
-        </motion.div>
-    );
-}
 
 /* ═══════════════════════════════════════════════════════════════
    MAIN SERVICES PAGE
@@ -198,57 +159,72 @@ export default function ServicesPage() {
     const parallaxY = useTransform(scrollYProgress, [0, 0.2], [0, -40]);
 
     return (
-        <main className="bg-background dark:bg-black">
+        <main className="bg-background overflow-hidden w-full relative">
             {/* ── HERO SECTION ── */}
-            <section className="relative w-full pt-32 lg:pt-44 pb-16 lg:pb-24 overflow-hidden">
-                {/* Ambient glow */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-primary/[0.03] blur-[150px] rounded-full pointer-events-none" />
+            <section className="relative w-full pt-32 lg:pt-44 pb-20 lg:pb-32 overflow-hidden bg-background">
+                {/* Ambient Glow Accents */}
+                <div className="absolute top-0 right-[10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+                <div className="absolute bottom-0 left-[5%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none -z-10" />
 
-                <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20">
-                    <div ref={heroRef} className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-                        {/* Label */}
+                <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
+                    <div ref={heroRef} className="flex flex-col gap-10 lg:gap-14">
+                        
+                        {/* Section Label */}
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                            transition={{ duration: 1.2, ease: EASE, delay: 0.1 }}
-                            className="lg:col-span-2 flex items-start pt-3"
+                            transition={{ duration: 1, ease: EASE, delay: 0.1 }}
+                            className="flex items-center gap-3.5"
                         >
-                            <div className="flex items-center gap-3 text-muted-foreground dark:text-white/60 font-bold tracking-tight text-[14px]">
-                                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                                Services
+                            <div className="relative flex h-3 w-3 items-center justify-center">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+                                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_12px_#9061F9]"></span>
                             </div>
+                            <h2 className="font-heading text-sm sm:text-base font-extrabold tracking-wider uppercase text-foreground">
+                                Our Services
+                            </h2>
                         </motion.div>
 
-                        {/* Main Heading */}
-                        <motion.div
-                            className="lg:col-span-5"
-                            style={{ y: parallaxY }}
-                        >
-                            <motion.h1
-                                initial={{ opacity: 0, y: 40 }}
-                                animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                                transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}
-                                className="font-heading text-[2.5rem] sm:text-[3rem] lg:text-[3.8rem] xl:text-[4.2rem] font-bold leading-[1.05] tracking-[-0.03em] text-foreground dark:text-white"
+                        {/* Main Grid: Headline + Description */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end">
+                            <motion.div
+                                className="lg:col-span-7"
+                                style={{ y: parallaxY }}
                             >
-                                We&apos;re a digital
-                                <br />
-                                agency with
-                                <br />
-                                <span className="italic font-medium text-primary">expertise</span>
-                            </motion.h1>
-                        </motion.div>
+                                <motion.h1
+                                    initial={{ opacity: 0, y: 40 }}
+                                    animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+                                    transition={{ duration: 1.2, ease: EASE, delay: 0.2 }}
+                                    className="font-heading text-[2.8rem] sm:text-[4rem] lg:text-[5.2rem] xl:text-[6rem] font-bold leading-[1.02] tracking-[-0.04em] text-foreground"
+                                >
+                                    We craft digital experiences with <span className="italic font-medium text-primary">uncompromising precision.</span>
+                                </motion.h1>
+                            </motion.div>
 
-                        {/* Description */}
-                        <motion.div
-                            className="lg:col-span-5 flex flex-col justify-end"
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                            transition={{ duration: 1.2, ease: EASE, delay: 0.4 }}
-                        >
-                            <p className="text-muted-foreground dark:text-white/45 text-[16px] lg:text-[17px] font-medium leading-[1.8] max-w-md">
-                                We bring our passion for exceptional design to ambitious brands — and deliver results you can shout about. From identity to infrastructure, we build digital empires.
-                            </p>
-                        </motion.div>
+                            <motion.div
+                                className="lg:col-span-5 flex flex-col justify-end gap-8"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                                transition={{ duration: 1.2, ease: EASE, delay: 0.35 }}
+                            >
+                                <p className="text-muted-foreground text-lg sm:text-xl font-medium leading-[1.7]">
+                                    We bring our passion for exceptional design and high-performance engineering to ambitious brands — delivering scalable systems, captivating interfaces, and revenue growth.
+                                </p>
+
+                                {/* Service Feature Tags */}
+                                <div className="flex flex-wrap gap-2.5 pt-2">
+                                    {['Brand Identity', 'UI/UX Design', 'Scalable Code', 'AI Solutions', 'Digital Growth'].map((tag) => (
+                                        <span
+                                            key={tag}
+                                            className="px-4 py-1.5 rounded-full bg-foreground/[0.04] border border-foreground/10 text-xs font-bold text-foreground/80 tracking-wide uppercase"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        </div>
+
                     </div>
                 </div>
             </section>
@@ -260,67 +236,7 @@ export default function ServicesPage() {
                 ))}
             </div>
 
-            {/* ── TRUST & SOCIAL PROOF SECTION ── */}
-            <section className="relative w-full bg-foreground dark:bg-white/[0.03] py-20 lg:py-32 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] to-transparent pointer-events-none" />
-                
-                <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20 relative">
-                    {/* Section Header */}
-                    <div className="text-center mb-16 lg:mb-24">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-10% 0px' }}
-                            transition={{ duration: 1.2, ease: EASE }}
-                            className="inline-flex items-center gap-3 text-background/60 dark:text-white/60 font-bold tracking-tight text-[14px] mb-6"
-                        >
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            Why RapSora
-                        </motion.div>
-                        <motion.h2
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-10% 0px' }}
-                            transition={{ duration: 1.4, ease: EASE, delay: 0.1 }}
-                            className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] font-bold tracking-[-0.03em] text-background dark:text-white leading-[1.1]"
-                        >
-                            Numbers that speak
-                            <br />
-                            <span className="italic font-medium text-primary">louder than words</span>
-                        </motion.h2>
-                    </div>
 
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-                        {TRUST_STATS.map((stat, i) => (
-                            <StatBlock key={stat.label} stat={stat} index={i} />
-                        ))}
-                    </div>
-
-                    {/* Trust Badges */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, ease: EASE, delay: 0.3 }}
-                        className="mt-16 lg:mt-24 flex flex-wrap items-center justify-center gap-8 lg:gap-12"
-                    >
-                        {['Google Partner', 'Shopify Expert', 'Clutch Top Agency', 'Webflow Professional'].map((badge, i) => (
-                            <motion.div
-                                key={badge}
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: 0.4 + i * 0.1 }}
-                                className="flex items-center gap-2 text-background/20 dark:text-white/20 text-[13px] font-bold uppercase tracking-wider"
-                            >
-                                <div className="w-2 h-2 rounded-full bg-primary/40" />
-                                {badge}
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </div>
-            </section>
 
             {/* ── PROCESS SECTION ── */}
             <section className="w-full py-20 lg:py-32">
@@ -333,16 +249,16 @@ export default function ServicesPage() {
                                 viewport={{ once: true, margin: '-10% 0px' }}
                                 transition={{ duration: 1.2, ease: EASE }}
                             >
-                                <div className="flex items-center gap-3 text-muted-foreground dark:text-white/60 font-bold tracking-tight text-[14px] mb-6">
+                                <div className="flex items-center gap-3 text-muted-foreground  font-bold tracking-tight text-[14px] mb-6">
                                     <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                                     Our Process
                                 </div>
-                                <h2 className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3rem] font-bold tracking-[-0.03em] text-foreground dark:text-white leading-[1.1]">
+                                <h2 className="font-heading text-[2rem] sm:text-[2.5rem] lg:text-[3rem] font-bold tracking-[-0.03em] text-foreground  leading-[1.1]">
                                     From brief to
                                     <br />
                                     <span className="italic font-medium">brilliant</span>
                                 </h2>
-                                <p className="mt-6 text-muted-foreground dark:text-white/40 text-[15px] font-medium leading-[1.8] max-w-sm">
+                                <p className="mt-6 text-muted-foreground  text-[15px] font-medium leading-[1.8] max-w-sm">
                                     Every project follows our battle-tested process, designed to maximise impact and minimise friction. No surprises — just results.
                                 </p>
                             </motion.div>
@@ -364,16 +280,16 @@ export default function ServicesPage() {
                                         initial={{ opacity: 0, y: 30 }}
                                         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                                         transition={{ duration: 1, ease: EASE, delay: index * 0.1 }}
-                                        className="flex gap-6 py-8 border-b border-foreground/[0.06] dark:border-white/[0.06] last:border-none"
+                                        className="flex gap-6 py-8 border-b border-foreground/[0.06]  last:border-none"
                                     >
                                         <span className="text-primary font-heading text-[2rem] lg:text-[2.5rem] font-bold leading-none tracking-tight">
                                             {item.step}
                                         </span>
                                         <div>
-                                            <h3 className="text-foreground dark:text-white text-[1.15rem] lg:text-[1.3rem] font-bold tracking-tight">
+                                            <h3 className="text-foreground  text-[1.15rem] lg:text-[1.3rem] font-bold tracking-tight">
                                                 {item.title}
                                             </h3>
-                                            <p className="mt-2 text-muted-foreground dark:text-white/35 text-[14px] lg:text-[15px] font-medium leading-[1.7] max-w-md">
+                                            <p className="mt-2 text-muted-foreground  text-[14px] lg:text-[15px] font-medium leading-[1.7] max-w-md">
                                                 {item.description}
                                             </p>
                                         </div>
@@ -385,51 +301,6 @@ export default function ServicesPage() {
                 </div>
             </section>
 
-            {/* ── CTA SECTION ── */}
-            <section className="relative w-full bg-black py-20 lg:py-40 mb-20 lg:mb-32 overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]">
-                <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.04] to-transparent pointer-events-none" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-primary/[0.03] blur-[200px] rounded-full pointer-events-none" />
-
-                <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20 relative text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: '-10% 0px' }}
-                        transition={{ duration: 1.4, ease: EASE }}
-                    >
-                        <h2 className="font-heading text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem] xl:text-[5.5rem] font-bold tracking-[-0.03em] text-white leading-[1.05]">
-                            Ready to build
-                            <br />
-                            something{' '}
-                            <span className="italic font-medium text-primary">extraordinary</span>?
-                        </h2>
-                        <p className="mt-6 text-white/40 text-[16px] lg:text-[17px] font-medium leading-[1.7] max-w-lg mx-auto">
-                            Let&apos;s talk about your project. We&apos;ll show you exactly how we can help you dominate your market.
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, ease: EASE, delay: 0.2 }}
-                        className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-8 lg:gap-12"
-                    >
-                        <Magnetic strength={0.3}>
-                            <GooeyCTA text="Start a Project" href="/contact" />
-                        </Magnetic>
-                        <Magnetic strength={0.3}>
-                            <Link
-                                href="/diagnostic"
-                                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/[0.1] text-white/70 text-[15px] font-bold tracking-tight hover:border-white/[0.2] hover:text-white transition-all duration-500"
-                            >
-                                Free Growth Audit
-                                <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform" />
-                            </Link>
-                        </Magnetic>
-                    </motion.div>
-                </div>
-            </section>
         </main>
     );
 }

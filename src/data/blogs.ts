@@ -22,7 +22,7 @@ export const BLOG_POSTS: IBlogPost[] = [
         _id: '1',
         slug: 'christmas-dublin-rapsora',
         title: "Shape's Christmas Party: A Night in Dublin",
-        excerpt: "It always has a feel good factor when another agency instructs us to engineer their new platform. Here is a teardown of the conversion triggers we used.",
+        excerpt: "It always has a feel good factor when another company instructs us to engineer their new platform. Here is a teardown of the conversion triggers we used.",
         content: `Dubliners know how to party, but when the Rapsora team descended upon the Temple Bar area, we brought a different kind of energy. 
         
         Our annual Christmas retreat wasn't just about the Guinness; it was about reflecting on a year where we pushed the boundaries of what's possible in web engineering. From the moment we landed at Dublin Airport, the city's unique charm—a mix of historic architecture and vibrant modern life—mirrored our own design philosophy. 
@@ -41,7 +41,7 @@ export const BLOG_POSTS: IBlogPost[] = [
         coverImage: "https://images.unsplash.com/photo-1543269664-56d56637e6f8?w=1600&q=80&auto=format&fit=crop",
         authorName: "Aditya Singh",
         authorImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop",
-        publishedAt: "2024-12-20T10:00:00Z"
+        publishedAt: "2026-12-20T10:00:00Z"
     },
     {
         _id: '2',
@@ -50,7 +50,7 @@ export const BLOG_POSTS: IBlogPost[] = [
         excerpt: "In our own words, how important aesthetics, micro-interactions, and psychological friction removal is to our web design process.",
         content: `Design is not just what it looks like and feels like. Design is how it works. And how it works is entirely dependent on how the human brain processes information.
         
-        Most agencies stop at 'looking good'. At Rapsora, we start at 'feeling inevitable'. 
+        Most companies stop at 'looking good'. At Rapsora, we start at 'feeling inevitable'. 
         
         ### The Three Pillars of Engineering Desire
         
@@ -71,7 +71,7 @@ export const BLOG_POSTS: IBlogPost[] = [
         coverImage: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&q=80&auto=format&fit=crop",
         authorName: "Rohan Sharma",
         authorImage: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=200&h=200&fit=crop",
-        publishedAt: "2024-11-15T09:00:00Z"
+        publishedAt: "2026-11-15T09:00:00Z"
     },
     {
         _id: '3',
@@ -94,7 +94,7 @@ export const BLOG_POSTS: IBlogPost[] = [
         coverImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1600&q=80&auto=format&fit=crop",
         authorName: "Sarah Davis",
         authorImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop",
-        publishedAt: "2024-10-10T14:30:00Z"
+        publishedAt: "2026-10-10T14:30:00Z"
     },
     {
         _id: '4',
@@ -118,13 +118,13 @@ export const BLOG_POSTS: IBlogPost[] = [
         coverImage: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=1600&q=80&auto=format&fit=crop",
         authorName: "Aditya Singh",
         authorImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop",
-        publishedAt: "2024-09-05T12:15:00Z"
+        publishedAt: "2026-09-05T12:15:00Z"
     },
     {
         _id: '5',
         slug: 'data-storage-digital-marketing',
         title: "The Importance of Data Storage in Digital Marketing Strategies",
-        excerpt: "Why Every Agency Should Give Their Team Two Weeks Off. Our data suggests that rest is the ultimate productivity hack.",
+        excerpt: "Why Every Team Should Give Their People Two Weeks Off. Our data suggests that rest is the ultimate productivity hack.",
         content: `In the age of AI, data is the new oil. But oil is useless if you don't have a refinery. 
         
         Your 'Refinery' is your data storage architecture. At Rapsora, we specialize in building fast, scalable, and secure data pipelines that power high-conversion frontends.
@@ -135,16 +135,16 @@ export const BLOG_POSTS: IBlogPost[] = [
         category: "web design",
         coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80&auto=format&fit=crop",
         authorName: "Alex Morgan",
-        publishedAt: "2024-08-20T08:45:00Z"
+        publishedAt: "2026-08-20T08:45:00Z"
     },
     {
         _id: '6',
         slug: 'webflow-to-nextjs-migration',
-        title: "Migrating from Webflow to Custom Next.js: The Agency Guide",
+        title: "Migrating from Webflow to Custom Next.js: The Enterprise Guide",
         excerpt: "When your brand outgrows low-code, it's time to build for the future. Here is how we handle enterprise-scale migrations.",
         content: `Webflow is great for prototypes. Next.js is great for empires.
         
-        As an agency, we often see clients hitting a 'performance ceiling' with standard builders. The transitions feel clunky, the SEO isn't quite modular enough, and the customization is limited.
+        As a digital team, we often see clients hitting a 'performance ceiling' with standard builders. The transitions feel clunky, the SEO isn't quite modular enough, and the customization is limited.
         
         ### The Migration Workflow
         We don't just move content; we rebuild the experience from the ground up to utilize the full power of React and Next.js. 
@@ -158,6 +158,6 @@ export const BLOG_POSTS: IBlogPost[] = [
         coverImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&q=80&auto=format&fit=crop",
         authorName: "Rohan Sharma",
         authorImage: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=200&h=200&fit=crop",
-        publishedAt: "2024-07-12T11:20:00Z"
+        publishedAt: "2026-07-12T11:20:00Z"
     }
 ];

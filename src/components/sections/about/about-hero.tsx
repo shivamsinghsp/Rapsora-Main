@@ -102,7 +102,7 @@ export function AboutHero() {
                                     delay: i * 0.15,
                                     ease: [0.22, 1, 0.36, 1]
                                 }}
-                                className="group relative aspect-[3/4] overflow-hidden rounded-[2rem] lg:rounded-[3rem] bg-foreground/[0.05] border border-foreground/[0.08] shadow-2xl dark:shadow-none"
+                                className="group relative aspect-[3/4] overflow-hidden rounded-[2rem] lg:rounded-[3rem] bg-foreground/[0.05] border border-foreground/[0.08] shadow-2xl "
                             >
                                 <img
                                     src={img.url}
@@ -140,7 +140,7 @@ export function AboutHero() {
             <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/2 right-[-50px] lg:right-12 w-48 h-48 opacity-[0.08] dark:opacity-10 pointer-events-none select-none"
+                className="absolute top-1/2 right-[-50px] lg:right-12 w-48 h-48 opacity-[0.08]  pointer-events-none select-none"
             >
                 <svg viewBox="0 0 100 100" className="w-full h-full fill-foreground">
                     <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="transparent" />

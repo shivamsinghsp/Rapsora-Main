@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
     email: 'info@rapsora.com',
     phone: '+91 8858743254',
     address: {
-        line1: '105-A, 14/144 First Floor Ratan Esquire Chunniganj',
+        line1: 'Office No.1, 3rd Floor, 17/5, Mall Rd, Roland Tower, Patkapur',
         city: 'Kanpur',
         state: 'Uttar Pradesh',
         zip: '208001',

@@ -1,17 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
 
-// GET /api/users — list all users (superadmin only)
+// GET /api/users — list all users
 export async function GET() {
     try {
-        const session = await auth();
-        const role = (session?.user as any)?.role;
-        if (!session || role !== 'superadmin') {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         await dbConnect();
         const users = await User.find({})
             .select('name email image role createdAt')

@@ -10,24 +10,12 @@ const FAQS = [
         answer: "Typically, a full premium website project takes between 6 to 12 weeks from strategy and design to development and launch. The exact timeline depends on the complexity of functionality, amount of content, and how quickly we receive feedback."
     },
     {
-        question: "How much does a website cost?",
-        answer: "Our minimum engagement for a complete website overhaul starts at $5,000. For complex e-commerce platforms or massive corporate architectures, the investment typically ranges between $15,000 and $30,000. We build tailored scopes based on your specific requirements."
-    },
-    {
         question: "We have a limited budget, will you still work with us?",
-        answer: "While we can't compromise on our quality or process, we sometimes offer phased approaches. If your budget doesn't align with full agency service right now, we can launch a 'Phase 1' landing page and build out the larger architecture over time."
-    },
-    {
-        question: "Do you outsource any work?",
-        answer: "No. Everything we design and build is handcrafted by our in-house team of premium designers and developers. This ensures the Rapsora standard of quality holds true on every single pixel and line of code."
+        answer: "While we can't compromise on our quality or process, we sometimes offer phased approaches. If your budget doesn't align with full custom scope right now, we can launch a 'Phase 1' landing page and build out the larger architecture over time."
     },
     {
         question: "What services do you offer?",
         answer: "We specialize in Digital Strategy, UI/UX Design, Full-Stack Web Development, SEO (Search Engine Optimization), and Brand Identity. We are a holistic digital partner for ambitious brands."
-    },
-    {
-        question: "What are your payment terms?",
-        answer: "We typically structure payments evenly across the project timeline: 50% upfront to commence strategy and design, and 50% prior to final launch and handover."
     }
 ];
 
@@ -57,7 +45,7 @@ export function FaqAccordion() {
                         The answers to your questions.
                     </h2>
 
-                    <a href="/diagnostic" className="inline-flex items-center gap-4 bg-primary text-primary-foreground px-6 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+                    <a href="/contact" className="inline-flex items-center gap-4 bg-primary text-primary-foreground px-6 py-4 rounded-full font-bold hover:scale-105 transition-transform">
                         View all FAQs 
                         <ArrowUpRight className="w-5 h-5 mx-1" />
                     </a>

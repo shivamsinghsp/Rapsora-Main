@@ -12,10 +12,10 @@ export function HeroSection() {
             <div className="absolute inset-0 z-0 bg-black">
                 <Image
                     src="/images/office-sketch.jpg"
-                    alt="Workspace sketch"
+                    alt="Team meeting in a modern office"
                     fill
                     priority
-                    className="object-cover opacity-80 dark:invert dark:grayscale"
+                    className="object-cover opacity-80"
                 />
                 {/* Frosted / Liquid Glass overlays */}
                 <div className="absolute inset-0" />
@@ -58,7 +58,7 @@ export function HeroSection() {
                 >
                     {/* Desktop Giant Text */}
                     {/* translate-y drives the text exactly flush to the bottom visually */}
-                    <div className="hidden md:flex  items-center justify-center w-full font-sans font-black text-background dark:text-white uppercase leading-[0.7] translate-y-[15%]">
+                    <div className="hidden md:flex  items-center justify-center w-full font-sans font-black text-background  uppercase leading-[0.7] translate-y-[15%]">
                         <div className="relative inline-flex">
                             <span className="text-[20vw]">R</span>
                             <motion.div
@@ -100,7 +100,7 @@ export function HeroSection() {
 
                     {/* Mobile View */}
                     <div className="flex md:hidden flex-col items-center gap-6 pb-6 pt-0">
-                        <div className="font-sans font-black text-background dark:text-white uppercase leading-[0.8] tracking-tighter text-[16vw]">
+                        <div className="font-sans font-black text-background  uppercase leading-[0.8] tracking-tighter text-[16vw]">
                             RAPSORA
                         </div>
                         <Link

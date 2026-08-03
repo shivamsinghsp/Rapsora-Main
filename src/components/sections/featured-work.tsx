@@ -15,7 +15,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: index * 0.1, ease: EASE }}
-            className="group relative flex-shrink-0 w-[85vw] sm:w-[70vw] lg:w-[60vw] h-[550px] lg:h-[650px] overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] bg-foreground/[0.03] dark:bg-white/[0.03] border border-foreground/5 dark:border-white/5 snap-center shadow-2xl"
+            className="group relative flex-shrink-0 w-[85vw] sm:w-[70vw] lg:w-[60vw] h-[550px] lg:h-[650px] overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] bg-foreground/[0.03]  border border-foreground/5  snap-center shadow-2xl"
         >
             {/* 🎞️ Background Layer: Project Image with Parallax & Hover Shift */}
             <motion.div
@@ -150,10 +150,10 @@ export function FeaturedWork() {
                                 <p className="text-muted-foreground text-base lg:text-lg font-medium italic">Our next world-class success story starts here.</p>
                             </div>
                             <Link
-                                href="/diagnostic"
+                                href="/contact"
                                 className="group flex items-center gap-6 bg-foreground text-background px-8 lg:px-10 py-4 lg:py-5 rounded-full font-black text-base lg:text-lg transition-all hover:scale-[1.03] active:scale-95 shadow-[0_30px_60px_rgba(var(--foreground-rgb),0.2)]"
                             >
-                                Start Growth Diagnostic
+                                Get In Touch
                                 <div className="flex h-8 lg:h-10 w-8 lg:w-10 items-center justify-center rounded-full bg-primary text-white transition-transform group-hover:rotate-45">
                                     <ArrowUpRight className="h-5 lg:h-6 w-5 lg:w-6" />
                                 </div>

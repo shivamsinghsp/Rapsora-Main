@@ -92,7 +92,7 @@ export function AboutCulture() {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            className="relative w-full p-8 lg:p-12 rounded-[24px] bg-primary/5 dark:bg-primary/[0.03] border border-primary/10 mb-12 flex flex-col gap-6"
+                            className="relative w-full p-8 lg:p-12 rounded-[24px] bg-primary/5  border border-primary/10 mb-12 flex flex-col gap-6"
                         >
                             <Quote className="w-8 h-8 text-primary opacity-40" />
                             <p className="text-xl lg:text-2xl font-medium text-foreground leading-snug tracking-tight">
@@ -114,9 +114,9 @@ export function AboutCulture() {
                         <div className="flex gap-4">
                             <GooeyCTA 
                                 text="Explore our Culture"
-                                href="/diagnostic"
-                                pillColorClass="bg-black dark:bg-white"
-                                textColorClass="text-white dark:text-black"
+                                href="/contact"
+                                pillColorClass="bg-black "
+                                textColorClass="text-white "
                             />
                         </div>
                     </div>

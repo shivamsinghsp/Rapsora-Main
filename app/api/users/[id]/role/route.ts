@@ -1,22 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
 import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
 
 const SUPER_ADMIN_EMAIL = 'singhaditya4333@gmail.com';
 
-// PUT /api/users/[id]/role — update user role (superadmin only)
+// PUT /api/users/[id]/role — update user role
 export async function PUT(
     req: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await auth();
-        const role = (session?.user as any)?.role;
-        if (!session || role !== 'superadmin') {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         await dbConnect();
         const { id } = await params;
         const body = await req.json();
@@ -31,7 +24,6 @@ export async function PUT(
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
 
-        // Prevent demoting the super admin
         if (user.email === SUPER_ADMIN_EMAIL) {
             return NextResponse.json({ error: 'Cannot modify super admin role' }, { status: 403 });
         }

@@ -16,19 +16,19 @@ files.forEach(f => {
   let content = fs.readFileSync(f, 'utf8');
 
   // Replace bg-black
-  content = content.replace(/bg-black(?![/a-zA-Z0-9-])/g, 'bg-background dark:bg-black');
+  content = content.replace(/bg-black(?![/a-zA-Z0-9-])/g, 'bg-background ');
 
   // Replace text-white
-  content = content.replace(/text-white(?![/a-zA-Z0-9-])/g, 'text-foreground dark:text-white');
+  content = content.replace(/text-white(?![/a-zA-Z0-9-])/g, 'text-foreground ');
 
   // Replace text-white/XX
-  content = content.replace(/text-white\/([0-9]+|\[[0-9.]+\])/g, 'text-foreground/$1 dark:text-white/$1');
+  content = content.replace(/text-white\/([0-9]+|\[[0-9.]+\])/g, 'text-foreground/$1 ');
 
   // Replace border-white/XX
-  content = content.replace(/border-white\/([0-9]+|\[[0-9.]+\])/g, 'border-foreground/10 dark:border-white/$1');
+  content = content.replace(/border-white\/([0-9]+|\[[0-9.]+\])/g, 'border-foreground/10 ');
 
   // Replace bg-white/XX
-  content = content.replace(/bg-white\/([0-9]+|\[[0-9.]+\])/g, 'bg-foreground/5 dark:bg-white/$1');
+  content = content.replace(/bg-white\/([0-9]+|\[[0-9.]+\])/g, 'bg-foreground/5 ');
 
   fs.writeFileSync(f, content);
   console.log('Updated ' + f);

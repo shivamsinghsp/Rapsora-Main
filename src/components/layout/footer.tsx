@@ -23,28 +23,28 @@ export function Footer() {
     ];
 
     return (
-        <footer className="relative bg-black pt-0" aria-label="Site footer">
+        <footer className="relative bg-black pt-0 overflow-hidden w-full" aria-label="Site footer">
 
             <div className="relative w-full mx-auto max-w-[1920px]">
 
                 {/* ── Main Dark Container ── */}
-                <div className="relative bg-black dark:bg-[#1A1B1E] text-white overflow-hidden rounded-t-[2.5rem] lg:rounded-t-[4rem] md:rounded-tl-none lg:rounded-tl-none min-h-[500px]">
+                <div className="relative bg-black  text-white overflow-hidden rounded-t-[2.5rem] lg:rounded-t-[4rem] md:rounded-tl-none lg:rounded-tl-none min-h-[500px]">
 
                     {/* ── Top Right Decorative Tab ── */}
                     <div className="absolute top-0 right-4 lg:right-12 flex items-end -translate-y-[99%] z-20">
                         {/* Inverse corner connecting tab to left */}
-                        <svg viewBox="0 0 100 100" fill="currentColor" className="w-[32px] h-[32px] text-black dark:text-[#1A1B1E] rotate-180 translate-x-[1px]">
+                        <svg viewBox="0 0 100 100" fill="currentColor" className="w-[32px] h-[32px] text-black  rotate-180 translate-x-[1px]">
                             <path d="M0 100 C0 44.77 44.77 0 100 0 L0 0 Z" />
                         </svg>
 
-                        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="bg-black dark:bg-[#1A1B1E] h-12 px-6 flex items-center justify-center rounded-t-3xl cursor-pointer hover:bg-black/90 dark:hover:bg-[#1A1B1E]/90 transition-colors">
+                        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="bg-black  h-12 px-6 flex items-center justify-center rounded-t-3xl cursor-pointer hover:bg-black/90  transition-colors">
                             <span className="text-[13px] font-medium text-white whitespace-nowrap">
                                 Sh*t I&apos;ve gone too far, send me back up 👆
                             </span>
                         </button>
 
                         {/* Inverse corner connecting tab to right */}
-                        <svg viewBox="0 0 100 100" fill="currentColor" className="w-[32px] h-[32px] text-black dark:text-[#1A1B1E] -rotate-90 -translate-x-[1px]">
+                        <svg viewBox="0 0 100 100" fill="currentColor" className="w-[32px] h-[32px] text-black  -rotate-90 -translate-x-[1px]">
                             <path d="M0 100 C0 44.77 44.77 0 100 0 L0 0 Z" />
                         </svg>
                     </div>
@@ -104,15 +104,16 @@ export function Footer() {
                             </div> */}
                         </div>
 
-                        {/* Column 2: Learn */}
-                        <div className="lg:col-span-2">
-                            <h3 className="text-[15px] font-medium text-white/50 mb-6">Learn</h3>
+                        {/* Column 2: Navigation */}
+                        <div className="lg:col-span-3">
+                            <h3 className="text-[15px] font-medium text-white/50 mb-6">Navigation</h3>
                             <ul className="space-y-3.5">
                                 {[
-                                    { name: 'About', href: '/about' },
-                                    { name: 'Culture', href: '/about#our-culture' },
-                                    { name: 'Testimonials', href: '/testimonials' },
-                                    { name: 'Blog', href: '/blog' }
+                                    { name: 'Home', href: '/' },
+                                    { name: 'About Us', href: '/about' },
+                                    { name: 'Services', href: '/services' },
+                                    { name: 'Portfolio', href: '/work' },
+                                    { name: 'Contact Us', href: '/contact' }
                                 ].map(item => (
                                     <li key={item.name}>
                                         <Link href={item.href} className={cn("inline-block text-[17px] font-medium text-white hover:text-primary transition-colors", ANIMATED_UNDERLINE)}>{item.name}</Link>
@@ -121,28 +122,8 @@ export function Footer() {
                             </ul>
                         </div>
 
-                        {/* Column 3: Explore */}
-                        <div className="lg:col-span-2">
-                            <h3 className="text-[15px] font-medium text-white/50 mb-6">Explore</h3>
-                            <ul className="space-y-3.5">
-                                {[
-                                    { name: 'Home', href: '/' },
-                                    { name: 'Work', href: '/work' },
-                                    { name: 'Services', href: '/services' },
-                                    { name: 'Careers', href: '/contact' },
-                                    { name: 'Contact', href: '/contact' }
-                                ].map(item => (
-                                    <li key={item.name}>
-                                        <Link href={item.href} className={cn("flex items-center gap-3 text-[17px] font-medium text-white hover:text-primary transition-colors w-fit", ANIMATED_UNDERLINE)}>
-                                            {item.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Column 4: Contact */}
-                        <div className="lg:col-span-3">
+                        {/* Column 3: Contact */}
+                        <div className="lg:col-span-4">
                             <h3 className="text-[15px] font-medium text-white/50 mb-6">Get in touch</h3>
                             <div className="space-y-6">
                                 <a href={`tel:${siteConfig.phone?.replace(/\s/g, '') || '+918858743254'}`} className={cn("flex items-center gap-4 text-[17px] font-medium text-white hover:text-primary transition-colors group w-fit", ANIMATED_UNDERLINE)}>
@@ -154,15 +135,14 @@ export function Footer() {
                                     {siteConfig.email || 'info@rapsora.com'}
                                 </a>
 
-                                <div className="flex gap-4 pt-2">
-                                    <MapPin className="h-4 w-4 text-white/60 shrink-0 mt-1" />
-                                    <address className="not-italic text-[17px] font-medium leading-[1.6] text-white/90">
-                                        105-A, 14/144, <br />First Floor, Ratan Esquire, <br />Chunniganj,
-                                        Kanpur, UP<br />
-                                        India - 208001<br />
-
+                                <Link href="/contact#studio-map" className={cn("flex gap-4 pt-2 text-[17px] font-medium leading-[1.6] text-white/90 hover:text-primary transition-colors group w-fit", ANIMATED_UNDERLINE)}>
+                                    <MapPin className="h-4 w-4 text-white/60 group-hover:text-primary transition-colors shrink-0 mt-1" />
+                                    <address className="not-italic">
+                                        Office No.1, 3rd Floor, 17/5, <br />
+                                        Mall Rd, Roland Tower, Patkapur, <br />
+                                        Kanpur, UP - 208001, India
                                     </address>
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -171,7 +151,7 @@ export function Footer() {
                     <div className="w-full relative pb-8 border-b border-white/10 mb-8 overflow-hidden">
                         <h2
                             className="font-heading uppercase font-medium tracking-tight text-center text-white mix-blend-plus-lighter opacity-90 pb-8"
-                            style={{ fontSize: 'clamp(5rem, 16vw, 20rem)', lineHeight: '0.8' }}
+                            style={{ fontSize: 'clamp(2.2rem, 13vw, 20rem)', lineHeight: '0.85' }}
                         >
                             Built for Growth
                         </h2>
@@ -180,7 +160,7 @@ export function Footer() {
                     {/* ── Sub Footer (Single Line on Desktop) ── */}
                     <div className="px-8 lg:px-16 pb-12 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-6 text-[14px] text-white/50 font-medium max-w-7xl mx-auto">
                         <div className="flex items-center gap-6">
-                            <Logo className="scale-[0.85] origin-left" />
+                            <Logo variant="white" className="scale-[0.85] origin-left" />
                             <span className="hidden xl:inline">© Rapsora Technologies Pvt. Ltd. {currentYear}</span>
                         </div>
 
