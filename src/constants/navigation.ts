@@ -18,7 +18,7 @@ export const mainNavItems: NavItem[] = [
             {
                 label: 'Meet the Team',
                 description: 'The people behind the pixels',
-                href: '/about/team',
+                href: '/about',
                 icon: 'UserCircle',
             },
             {

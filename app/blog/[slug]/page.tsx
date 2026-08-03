@@ -121,13 +121,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                                <h4 className="text-3xl lg:text-4xl font-black tracking-tight leading-none">Engineering<br />desire at scale.</h4>
                                <p className="text-background/60 font-medium">Join 22k+ readers obsessed with high-conversion design.</p>
                            </div>
-                           <Link 
-                                href="/diagnostic"
-                                className="relative z-10 shrink-0 px-10 py-5 rounded-full bg-primary text-white font-black text-lg tracking-tight hover:scale-105 transition-all shadow-2xl flex items-center gap-4"
-                            >
-                                Get Growth Blueprint
-                                <ArrowUpRight className="w-5 h-5" />
-                            </Link>
                         </div>
                     </div>
 

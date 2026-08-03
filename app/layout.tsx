@@ -2,20 +2,27 @@ import type { Metadata } from 'next';
 import './globals.css';
 import localFont from 'next/font/local';
 import { SiteLayout } from '@/components/layout/site-layout';
-import { ThemeProvider } from '@/components/shared/theme-provider';
 import { CustomCursor } from '@/components/shared/custom-cursor';
-import { AuthProvider } from '@/components/shared/auth-provider';
 
-const chillax = localFont({
+const gilroy = localFont({
   src: [
-    { path: '../public/fonts/Chillax-Extralight.otf', weight: '200' },
-    { path: '../public/fonts/Chillax-Light.otf', weight: '300' },
-    { path: '../public/fonts/Chillax-Regular.otf', weight: '400' },
-    { path: '../public/fonts/Chillax-Medium.otf', weight: '500' },
-    { path: '../public/fonts/Chillax-Semibold.otf', weight: '600' },
-    { path: '../public/fonts/Chillax-Bold.otf', weight: '700' },
+    { path: '../public/fonts/Gilroy-Light.ttf', weight: '300' },
+    { path: '../public/fonts/Gilroy-Regular.ttf', weight: '400' },
+    { path: '../public/fonts/Gilroy-Medium.ttf', weight: '500' },
+    { path: '../public/fonts/Gilroy-Bold.ttf', weight: '700' },
+    { path: '../public/fonts/Gilroy-Heavy.ttf', weight: '800' },
   ],
-  variable: '--font-chillax',
+  variable: '--font-gilroy',
+  display: 'swap',
+});
+
+const satoshi = localFont({
+  src: [
+    { path: '../public/fonts/Satoshi-Regular.otf', weight: '400' },
+    { path: '../public/fonts/Satoshi-Medium.otf', weight: '500' },
+    { path: '../public/fonts/Satoshi-Bold.otf', weight: '700' },
+  ],
+  variable: '--font-satoshi',
   display: 'swap',
 });
 
@@ -86,16 +93,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
-        className={`${chillax.className} ${chillax.variable} antialiased`}
+        className={`${gilroy.variable} ${satoshi.variable} antialiased`}
       >
-        <AuthProvider>
-          <ThemeProvider>
-            <CustomCursor />
-            <SiteLayout>{children}</SiteLayout>
-          </ThemeProvider>
-        </AuthProvider>
+        <CustomCursor />
+        <SiteLayout>{children}</SiteLayout>
       </body>
     </html>
   );

@@ -259,7 +259,7 @@ export function TestimonialsSection() {
     return (
         <section
             ref={sectionRef}
-            className="relative w-full bg-background dark:bg-black pt-8 pb-24 lg:pt-16 lg:pb-32 overflow-hidden"
+            className="relative w-full bg-background  pt-8 pb-24 lg:pt-16 lg:pb-32 overflow-hidden"
         >
             {/* Ambient glow effects */}
             <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-primary/[0.03] blur-[150px] rounded-full pointer-events-none" />

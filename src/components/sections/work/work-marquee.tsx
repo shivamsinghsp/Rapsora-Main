@@ -7,8 +7,8 @@ import { Magnetic } from '@/components/shared/magnetic';
 
 export function LetWorkMarquee() {
     return (
-        <section className="relative w-full overflow-hidden bg-primary py-16 lg:py-24 my-10 lg:my-20 flex flex-col items-center justify-center cursor-pointer group">
-            <Link href="/diagnostic" className="w-full relative z-10 flex">
+        <section className="relative w-full overflow-hidden bg-primary py-16 lg:py-24 mt-10 lg:mt-20 mb-0 flex flex-col items-center justify-center cursor-pointer group">
+            <Link href="/contact" className="w-full relative z-10 flex">
                 <motion.div
                     animate={{ x: ['0%', '-50%'] }}
                     transition={{

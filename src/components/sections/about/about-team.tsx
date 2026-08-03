@@ -8,33 +8,33 @@ import { useState, useEffect } from 'react';
 const TEAM = [
     {
         hook: 'VIRAL ARCHITECT',
-        name: 'Andy',
+        name: 'Xxxx Xxxx',
         role: 'Co-Founder',
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800',
+        image: '/images/blank-portrait.png',
     },
     {
         hook: 'RETENTION SURGEON',
-        name: 'Jason',
+        name: 'Xxxx Xxxx',
         role: 'Co-Founder',
-        image: '/images/jason-portrait.jpg',
+        image: '/images/blank-portrait.png',
     },
     {
         hook: 'NEURAL NARRATIVE',
-        name: 'Natasia',
+        name: 'Xxxx Xxxx',
         role: 'Lead Architect',
-        image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800',
+        image: '/images/blank-portrait.png',
     },
     {
         hook: 'GROWTH CATALYST',
-        name: 'Ruby',
+        name: 'Xxxx Xxxx',
         role: 'Growth Lead',
-        image: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80&w=800',
+        image: '/images/blank-portrait.png',
     },
     {
         hook: 'PATTERN BREAKER',
-        name: 'Joe',
+        name: 'Xxxx Xxxx',
         role: 'Behavioral Dev',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800',
+        image: '/images/blank-portrait.png',
     }
 ];
 
@@ -59,14 +59,14 @@ export function AboutTeam() {
     }, [isDragging, controls]);
 
     return (
-        <section id="team" className="w-full py-24 lg:py-40 bg-background overflow-hidden border-t border-black/5 dark:border-white/5">
+        <section id="team" className="w-full py-24 lg:py-40 bg-background overflow-hidden border-t border-black/5 ">
             <div className="container mx-auto px-6">
                 {/* Minimalist Header */}
                 <div className="flex flex-col items-center text-center mb-16 lg:mb-24">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="px-4 py-1.5 rounded-full border border-black/5 dark:border-white/5 bg-gray-50 dark:bg-[#111] mb-8"
+                        className="px-4 py-1.5 rounded-full border border-black/5  bg-gray-50  mb-8"
                     >
                         <span className="text-[10px] font-black tracking-[0.3em] uppercase text-foreground/60">THE ADVISORS</span>
                     </motion.div>
@@ -75,10 +75,10 @@ export function AboutTeam() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                        className="text-5xl lg:text-8xl font-black text-foreground leading-[0.9] tracking-tighter"
+                        className="text-5xl lg:text-7xl xl:text-8xl font-bold text-foreground leading-[0.95] tracking-tight"
                     >
                         Multiple personalities, <br />
-                        <span className="text-[#9061F9] italic">Zero egos.</span>
+                        <span className="text-[#9061F9] italic font-medium">Zero egos.</span>
                     </motion.h3>
                 </div>
             </div>
@@ -96,7 +96,7 @@ export function AboutTeam() {
                     {INFINITE_TEAM.map((member, i) => (
                         <div
                             key={i}
-                            className={`relative min-w-[280px] lg:min-w-[340px] aspect-[1/1.25] rounded-[24px] overflow-hidden group bg-white dark:bg-[#111] border border-black/5 dark:border-white/5
+                            className={`relative min-w-[280px] lg:min-w-[340px] aspect-[1/1.25] rounded-[24px] overflow-hidden group bg-white  border border-black/5 
                                 ${i % 2 === 0 ? 'translate-y-20' : '-translate-y-20'} shadow-[0_40px_80px_rgba(0,0,0,0.04)] hover:shadow-[0_60px_120px_rgba(144,97,249,0.1)] transition-all duration-700`}
                         >
                             {/* Portrait (No scale, high clarity) */}
@@ -127,7 +127,7 @@ export function AboutTeam() {
                             </div>
 
                             {/* Name & Role Label (The Smaller Blob) */}
-                            <div className="absolute bottom-0 left-0 bg-white dark:bg-[#111] py-4 px-8 lg:py-6 lg:px-12 rounded-tr-[32px] shadow-[10px_-10px_40px_rgba(0,0,0,0.05)] border-r border-t border-black/5 dark:border-white/5 z-20">
+                            <div className="absolute bottom-0 left-0 bg-white  py-4 px-8 lg:py-6 lg:px-12 rounded-tr-[32px] shadow-[10px_-10px_40px_rgba(0,0,0,0.05)] border-r border-t border-black/5  z-20">
                                 <h4 className="text-xl lg:text-2xl font-black text-foreground leading-none mb-1 whitespace-nowrap tracking-tight">
                                     {member.name}
                                 </h4>
@@ -140,15 +140,6 @@ export function AboutTeam() {
                 </motion.div>
             </div>
 
-            {/* Official Brand Gooey CTA */}
-            <div className="container mx-auto px-6 mt-4 lg:mt-8 flex justify-center pb-12 lg:pb-16">
-                <GooeyCTA
-                    href="/diagnostic"
-                    text="Join the Lab"
-                    pillColorClass="bg-[#9061F9]"
-                    textColorClass="text-white"
-                />
-            </div>
         </section>
     );
 }

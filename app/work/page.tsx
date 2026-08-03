@@ -1,26 +1,29 @@
-import dbConnect from '@/lib/mongodb';
-import Work from '@/models/Work';
+import { PROJECTS } from '@/data/projects';
 import { WorkClient } from './work-client';
 
 export const metadata = {
-    title: 'Our Work | RapSora Agency',
+    title: 'Our Work | RapSora Technologies',
     description: 'Explore our portfolio of award-winning websites, branding, and digital experiences.',
 };
 
-export const revalidate = 60; // Revalidate every 60 seconds
-
-export default async function WorkPage() {
-    await dbConnect();
-    
-    // Fetch all works sorted by order then newest
-    const rawWorks = await Work.find().sort({ order: 1, createdAt: -1 }).lean();
-    
-    // Clean Mongoose IDs and convert dates for serialization
-    const works = rawWorks.map(w => ({
-        ...w,
-        _id: w._id.toString(),
-        createdAt: w.createdAt?.toISOString() || null,
-        updatedAt: w.updatedAt?.toISOString() || null,
+export default function WorkPage() {
+    // Map static PROJECTS to work items format
+    const works = PROJECTS.map((p, index) => ({
+        _id: p.id,
+        title: p.title,
+        subtitle: p.subtitle,
+        category: p.category,
+        categories: [p.category, ...(p.tags || [])],
+        description: p.description,
+        image: p.image,
+        link: p.link,
+        color: p.color,
+        year: p.year,
+        client: p.client,
+        tags: p.tags,
+        metric: p.metric,
+        metricLabel: p.metricLabel,
+        isFeatured: index === 0,
     }));
 
     // Extract unique categories and count them

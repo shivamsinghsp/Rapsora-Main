@@ -32,7 +32,7 @@ export function AboutCapabilities() {
     const [paused, setPaused] = useState(false);
 
     return (
-        <section className="relative w-full py-24 lg:py-40 bg-background overflow-hidden border-t border-black/5 dark:border-white/5">
+        <section className="relative w-full py-24 lg:py-40 bg-background overflow-hidden border-t border-black/5 ">
             <div className="container mx-auto px-6 lg:px-12">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
                     
@@ -90,7 +90,7 @@ export function AboutCapabilities() {
                                     }}
                                 >
                                     {/* Medical/Science Study Image Card */}
-                                    <div className="relative aspect-[3/4.5] mb-8 overflow-hidden rounded-[2px] transition-all duration-1000 bg-white dark:bg-[#111] shadow-[0_80px_120px_rgba(0,0,0,0.03)] dark:shadow-none border border-black/5 dark:border-white/10 group-hover:shadow-[0_100px_160px_rgba(144,97,249,0.1)]">
+                                    <div className="relative aspect-[3/4.5] mb-8 overflow-hidden rounded-[2px] transition-all duration-1000 bg-white  shadow-[0_80px_120px_rgba(0,0,0,0.03)]  border border-black/5  group-hover:shadow-[0_100px_160px_rgba(144,97,249,0.1)]">
                                         <motion.img 
                                             src={cap.image}
                                             alt={cap.title}
@@ -156,7 +156,7 @@ export function AboutCapabilities() {
                 <div className="absolute bottom-10 right-10 z-20">
                     <button 
                         onClick={() => setPaused(!paused)}
-                        className="flex items-center gap-6 bg-white dark:bg-card border border-black/5 dark:border-white/10 text-foreground px-8 py-4 rounded-full hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all shadow-xl group"
+                        className="flex items-center gap-6 bg-white  border border-black/5  text-foreground px-8 py-4 rounded-full hover:bg-black  hover:text-white  transition-all shadow-xl group"
                     >
                         <span className="text-[10px] font-black tracking-[0.3em] uppercase">
                             {paused ? 'RESUME LOOPS' : 'PAUSE LOOPS'}

@@ -55,8 +55,9 @@
   --color-surface-elevated: var(--surface-elevated);
 
   /* --- Typography --- */
-  --font-sans: var(--font-chillax);
-  --font-heading: var(--font-chillax);
+  --font-sans: var(--font-gilroy);
+  --font-heading: var(--font-gilroy);
+  --font-body: var(--font-satoshi);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 
@@ -151,78 +152,6 @@
 }
 
 /* ========================================
-   DARK MODE
-   Bg: Pure black (logo black #000000)
-   Primary: Slightly brighter violet for contrast
-   ======================================== */
-.dark {
-  --background: oklch(0 0 0);
-  /* #000000 — pure black */
-  --foreground: oklch(0.96 0.003 75);
-  /* #F5F5F0 — warm white */
-  --card: oklch(0.12 0.008 280);
-  /* #0D0D14 — elevated dark */
-  --card-foreground: oklch(0.96 0.003 75);
-  --popover: oklch(0.13 0.010 280);
-  --popover-foreground: oklch(0.96 0.003 75);
-
-  /* Primary — slightly lighter for visibility on black */
-  --primary: oklch(0.68 0.22 300);
-  /* #A87EF9 — bright on black */
-  --primary-foreground: oklch(0.10 0.010 280);
-  /* very dark, near black */
-
-  /* Secondary */
-  --secondary: oklch(0.18 0.015 280);
-  /* #141420 */
-  --secondary-foreground: oklch(0.88 0.012 300);
-
-  /* Muted */
-  --muted: oklch(0.18 0.012 280);
-  /* #141420 */
-  --muted-foreground: oklch(0.62 0.010 280);
-  /* #909099 */
-
-  /* Accent — subtle deep violet glow */
-  --accent: oklch(0.25 0.07 300);
-  /* #1E0F40 */
-  --accent-foreground: oklch(0.80 0.14 300);
-
-  --destructive: oklch(0.704 0.191 22);
-  --border: oklch(1 0 0 / 9%);
-  /* white@ 9% */
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.68 0.22 300);
-
-  /* Charts */
-  --chart-1: oklch(0.68 0.22 300);
-  --chart-2: oklch(0.58 0.22 330);
-  --chart-3: oklch(0.62 0.20 270);
-  --chart-4: oklch(0.72 0.18 310);
-  --chart-5: oklch(0.55 0.16 250);
-
-  /* Sidebar */
-  --sidebar: oklch(0.11 0.008 280);
-  --sidebar-foreground: oklch(0.96 0.003 75);
-  --sidebar-primary: oklch(0.68 0.22 300);
-  --sidebar-primary-foreground: oklch(0.10 0.010 280);
-  --sidebar-accent: oklch(0.25 0.07 300);
-  --sidebar-accent-foreground: oklch(0.80 0.14 300);
-  --sidebar-border: oklch(1 0 0 / 9%);
-  --sidebar-ring: oklch(0.68 0.22 300);
-
-  /* Brand tokens */
-  --brand: oklch(0.68 0.22 300);
-  /* slightly brighter on black */
-  --brand-light: oklch(0.78 0.16 300);
-  --brand-dark: oklch(0.55 0.24 300);
-  --brand-muted: oklch(0.22 0.08 300);
-  /* deep violet glow */
-  --surface: oklch(0.12 0.008 280);
-  --surface-elevated: oklch(0.16 0.010 280);
-}
-
-/* ========================================
    BASE STYLES
    ======================================== */
 @layer base {
@@ -245,7 +174,7 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    font-family: var(--font-chillax), sans-serif;
+    font-family: var(--font-satoshi), sans-serif;
   }
 
   /* Hide OS cursor on desktop for custom cursor */
@@ -255,14 +184,14 @@
     }
   }
 
-  /* Headings use Chillax (brand typeface) */
+  /* Headings use Gilroy (brand typeface) */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: var(--font-chillax);
+    font-family: var(--font-gilroy);
     @apply tracking-tight;
   }
 
@@ -270,10 +199,6 @@
   ::selection {
     background-color: oklch(0.60 0.24 300 / 22%);
     color: inherit;
-  }
-
-  .dark ::selection {
-    background-color: oklch(0.68 0.22 300 / 28%);
   }
 }
 
@@ -284,6 +209,13 @@
 
   .animate-marquee:hover {
     animation-play-state: paused;
+  }
+
+  /* Logo strip: row is duplicated exactly once, so -50% lands on the seam.
+     Never pauses — not on hover, not for reduced motion. */
+  .animate-logo-marquee {
+    animation: logo-marquee 40s linear infinite;
+    animation-play-state: running !important;
   }
 
   /* Project Card Notch — smooth organic shape */
@@ -319,5 +251,15 @@
 
   100% {
     transform: translateX(calc(-100% / 3));
+  }
+}
+
+@keyframes logo-marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
   }
 }
