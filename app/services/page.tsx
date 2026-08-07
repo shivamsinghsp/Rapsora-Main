@@ -28,11 +28,25 @@ const SERVICE_CATEGORIES = [
         description:
             'Our engineers build blazing-fast, scalable websites and applications engineered for growth.',
         services: [
-            { number: '01', name: 'Web Development', href: '/services/web-development' },
-            { number: '02', name: 'E-Commerce', href: '/services/ecommerce' },
-            { number: '03', name: 'Custom Platforms', href: '/services/custom-platforms' },
-            { number: '04', name: 'CMS Integration', href: '/services/cms' },
-            { number: '05', name: 'API Development', href: '/services/api-development' },
+            { number: '01', name: 'Web Development', href: '/services/web-design' },
+            {
+                number: '02',
+                name: 'Mobile Application Development',
+                href: '/services/mobile-app-development',
+                children: [
+                    { name: 'Android Application Development', href: '/services/android-app-development' },
+                    { name: 'iOS Application Development', href: '/services/ios-app-development' },
+                ],
+            },
+            { number: '03', name: 'Desktop Application Development', href: '/services/desktop-app-development' },
+            { number: '04', name: 'UI / UX Design Services', href: '/services/ui-ux' },
+            { number: '05', name: 'Artificial Intelligence (AI) Integration Services', href: '/services/ai-integration' },
+            { number: '06', name: 'Web and Mobile App Development (End-to-End Solutions)', href: '/services/end-to-end-development' },
+            { number: '07', name: 'E-commerce Application & Website Development', href: '/services/ecommerce' },
+            { number: '08', name: 'AI Chatbot and Audio Bot Solutions', href: '/services/ai-chatbot' },
+            { number: '09', name: 'Cloud-Based Solutions and Deployment Services', href: '/services/cloud-deployment' },
+            { number: '10', name: 'Enterprise Resource Planning (ERP) Solutions', href: '/services/erp' },
+            { number: '11', name: 'Customer Relationship Management (CRM) Solutions', href: '/services/crm' },
         ],
     },
     {
@@ -59,11 +73,18 @@ const SERVICE_CATEGORIES = [
     },
 ];
 
+type ServiceListItem = {
+    number: string;
+    name: string;
+    href?: string;
+    children?: { name: string; href?: string }[];
+};
+
 /* ─────────────────────────────────────────────────────────────
    ANIMATED SERVICE ROW (Non-clickable static list)
 ───────────────────────────────────────────────────────────── */
 function ServiceRow({ service, index }: {
-    service: { number: string; name: string };
+    service: ServiceListItem;
     index: number;
 }) {
     const ref = useRef(null);
@@ -76,15 +97,30 @@ function ServiceRow({ service, index }: {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.9, ease: EASE, delay: index * 0.08 }}
         >
-            <div className="flex items-center justify-between py-5 lg:py-6 border-b border-foreground/[0.06]">
-                <div className="flex items-center gap-6 lg:gap-10">
-                    <span className="text-muted-foreground/40 text-[13px] font-bold tabular-nums tracking-wider w-6">
-                        {service.number}
-                    </span>
-                    <h4 className="text-foreground text-[1.1rem] lg:text-[1.25rem] font-bold tracking-tight">
-                        {service.name}
-                    </h4>
+            <div className="border-b border-foreground/[0.06]">
+                <div className="flex items-center justify-between py-5 lg:py-6">
+                    <div className="flex items-center gap-6 lg:gap-10">
+                        <span className="text-muted-foreground/40 text-[13px] font-bold tabular-nums tracking-wider w-6 shrink-0">
+                            {service.number}
+                        </span>
+                        <h4 className="text-foreground text-[1.1rem] lg:text-[1.25rem] font-bold tracking-tight">
+                            {service.name}
+                        </h4>
+                    </div>
                 </div>
+                {service.children?.map((child) => (
+                    <div
+                        key={child.name}
+                        className="flex items-center gap-6 lg:gap-10 py-3 lg:py-3.5 pl-12 lg:pl-16 border-t border-foreground/[0.04]"
+                    >
+                        <span className="text-muted-foreground/30 text-[13px] w-6 shrink-0" aria-hidden>
+                            ·
+                        </span>
+                        <p className="text-foreground/85 text-[1rem] lg:text-[1.1rem] font-semibold tracking-tight">
+                            {child.name}
+                        </p>
+                    </div>
+                ))}
             </div>
         </motion.div>
     );
@@ -103,7 +139,11 @@ function CategoryBlock({ category, index }: {
     const isTitleInView = useInView(titleRef, { once: true, margin: '-5% 0px' });
 
     return (
-        <section ref={ref} className="py-16 lg:py-24">
+        <section
+            id={category.title.toLowerCase()}
+            ref={ref}
+            className="py-16 lg:py-24 scroll-mt-28 lg:scroll-mt-32"
+        >
             {/* Heading at the top */}
             <div className="mb-10 lg:mb-16">
                 <motion.h2

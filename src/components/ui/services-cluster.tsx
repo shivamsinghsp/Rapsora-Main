@@ -10,6 +10,7 @@ export interface ServiceItem {
   number: string;
   name: string;
   href?: string;
+  children?: { id: string; name: string; href?: string }[];
 }
 
 export interface CategoryData {
@@ -39,11 +40,26 @@ export const CATEGORIES: CategoryData[] = [
     bgWord: 'DEVELOP',
     description: 'Our engineers build blazing-fast, scalable websites and applications engineered for growth.',
     services: [
-      { id: 'web-development', number: '01', name: 'Web Development', href: '/services#web-development' },
-      { id: 'e-commerce', number: '02', name: 'E-Commerce', href: '/services#ecommerce' },
-      { id: 'custom-platforms', number: '03', name: 'Custom Platforms', href: '/services#custom-platforms' },
-      { id: 'cms-integration', number: '04', name: 'CMS Integration', href: '/services#cms' },
-      { id: 'api-development', number: '05', name: 'API Development', href: '/services#api' },
+      { id: 'web-development', number: '01', name: 'Web Development', href: '/services#develop' },
+      {
+        id: 'mobile-app-development',
+        number: '02',
+        name: 'Mobile Application Development',
+        href: '/services#develop',
+        children: [
+          { id: 'android-app', name: 'Android Application Development', href: '/services#develop' },
+          { id: 'ios-app', name: 'iOS Application Development', href: '/services#develop' },
+        ],
+      },
+      { id: 'desktop-app', number: '03', name: 'Desktop Application Development', href: '/services#develop' },
+      { id: 'ui-ux-services', number: '04', name: 'UI / UX Design Services', href: '/services#develop' },
+      { id: 'ai-integration', number: '05', name: 'Artificial Intelligence (AI) Integration Services', href: '/services#develop' },
+      { id: 'end-to-end', number: '06', name: 'Web and Mobile App Development (End-to-End Solutions)', href: '/services#develop' },
+      { id: 'ecommerce', number: '07', name: 'E-commerce Application & Website Development', href: '/services#develop' },
+      { id: 'ai-chatbot', number: '08', name: 'AI Chatbot and Audio Bot Solutions', href: '/services#develop' },
+      { id: 'cloud-deployment', number: '09', name: 'Cloud-Based Solutions and Deployment Services', href: '/services#develop' },
+      { id: 'erp', number: '10', name: 'Enterprise Resource Planning (ERP) Solutions', href: '/services#develop' },
+      { id: 'crm', number: '11', name: 'Customer Relationship Management (CRM) Solutions', href: '/services#develop' },
     ],
   },
   {
@@ -214,7 +230,7 @@ export function ServicesCluster({
           id={`service-tabpanel-${activeCategory.id}`}
           role="tabpanel"
           aria-labelledby={`service-tab-${activeCategory.id}`}
-          className="relative min-h-[420px] w-full"
+          className="relative min-h-[320px] w-full"
         >
           {/* Animated Background Watermark Word */}
           <AnimatePresence mode="wait">
@@ -266,33 +282,57 @@ export function ServicesCluster({
               {/* Right Column (65% -> lg:col-span-7) */}
               <div className="lg:col-span-7 w-full flex flex-col divide-y divide-border/60 border-t border-b border-border/60">
                 {activeCategory.services.map((service, sIdx) => (
-                  <motion.a
-                    key={service.id}
-                    href={service.href || '#'}
-                    initial={{ opacity: 0, y: 25 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: 0.1 + sIdx * 0.08,
-                      ease: EASE_POWER4_OUT,
-                    }}
-                    className="group relative flex items-center justify-between py-6 sm:py-7 md:py-8 px-2 sm:px-4 cursor-pointer text-foreground no-underline transition-colors duration-300 hover:bg-secondary/40 rounded-xl"
-                  >
-                    {/* Left: Number + Service Name */}
-                    <div className="flex items-center gap-6 sm:gap-8 md:gap-10">
-                      <span className="font-mono text-sm sm:text-base font-semibold text-primary/80 group-hover:text-primary transition-colors duration-300">
-                        {service.number}
-                      </span>
-                      <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-foreground group-hover:translate-x-3 transition-transform duration-300 ease-out">
-                        {service.name}
-                      </h3>
-                    </div>
+                  <div key={service.id} className="divide-y divide-border/40">
+                    <motion.a
+                      href={service.href || '#'}
+                      initial={{ opacity: 0, y: 25 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: 0.1 + sIdx * 0.06,
+                        ease: EASE_POWER4_OUT,
+                      }}
+                      className="group relative flex items-center justify-between py-5 sm:py-6 md:py-7 px-2 sm:px-4 cursor-pointer text-foreground no-underline transition-colors duration-300 hover:bg-secondary/40 rounded-xl gap-4"
+                    >
+                      <div className="flex items-start sm:items-center gap-4 sm:gap-8 md:gap-10 min-w-0 flex-1">
+                        <span className="font-mono text-sm sm:text-base font-semibold text-primary/80 group-hover:text-primary transition-colors duration-300 shrink-0 pt-0.5 sm:pt-0">
+                          {service.number}
+                        </span>
+                        <h3 className="font-heading text-base sm:text-xl md:text-2xl font-bold tracking-tight text-foreground group-hover:translate-x-2 transition-transform duration-300 ease-out leading-snug">
+                          {service.name}
+                        </h3>
+                      </div>
 
-                    {/* Right: Circular Arrow Button */}
-                    <div className="relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-border/80 bg-background group-hover:bg-primary group-hover:border-primary group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-45 transition-all duration-300 ease-out shadow-sm">
-                      <ArrowUpRight className="w-5 h-5 transition-transform duration-300" />
-                    </div>
-                  </motion.a>
+                      <div className="relative flex shrink-0 items-center justify-center w-9 h-9 sm:w-12 sm:h-12 rounded-full border border-border/80 bg-background group-hover:bg-primary group-hover:border-primary group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-45 transition-all duration-300 ease-out shadow-sm">
+                        <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300" />
+                      </div>
+                    </motion.a>
+
+                    {service.children?.map((child, cIdx) => (
+                      <motion.a
+                        key={child.id}
+                        href={child.href || '#'}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.45,
+                          delay: 0.14 + sIdx * 0.06 + cIdx * 0.04,
+                          ease: EASE_POWER4_OUT,
+                        }}
+                        className="group flex items-center justify-between py-4 sm:py-5 pl-10 sm:pl-14 md:pl-16 pr-2 sm:pr-4 cursor-pointer text-foreground no-underline transition-colors duration-300 hover:bg-secondary/30 rounded-lg gap-4"
+                      >
+                        <div className="flex items-center gap-4 sm:gap-6 min-w-0 flex-1">
+                          <span className="text-muted-foreground/40 text-sm shrink-0" aria-hidden>
+                            ·
+                          </span>
+                          <p className="font-heading text-sm sm:text-lg md:text-xl font-semibold tracking-tight text-foreground/90 group-hover:translate-x-2 transition-transform duration-300 leading-snug">
+                            {child.name}
+                          </p>
+                        </div>
+                        <ArrowUpRight className="w-4 h-4 shrink-0 text-muted-foreground/50 group-hover:text-primary transition-colors" />
+                      </motion.a>
+                    ))}
+                  </div>
                 ))}
               </div>
             </motion.div>
