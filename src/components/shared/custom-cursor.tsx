@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
 export function CustomCursor() {
+    const [mounted, setMounted] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
 
@@ -15,6 +16,12 @@ export function CustomCursor() {
     const springY = useSpring(cursorY, { stiffness: 500, damping: 28 });
 
     useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!mounted) return;
+
         const mediaQuery = window.matchMedia('(pointer: fine)');
         if (!mediaQuery.matches) return;
 
@@ -45,9 +52,9 @@ export function CustomCursor() {
             document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
             document.documentElement.removeEventListener('mouseenter', handleMouseEnter);
         };
-    }, [cursorX, cursorY, isVisible]);
+    }, [mounted, cursorX, cursorY, isVisible]);
 
-    if (typeof window === 'undefined') return null;
+    if (!mounted) return null;
 
     return (
         <motion.div

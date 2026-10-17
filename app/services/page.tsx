@@ -81,7 +81,7 @@ type ServiceListItem = {
 };
 
 /* ─────────────────────────────────────────────────────────────
-   ANIMATED SERVICE ROW (Non-clickable static list)
+   ANIMATED SERVICE ROW (Clickable links)
 ───────────────────────────────────────────────────────────── */
 function ServiceRow({ service, index }: {
     service: ServiceListItem;
@@ -98,28 +98,60 @@ function ServiceRow({ service, index }: {
             transition={{ duration: 0.9, ease: EASE, delay: index * 0.08 }}
         >
             <div className="border-b border-foreground/[0.06]">
-                <div className="flex items-center justify-between py-5 lg:py-6">
-                    <div className="flex items-center gap-6 lg:gap-10">
-                        <span className="text-muted-foreground/40 text-[13px] font-bold tabular-nums tracking-wider w-6 shrink-0">
-                            {service.number}
-                        </span>
-                        <h4 className="text-foreground text-[1.1rem] lg:text-[1.25rem] font-bold tracking-tight">
-                            {service.name}
-                        </h4>
-                    </div>
-                </div>
-                {service.children?.map((child) => (
-                    <div
-                        key={child.name}
-                        className="flex items-center gap-6 lg:gap-10 py-3 lg:py-3.5 pl-12 lg:pl-16 border-t border-foreground/[0.04]"
+                {service.href ? (
+                    <Link
+                        href={service.href}
+                        className="flex items-center justify-between py-5 lg:py-6 group transition-colors duration-300 hover:pl-2"
                     >
-                        <span className="text-muted-foreground/30 text-[13px] w-6 shrink-0" aria-hidden>
-                            ·
-                        </span>
-                        <p className="text-foreground/85 text-[1rem] lg:text-[1.1rem] font-semibold tracking-tight">
-                            {child.name}
-                        </p>
+                        <div className="flex items-center gap-6 lg:gap-10">
+                            <span className="text-muted-foreground/40 text-[13px] font-bold tabular-nums tracking-wider w-6 shrink-0 group-hover:text-primary transition-colors duration-300">
+                                {service.number}
+                            </span>
+                            <h4 className="text-foreground text-[1.1rem] lg:text-[1.25rem] font-bold tracking-tight group-hover:text-primary transition-colors duration-300">
+                                {service.name}
+                            </h4>
+                        </div>
+                        <ArrowUpRight className="w-5 h-5 text-muted-foreground/0 group-hover:text-primary transition-all duration-300 group-hover:translate-x-0 -translate-x-2 group-hover:opacity-100 opacity-0" />
+                    </Link>
+                ) : (
+                    <div className="flex items-center justify-between py-5 lg:py-6">
+                        <div className="flex items-center gap-6 lg:gap-10">
+                            <span className="text-muted-foreground/40 text-[13px] font-bold tabular-nums tracking-wider w-6 shrink-0">
+                                {service.number}
+                            </span>
+                            <h4 className="text-foreground text-[1.1rem] lg:text-[1.25rem] font-bold tracking-tight">
+                                {service.name}
+                            </h4>
+                        </div>
                     </div>
+                )}
+                {service.children?.map((child) => (
+                    child.href ? (
+                        <Link
+                            key={child.name}
+                            href={child.href}
+                            className="flex items-center gap-6 lg:gap-10 py-3 lg:py-3.5 pl-12 lg:pl-16 border-t border-foreground/[0.04] group/child hover:pl-14 lg:hover:pl-18 transition-all duration-300"
+                        >
+                            <span className="text-muted-foreground/30 text-[13px] w-6 shrink-0" aria-hidden>
+                                ·
+                            </span>
+                            <p className="text-foreground/85 text-[1rem] lg:text-[1.1rem] font-semibold tracking-tight group-hover/child:text-primary transition-colors duration-300">
+                                {child.name}
+                            </p>
+                        </Link>
+                    ) : (
+                        <div
+                            key={child.name}
+                            className="flex items-center gap-6 lg:gap-10 py-3 lg:py-3.5 pl-12 lg:pl-16 border-t border-foreground/[0.04]"
+                        >
+                            <span className="text-muted-foreground/30 text-[13px] w-6 shrink-0" aria-hidden>
+                                ·
+                            </span>
+                            <p className="text-foreground/85 text-[1rem] lg:text-[1.1rem] font-semibold tracking-tight">
+                                {child.name}
+                            </p>
+                        </div>
+                    )
                 ))}
             </div>
         </motion.div>

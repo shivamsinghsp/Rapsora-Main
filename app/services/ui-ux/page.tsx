@@ -2,30 +2,52 @@
 
 import { motion } from 'framer-motion';
 import { Layout, Palette, Zap } from 'lucide-react';
+import { Hero10, type Hero10Props } from '@/components/ui/hero-10';
+
+const heroValues: Hero10Props = {
+    badge: 'CAPABILITY REF.001',
+    title: 'Visceral',
+    titleHighlight: 'Dynamics.',
+    description:
+        'We engineer digital environments designed to trigger immediate engagement. This is where psychology meets pixel-perfect execution.',
+    socialProof: 'Trusted by high-growth startups & global enterprise brands',
+    washImage: '/images/pastel-bg-3.jpg',
+    images: [
+        '/images/hero-uiux-mobile.jpg',
+        '/images/hero-uiux-dashboard.jpg',
+        '/images/hero-uiux-wireframes.jpg',
+    ],
+    imageAlts: [
+        'Minimalist mobile app UX design on pastel linen',
+        'Modern SaaS analytics & interaction dashboard on tablet',
+        'Design system tokens & UX wireframe cards',
+    ],
+    animation: 'subtle',
+    primaryCTA: {
+        ctaEnabled: true,
+        text: 'Start your project',
+        link: '/contact',
+        variant: 'default',
+        size: 'lg',
+    },
+    secondaryCTA: {
+        ctaEnabled: true,
+        text: 'View our work',
+        link: '/work',
+        variant: 'outline',
+    },
+};
 
 export default function UIUXPage() {
     return (
-        <main className="relative pt-40 pb-24 bg-background px-6 overflow-hidden">
-            {/* Ambient Background */}
-            <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-            
-            <div className="container mx-auto">
-                <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="flex flex-col mb-24"
-                >
-                    <span className="text-[10px] font-black tracking-[0.5em] text-primary uppercase mb-8 block">CAPABILITY REF.001</span>
-                    <h1 className="text-7xl lg:text-[140px] font-black tracking-tighter text-foreground leading-[0.85] mb-12">
-                        Visceral <br/>
-                        <span className="italic text-primary">Dynamics.</span>
-                    </h1>
-                    <p className="text-2xl text-muted-foreground max-w-2xl leading-relaxed">
-                        We engineer digital environments designed to trigger immediate engagement. This is where psychology meets pixel-perfect execution.
-                    </p>
-                </motion.div>
+        <main className="relative bg-background overflow-hidden">
+            {/* ── HERO SECTION — Hero10 Component with Animated Image Fan ── */}
+            <div className="pt-24 lg:pt-32">
+                <Hero10 {...heroValues} />
+            </div>
 
+            {/* ── PILLARS SECTION ── */}
+            <div className="container mx-auto px-6 py-20 lg:py-28">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
                     {[
                         { title: 'Neural Architecture', icon: Layout, desc: 'Information hierarchy designed for the way the human brain actually processes data.' },

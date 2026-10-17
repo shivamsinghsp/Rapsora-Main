@@ -2,27 +2,47 @@
 
 import { motion } from 'framer-motion';
 import { MousePointer2, Layers, Cpu } from 'lucide-react';
+import { Hero04, type Hero04Props } from '@/components/ui/hero-04';
+
+const heroValues: Hero04Props = {
+    badge: 'CAPABILITY REF.004',
+    title: 'Obsessive',
+    titleLine2: (
+        <span className="italic text-primary">Architecture.</span>
+    ),
+    description:
+        'We don\'t just design websites; we engineer behavioral destiny. Every pixel is a calculated trigger designed to lead users to the ultimate objective.',
+    washImage: '/images/pastel-bg-3.jpg',
+    primaryImage: '/images/hero-web-design-laptop.jpg',
+    secondaryImage: '/images/hero-web-design-tablet.jpg',
+    primaryAlt: 'Editorial laptop presentation of modern agency website design on pastel linen',
+    secondaryAlt: 'Editorial tablet presentation of responsive mobile website on pastel linen',
+    animation: 'subtle',
+    primaryCTA: {
+        ctaEnabled: true,
+        text: 'Start your project',
+        link: '/contact',
+        variant: 'default',
+        size: 'lg',
+    },
+    secondaryCTA: {
+        ctaEnabled: true,
+        text: 'View our work',
+        link: '/work',
+        variant: 'link',
+    },
+};
 
 export default function WebDesignPage() {
     return (
-        <main className="relative pt-40 pb-24 bg-background px-6 overflow-hidden">
-            <div className="container mx-auto">
-                <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="flex flex-col mb-24"
-                >
-                    <span className="text-[10px] font-black tracking-[0.5em] text-primary uppercase mb-8 block">CAPABILITY REF.004</span>
-                    <h1 className="text-7xl lg:text-[140px] font-black tracking-tighter text-foreground leading-[0.85] mb-12">
-                        Obsessive <br/>
-                        <span className="italic text-primary">Architecture.</span>
-                    </h1>
-                    <p className="text-2xl text-muted-foreground max-w-2xl leading-relaxed">
-                        We don't just design websites; we engineer behavioral destiny. Every pixel is a calculated trigger designed to lead users to the ultimate objective.
-                    </p>
-                </motion.div>
+        <main className="relative bg-background overflow-hidden">
+            {/* ── HERO SECTION — Hero04 Component with Editorial Imagery ── */}
+            <div className="pt-24 lg:pt-32">
+                <Hero04 {...heroValues} />
+            </div>
 
+            {/* ── ORIGINAL PILLARS SECTION (UNTOUCHED) ── */}
+            <div className="container mx-auto px-6 py-20 lg:py-28">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
                     {[
                         { title: 'Behavioral UX', icon: MousePointer2, desc: 'User journeys mapped against deep psychological archetypes to minimize bounce and maximize intent.' },

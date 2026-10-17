@@ -28,10 +28,11 @@ export const CATEGORIES: CategoryData[] = [
     bgWord: 'DESIGN',
     description: 'Brand designers and web designers in-house crafting visuals to match your brand values.',
     services: [
-      { id: 'brand-identity', number: '01', name: 'Brand Identity', href: '/services#branding' },
-      { id: 'web-design', number: '02', name: 'Web Design', href: '/services#web-design' },
-      { id: 'ui-ux-design', number: '03', name: 'UI/UX Design', href: '/services#ui-ux' },
-      { id: 'graphic-design', number: '04', name: 'Graphic Design', href: '/services#graphic-design' },
+      { id: 'brand-identity', number: '01', name: 'Brand Identity', href: '/services/branding' },
+      { id: 'web-design', number: '02', name: 'Web Design', href: '/services/web-design' },
+      { id: 'ui-ux-design', number: '03', name: 'UI/UX Design', href: '/services/ui-ux' },
+      { id: 'graphic-design', number: '04', name: 'Graphic Design', href: '/services/graphic-design' },
+      { id: 'motion-design', number: '05', name: 'Motion Design', href: '/services/motion-design' },
     ],
   },
   {
