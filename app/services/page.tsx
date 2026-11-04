@@ -28,7 +28,7 @@ const SERVICE_CATEGORIES = [
         description:
             'Our engineers build blazing-fast, scalable websites and applications engineered for growth.',
         services: [
-            { number: '01', name: 'Web Development', href: '/services/web-design' },
+            { number: '01', name: 'Web Development', href: '/services/web-development' },
             {
                 number: '02',
                 name: 'Mobile Application Development',

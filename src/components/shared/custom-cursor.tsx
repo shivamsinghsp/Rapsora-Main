@@ -16,7 +16,8 @@ export function CustomCursor() {
     const springY = useSpring(cursorY, { stiffness: 500, damping: 28 });
 
     useEffect(() => {
-        setMounted(true);
+        const frame = requestAnimationFrame(() => setMounted(true));
+        return () => cancelAnimationFrame(frame);
     }, []);
 
     useEffect(() => {

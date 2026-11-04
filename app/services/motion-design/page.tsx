@@ -97,7 +97,7 @@ export default function MotionDesignPage() {
       <MotionHero
         config={{
           eyebrow: {
-            enabled: true,
+            enabled: false,
             text: 'CAPABILITY REF.005 • KINETIC DIRECTION',
             icon: '✨',
           },
