@@ -1,51 +1,51 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Search, TrendingUp, BarChart } from 'lucide-react';
+import * as React from 'react';
+import { ServiceDetailHero } from '@/components/marketing/service-detail-hero';
+import { ServiceCapabilitiesSection } from '@/components/marketing/service-capabilities-section';
+import { MarketingProcess } from '@/components/marketing/marketing-process';
+import { MarketingTools } from '@/components/marketing/marketing-tools';
+import { MarketingFaq } from '@/components/marketing/marketing-faq';
+import { CtaSection } from '@/components/sections/cta-section';
+import { ContactFormSection } from '@/components/sections/contact-form-section';
+import { MARKETING_SERVICES } from '@/data/marketing-services';
 
-export default function SEOPage() {
-    return (
-        <main className="relative pt-40 pb-24 bg-background px-6 overflow-hidden">
-            <div className="container mx-auto">
-                <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="flex flex-col mb-24"
-                >
-                    <span className="text-[10px] font-black tracking-[0.5em] text-primary uppercase mb-8 block">CAPABILITY REF.002</span>
-                    <h1 className="text-7xl lg:text-[140px] font-black tracking-tighter text-foreground leading-[0.85] mb-12">
-                        Intent <br/>
-                        <span className="italic text-primary">Domination.</span>
-                    </h1>
-                    <p className="text-2xl text-muted-foreground max-w-2xl leading-relaxed">
-                        We don't just optimize for bots; we engineer for human intent. We position your brand exactly where and when the decision is made.
-                    </p>
-                </motion.div>
+const SERVICE = MARKETING_SERVICES['seo'];
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-                    {[
-                        { title: 'Search Psychology', icon: Search, desc: 'Decoding the true intent behind the query to capture high-value traffic.' },
-                        { title: 'Authority Sculpting', icon: TrendingUp, desc: 'Engineering a backlink profile and content map that commands trust and dominance.' },
-                        { title: 'Data Diagnostics', icon: BarChart, desc: 'Clinical-grade analysis of performance metrics to eliminate bottlenecks in the funnel.' }
-                    ].map((item, i) => (
-                        <motion.div 
-                            key={item.title}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: i * 0.1 }}
-                            className="flex flex-col gap-6"
-                        >
-                            <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                                <item.icon className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-foreground tracking-tight">{item.title}</h3>
-                            <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </main>
-    );
+export default function SeoServicePage() {
+  return (
+    <main className="relative bg-background overflow-hidden text-foreground">
+      {/* ── 1. SEO HERO WITH METRICS ── */}
+      <ServiceDetailHero service={SERVICE} />
+
+      {/* ── 2. STRATEGIC OVERVIEW, PILLARS & CAPABILITIES ── */}
+      <ServiceCapabilitiesSection service={SERVICE} />
+
+      {/* ── 3. 5-STEP CONTINUOUS SEO PROCESS ── */}
+      <MarketingProcess
+        steps={SERVICE.process}
+        title="Our continuous SEO process."
+        titleHighlight="Compounding search equity."
+        subtitle="Our 5-stage sprint cycle systematically eliminates crawl friction, captures competitor keyword gaps, and drives verified organic pipeline."
+      />
+
+      {/* ── 4. TOOLS & SEARCH TELEMETRY STACK ── */}
+      <MarketingTools
+        tools={SERVICE.tools}
+        title="SEO Diagnostics & Search Telemetry Stack"
+        subtitle="We employ industry-leading diagnostic and monitoring tools to ensure zero guesswork in our organic search optimizations."
+      />
+
+      {/* ── 5. TRANSPARENT FAQS ── */}
+      <MarketingFaq
+        faqs={SERVICE.faqs}
+        title="Frequently asked questions about SEO."
+        subtitle="Everything you need to know about our organic growth strategy, timelines, and technical execution."
+      />
+
+      {/* ── 6. CLOSING CTA & CONTACT FORM ── */}
+      <CtaSection />
+      <ContactFormSection />
+    </main>
+  );
 }

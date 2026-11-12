@@ -69,6 +69,46 @@ const nextConfig: NextConfig = {
         destination: '/services/cloud-deployment',
         permanent: true,
       },
+      {
+        source: '/services/seo-organic-growth',
+        destination: '/services/seo',
+        permanent: true,
+      },
+      {
+        source: '/marketing/seo',
+        destination: '/marketing/seo-organic-growth',
+        permanent: true,
+      },
+      {
+        source: '/services/maintenance',
+        destination: '/support/website-management',
+        permanent: true,
+      },
+      {
+        source: '/services/hosting',
+        destination: '/support/hosting-security',
+        permanent: true,
+      },
+      {
+        source: '/services/analytics',
+        destination: '/support/analytics-reporting',
+        permanent: true,
+      },
+      {
+        source: '/support/maintenance',
+        destination: '/support/website-management',
+        permanent: true,
+      },
+      {
+        source: '/support/hosting',
+        destination: '/support/hosting-security',
+        permanent: true,
+      },
+      {
+        source: '/support/analytics',
+        destination: '/support/analytics-reporting',
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

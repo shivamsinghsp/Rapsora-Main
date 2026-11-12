@@ -14,6 +14,10 @@ import {
   Workflow,
   Smartphone,
   CheckCircle2,
+  ShoppingCart,
+  CreditCard,
+  Rocket,
+  TrendingUp,
 } from 'lucide-react';
 import { PanoramicSpreadHero } from '@/components/ui/panoramic-spread-hero';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
@@ -43,6 +47,10 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Workflow,
   Smartphone,
   CheckCircle2,
+  ShoppingCart,
+  CreditCard,
+  Rocket,
+  TrendingUp,
 };
 
 const DEDICATED_STATIC_SLUGS = new Set([
@@ -51,6 +59,7 @@ const DEDICATED_STATIC_SLUGS = new Set([
   'ai-chatbot',
   'erp',
   'crm',
+  'ecommerce',
 ]);
 
 export async function generateStaticParams() {

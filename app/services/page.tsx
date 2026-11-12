@@ -42,7 +42,7 @@ const SERVICE_CATEGORIES = [
             { number: '04', name: 'UI / UX Design Services', href: '/services/ui-ux' },
             { number: '05', name: 'Artificial Intelligence (AI) Integration Services', href: '/services/ai-integration' },
             { number: '06', name: 'Web and Mobile App Development (End-to-End Solutions)', href: '/services/end-to-end-development' },
-            { number: '07', name: 'E-commerce Application & Website Development', href: '/services/ecommerce' },
+            { number: '07', name: 'E-commerce Application and Website Management', href: '/services/ecommerce' },
             { number: '08', name: 'AI Chatbot and Audio Bot Solutions', href: '/services/ai-chatbot' },
             { number: '09', name: 'Cloud-Based Solutions and Deployment Services', href: '/services/cloud-deployment' },
             { number: '10', name: 'Enterprise Resource Planning (ERP) Solutions', href: '/services/erp' },
@@ -56,7 +56,7 @@ const SERVICE_CATEGORIES = [
         services: [
             { number: '01', name: 'SEO & Organic Growth', href: '/services/seo' },
             { number: '02', name: 'Content Strategy', href: '/services/content-strategy' },
-            { number: '03', name: 'Social Media', href: '/services/social-media' },
+            { number: '03', name: 'Social Media Marketing', href: '/services/social-media' },
             { number: '04', name: 'Email Marketing', href: '/services/email-marketing' },
         ],
     },
@@ -65,10 +65,10 @@ const SERVICE_CATEGORIES = [
         description:
             'Lean on our in-house team for ongoing support with your design, development, and growth needs.',
         services: [
-            { number: '01', name: 'Website Maintenance', href: '/services/maintenance' },
-            { number: '02', name: 'Hosting & Security', href: '/services/hosting' },
-            { number: '03', name: 'Analytics & Reporting', href: '/services/analytics' },
-            { number: '04', name: 'Consultation', href: '/services/consultation' },
+            { number: '01', name: 'Website Management', href: '/support/website-management' },
+            { number: '02', name: 'Hosting & Security', href: '/support/hosting-security' },
+            { number: '03', name: 'Analytics & Reporting', href: '/support/analytics-reporting' },
+            { number: '04', name: 'Consultation', href: '/support/consultation' },
         ],
     },
 ];

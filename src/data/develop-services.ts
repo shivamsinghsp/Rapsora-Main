@@ -803,6 +803,208 @@ module "ecs_cluster" {
     ],
   },
 
+  'ecommerce': {
+    id: 'ecommerce',
+    slug: 'ecommerce',
+    aliases: [
+      'ecommerce',
+      'e-commerce',
+      'e-commerce application and website management',
+      'e-commerce application & website development',
+      'ecommerce application and website management',
+      'ecommerce-management',
+      'ecommerce application',
+      'online-store',
+    ],
+    number: '07',
+    name: 'E-commerce Application and Website Management',
+    eyebrow: 'E-COMMERCE & DIGITAL COMMERCE',
+    title: 'High-Velocity Commerce.',
+    titleHighlight: 'Engineered for Conversion.',
+    description:
+      'From lightning-fast headless storefronts to robust ERP/OMS integrations and 24/7 store management, we architect, scale, and manage high-converting e-commerce ecosystems that maximize customer lifetime value.',
+    primaryCTA: {
+      text: 'Launch your store',
+      href: '/contact',
+    },
+    secondaryCTA: {
+      text: 'Explore technical architecture',
+      href: '#architecture',
+    },
+    cards: [
+      {
+        id: 'headless-storefront',
+        title: 'Headless Next.js Storefront',
+        category: 'Next.js 16 & Hydrogen',
+        imageSrc: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Modern responsive headless e-commerce storefront with instant product search and dynamic filtering',
+        techTags: ['Next.js 16', 'Turbopack', 'Sub-800ms FCP'],
+      },
+      {
+        id: 'checkout-engine',
+        title: 'Zero-Friction Checkout Engine',
+        category: 'Stripe & Multi-Currency',
+        imageSrc: 'https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=1000&q=80',
+        alt: 'High-conversion checkout funnel with localized currency conversion and fraud detection shields',
+        techTags: ['Stripe Elements', '1-Click Pay', '3D Secure 2.0'],
+      },
+      {
+        id: 'inventory-sync',
+        title: 'Real-Time Omnichannel Inventory',
+        category: 'ERP & Multi-Warehouse Sync',
+        imageSrc: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Warehouse fulfillment control center tracking real-time SKU stock levels across global distribution centers',
+        techTags: ['Redis Locks', 'Webhooks', 'Zero Oversell'],
+      },
+      {
+        id: 'mobile-commerce',
+        title: 'Mobile Commerce & PWA App',
+        category: 'iOS, Android & Web',
+        imageSrc: 'https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Sleek smartphone e-commerce mobile application showing instant one-tap Apple Pay checkout',
+        techTags: ['React Native', 'Apple Pay', 'Haptic Feedback'],
+      },
+      {
+        id: 'ai-merchandising',
+        title: 'AI Search & Personalization',
+        category: 'Search & Recommendation',
+        imageSrc: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80',
+        alt: 'AI-driven product merchandising engine rendering predictive search queries and tailored bundles',
+        techTags: ['Algolia Neural', 'Vector Similarity', 'Real-Time Rank'],
+      },
+      {
+        id: 'order-fulfillment',
+        title: 'Automated Order Fulfillment (OMS)',
+        category: 'Logistics & 3PL Integration',
+        imageSrc: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Automated logistics pipeline dispatching shipping notifications and tracking barcodes across carrier APIs',
+        techTags: ['FedEx / DHL API', 'Automated Returns', 'Post-Purchase'],
+      },
+      {
+        id: 'store-ops-management',
+        title: '24/7 High-Uptime Store Management',
+        category: 'Managed Operations & APM',
+        imageSrc: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Cloud operations dashboard tracking server latency, synthetic user test transactions, and error telemetry',
+        techTags: ['99.99% Uptime SLA', 'Datadog APM', 'Flash-Sale Ready'],
+      },
+      {
+        id: 'cro-retention',
+        title: 'Conversion Optimization & Retention',
+        category: 'A/B Testing & Revenue Growth',
+        imageSrc: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Executive revenue metrics displaying checkout completion rates, average order value lift, and retention',
+        techTags: ['Klaviyo Sync', 'A/B Test Engine', 'Cart Recovery'],
+      },
+    ],
+    metrics: [
+      { value: '3.4x', label: 'Conversion Velocity', desc: 'Accelerated checkout completion via sub-second edge rendering' },
+      { value: '<800ms', label: 'Global Checkout Latency', desc: 'Frictionless edge-computed cart transactions and 1-tap payments' },
+      { value: '99.99%', label: 'Flash-Sale Uptime', desc: 'Elastic autoscaling engineered to handle 100k+ peak RPM traffic spikes' },
+      { value: '0%', label: 'Inventory Oversell', desc: 'Atomic distributed Redis locks eliminating stockouts and drop collisions' },
+    ],
+    pillars: [
+      {
+        number: '01',
+        tag: 'HEADLESS STOREFRONT ARCHITECTURE',
+        title: 'Next.js 16 & Headless Commerce Core',
+        iconName: 'ShoppingCart',
+        desc: 'Decoupled frontend storefronts powered by Next.js 16 Server Components, Turbopack, and distributed edge caching. Blazing sub-second Core Web Vitals eliminate bounce rates and guarantee instant search indexing across millions of SKUs.',
+        specs: ['Next.js 16 Turbopack', 'Shopify / Medusa API', 'Sub-800ms Edge TTFB', 'Streaming SSR'],
+      },
+      {
+        number: '02',
+        tag: 'CHECKOUT PSYCHOLOGY & PAYMENTS',
+        title: 'Global High-Conversion Payment Gateway',
+        iconName: 'CreditCard',
+        desc: 'Unified payment gateway orchestration supporting Stripe Elements, Apple Pay, Google Pay, Klarna, and localized international currencies. Hardened with 3D Secure 2.0 biometric verification, auto-tax calculations, and zero fraud friction.',
+        specs: ['Stripe & Adyen Direct', 'Apple / Google 1-Click', 'Dynamic Tax & Duties', '3D Secure 2.0 PSD2'],
+      },
+      {
+        number: '03',
+        tag: 'OMNICHANNEL INVENTORY & OMS',
+        title: 'Real-Time SKU Synchronization & Stock Locking',
+        iconName: 'Workflow',
+        desc: 'Atomic distributed Redis locks guarantee that high-demand flash sales and limited product drops never suffer from stockouts or overselling. Seamless event-driven bi-directional sync with ERPs, Amazon, and 3PL fulfillment networks.',
+        specs: ['Redis Distributed Locks', 'Event-Driven Webhooks', 'ERP & 3PL Integration', 'Automated Returns'],
+      },
+      {
+        number: '04',
+        tag: 'CONTINUOUS MANAGEMENT & GROWTH',
+        title: '24/7 Storefront Ops & Conversion Optimization',
+        iconName: 'ShieldCheck',
+        desc: 'Active store management, security patch deployment, uptime telemetry, and weekly conversion rate optimization (CRO) sprints. Automated cart abandonment sequences and personalized loyalty engines to compound customer lifetime value.',
+        specs: ['24/7 APM Monitoring', 'Automated A/B Testing', 'Cart Recovery Engine', 'Zero-Downtime Releases'],
+      },
+    ],
+    codeSnippet: {
+      filename: 'src/lib/commerce/checkout-orchestrator.ts',
+      language: 'typescript',
+      code: `// High-Concurrency Stripe Checkout Session with Atomic Inventory Locking
+import { stripe } from '@/lib/stripe';
+import { redis } from '@/lib/redis';
+import { db } from '@/lib/db';
+
+export async function createCommerceCheckoutSession({
+  cartId,
+  customerId,
+  currency = 'usd',
+  successUrl,
+  cancelUrl,
+}: CheckoutParams) {
+  // 1. Acquire Distributed Redis Locks for All Cart SKUs (Prevent Overselling)
+  const cartItems = await db.cartItem.findMany({ where: { cartId } });
+  const lockAcquired = await redis.set(
+    \`lock:checkout:\${cartId}\`,
+    'LOCKED',
+    'EX',
+    300,
+    'NX'
+  );
+
+  if (!lockAcquired) {
+    throw new Error('Checkout session already in progress. Please retry.');
+  }
+
+  // 2. Validate Real-Time Stock Invariants
+  for (const item of cartItems) {
+    const availableStock = await redis.get(\`stock:\${item.sku}\`);
+    if (Number(availableStock) < item.quantity) {
+      throw new Error(\`Insufficient stock for SKU: \${item.sku}\`);
+    }
+  }
+
+  // 3. Create Idempotent Stripe Checkout Session with 3DS 2.0 & Apple Pay
+  const session = await stripe.checkout.sessions.create({
+    customer: customerId,
+    payment_method_types: ['card', 'link'],
+    mode: 'payment',
+    billing_address_collection: 'auto',
+    shipping_address_collection: { allowed_countries: ['US', 'CA', 'GB', 'EU'] },
+    line_items: cartItems.map((item) => ({
+      price_data: {
+        currency,
+        product_data: { name: item.name, images: [item.image] },
+        unit_amount: item.unitPriceCents,
+      },
+      quantity: item.quantity,
+    })),
+    success_url: \`\${successUrl}?session_id={CHECKOUT_SESSION_ID}\`,
+    cancel_url: cancelUrl,
+    metadata: { cartId, customerId },
+  });
+
+  return { checkoutUrl: session.url, sessionId: session.id };
+}`,
+    },
+    pipeline: [
+      { step: '01', title: 'Store Audit & Architecture Blueprint', desc: 'Evaluating catalog schemas, transaction funnels, ERP endpoints, and conversion drop-offs.' },
+      { step: '02', title: 'Headless Engineering & Gateway Integration', desc: 'Building responsive Next.js storefronts, integrating Stripe, and wiring real-time webhooks.' },
+      { step: '03', title: 'Concurrency Load Testing & Security Audit', desc: 'Simulating high-volume flash sales, stress testing Redis locks, and validating 3DS security.' },
+      { step: '04', title: 'Zero-Downtime Launch & Managed Growth', desc: 'Executing DNS cutover, activating 24/7 APM monitoring, and running continuous CRO sprints.' },
+    ],
+  },
+
   'ai-chatbot': {
     id: 'ai-chatbot',
     slug: 'ai-chatbot',

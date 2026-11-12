@@ -56,7 +56,7 @@ export const CATEGORIES: CategoryData[] = [
       { id: 'ui-ux-services', number: '04', name: 'UI / UX Design Services', href: '/services/ui-ux' },
       { id: 'ai-integration', number: '05', name: 'Artificial Intelligence (AI) Integration Services', href: '/services/ai-integration' },
       { id: 'end-to-end', number: '06', name: 'Web and Mobile App Development (End-to-End Solutions)', href: '/services/web-development' },
-      { id: 'ecommerce', number: '07', name: 'E-commerce Application & Website Development', href: '/services/ecommerce' },
+      { id: 'ecommerce', number: '07', name: 'E-commerce Application and Website Management', href: '/services/ecommerce' },
       { id: 'ai-chatbot', number: '08', name: 'AI Chatbot and Audio Bot Solutions', href: '/services/ai-chatbot' },
       { id: 'cloud-deployment', number: '09', name: 'Cloud-Based Solutions and Deployment Services', href: '/services/cloud-deployment' },
       { id: 'erp', number: '10', name: 'Enterprise Resource Planning (ERP) Solutions', href: '/services/erp' },
@@ -69,10 +69,10 @@ export const CATEGORIES: CategoryData[] = [
     bgWord: 'MARKETING',
     description: 'Data-driven growth strategies that compound over time to engineer sustainable revenue systems.',
     services: [
-      { id: 'seo-growth', number: '01', name: 'SEO & Organic Growth', href: '/services#seo' },
-      { id: 'content-strategy', number: '02', name: 'Content Strategy', href: '/services#content' },
-      { id: 'social-media', number: '03', name: 'Social Media', href: '/services#social' },
-      { id: 'email-marketing', number: '04', name: 'Email Marketing', href: '/services#email' },
+      { id: 'seo-growth', number: '01', name: 'SEO & Organic Growth', href: '/services/seo' },
+      { id: 'content-strategy', number: '02', name: 'Content Strategy', href: '/services/content-strategy' },
+      { id: 'social-media', number: '03', name: 'Social Media Marketing', href: '/services/social-media' },
+      { id: 'email-marketing', number: '04', name: 'Email Marketing', href: '/services/email-marketing' },
     ],
   },
   {
@@ -81,10 +81,10 @@ export const CATEGORIES: CategoryData[] = [
     bgWord: 'SUPPORT',
     description: 'Lean on our in-house team for ongoing support with your design, development, and growth needs.',
     services: [
-      { id: 'website-maintenance', number: '01', name: 'Website Maintenance', href: '/services#maintenance' },
-      { id: 'hosting-security', number: '02', name: 'Hosting & Security', href: '/services#security' },
-      { id: 'analytics-reporting', number: '03', name: 'Analytics & Reporting', href: '/services#analytics' },
-      { id: 'consultation', number: '04', name: 'Consultation', href: '/services#consultation' },
+      { id: 'website-management', number: '01', name: 'Website Management', href: '/support/website-management' },
+      { id: 'hosting-security', number: '02', name: 'Hosting & Security', href: '/support/hosting-security' },
+      { id: 'analytics-reporting', number: '03', name: 'Analytics & Reporting', href: '/support/analytics-reporting' },
+      { id: 'consultation', number: '04', name: 'Consultation', href: '/support/consultation' },
     ],
   },
 ];
