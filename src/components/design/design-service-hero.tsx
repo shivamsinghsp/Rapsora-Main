@@ -1,9 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
 import { ArcGalleryHero } from '@/components/ui/arc-gallery-hero-component';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 import type { DesignServiceConfig } from '@/data/design-services';
@@ -17,30 +15,6 @@ interface DesignServiceHeroProps {
 export function DesignServiceHero({ service }: DesignServiceHeroProps) {
   return (
     <div className="relative w-full overflow-hidden bg-background">
-      {/* Breadcrumb Navigation Bar */}
-      <div className="container mx-auto px-6 max-w-[1400px] pt-28 sm:pt-36 relative z-30">
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="flex items-center gap-2 text-xs font-mono text-muted-foreground mb-4"
-        >
-          <Link href="/" className="hover:text-foreground transition-colors">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-          <Link href="/services" className="hover:text-foreground transition-colors">
-            Services
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-          <Link href="/design" className="hover:text-foreground transition-colors">
-            Design
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-          <span className="text-primary font-bold">{service.name}</span>
-        </motion.div>
-      </div>
-
       {/* ArcGalleryHero Component with Service Images & Content */}
       <ArcGalleryHero
         images={service.galleryImages}
@@ -49,7 +23,7 @@ export function DesignServiceHero({ service }: DesignServiceHeroProps) {
         description={service.description}
         primaryCTA={service.primaryCTA}
         secondaryCTA={service.secondaryCTA}
-        className="pt-4 pb-12"
+        className="pt-24 sm:pt-28 pb-12 sm:pb-16"
       />
 
       {/* Live Impact Quantitative Metrics Bar */}
@@ -82,3 +56,4 @@ export function DesignServiceHero({ service }: DesignServiceHeroProps) {
     </div>
   );
 }
+

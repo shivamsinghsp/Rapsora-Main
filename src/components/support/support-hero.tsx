@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronRight, Terminal } from 'lucide-react';
+import { ArrowRight, Terminal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 import type { SupportServiceConfig } from '@/data/support-services';
@@ -17,7 +17,7 @@ interface SupportHeroProps {
 
 export function SupportHero({ service, visualSlot }: SupportHeroProps) {
   return (
-    <section className="relative w-full pt-32 sm:pt-40 pb-16 sm:pb-24 overflow-hidden bg-background">
+    <section className="relative w-full pt-24 sm:pt-28 pb-16 sm:pb-24 overflow-hidden bg-background">
       {/* Oversized background typography watermark */}
       <div className="pointer-events-none absolute top-12 right-0 select-none overflow-hidden opacity-[0.03] dark:opacity-[0.05] z-0">
         <span className="font-heading text-[22vw] font-black leading-none tracking-tighter text-foreground">
@@ -32,24 +32,6 @@ export function SupportHero({ service, visualSlot }: SupportHeroProps) {
       </div>
 
       <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
-        {/* Breadcrumb Navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="flex items-center gap-2 text-xs font-mono text-muted-foreground mb-8"
-        >
-          <Link href="/" className="hover:text-foreground transition-colors">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-          <Link href="/support" className="hover:text-foreground transition-colors">
-            Support
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-          <span className="text-primary font-bold">{service.name}</span>
-        </motion.div>
-
         {/* Main Grid: Copy Left, Custom Visual Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-16 lg:mb-20">
           {/* Left Column */}

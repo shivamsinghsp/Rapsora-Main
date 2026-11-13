@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronRight, Terminal } from 'lucide-react';
+import { ArrowRight, Terminal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 import type { MarketingServiceConfig } from '@/data/marketing-services';
@@ -17,7 +17,7 @@ interface ServiceDetailHeroProps {
 
 export function ServiceDetailHero({ service }: ServiceDetailHeroProps) {
   return (
-    <section className="relative w-full pt-32 sm:pt-40 pb-16 sm:pb-24 overflow-hidden bg-background">
+    <section className="relative w-full pt-24 sm:pt-28 pb-16 sm:pb-24 overflow-hidden bg-background">
       {/* Ambient Atmospheric Glow */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-1/4 right-[10%] w-[500px] h-[500px] bg-primary/12 rounded-full blur-[140px] opacity-70" />
@@ -25,24 +25,6 @@ export function ServiceDetailHero({ service }: ServiceDetailHeroProps) {
       </div>
 
       <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
-        {/* Breadcrumb Navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="flex items-center gap-2 text-xs font-mono text-muted-foreground mb-8"
-        >
-          <Link href="/" className="hover:text-foreground transition-colors">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-          <Link href="/marketing" className="hover:text-foreground transition-colors">
-            Marketing
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-          <span className="text-primary font-bold">{service.name}</span>
-        </motion.div>
-
         {/* Main Grid: Left copy, Right visual showcase */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-16 lg:mb-20">
           {/* Left Column */}

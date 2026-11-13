@@ -88,7 +88,7 @@ export const ArcGalleryHero: React.FC<ArcGalleryHeroProps> = ({
   return (
     <section
       className={cn(
-        'relative overflow-hidden bg-background text-foreground min-h-[90vh] flex flex-col justify-between pt-12 pb-16 px-4 sm:px-6 isolate',
+        'relative overflow-hidden bg-background text-foreground flex flex-col items-center pt-20 sm:pt-24 pb-14 sm:pb-18 px-4 sm:px-6 isolate',
         className
       )}
     >
