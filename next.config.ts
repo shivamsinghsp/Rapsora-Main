@@ -109,6 +109,16 @@ const nextConfig: NextConfig = {
         destination: '/support/analytics-reporting',
         permanent: true,
       },
+      {
+        source: '/services/brand-identity',
+        destination: '/services/branding',
+        permanent: true,
+      },
+      {
+        source: '/design/brand-identity',
+        destination: '/services/branding',
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

@@ -1,71 +1,62 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { MousePointer2, Layers, Cpu } from 'lucide-react';
-import { Hero04, type Hero04Props } from '@/components/ui/hero-04';
+import * as React from 'react';
+import { DesignServiceHero } from '@/components/design/design-service-hero';
+import { DesignPillarsSection } from '@/components/design/design-pillars-section';
+import { DesignCapabilitiesGrid } from '@/components/design/design-capabilities-grid';
+import { DesignProcess } from '@/components/design/design-process';
+import { DesignTools } from '@/components/design/design-tools';
+import { DesignFaq } from '@/components/design/design-faq';
+import { CtaSection } from '@/components/sections/cta-section';
+import { ContactFormSection } from '@/components/sections/contact-form-section';
+import { DESIGN_SERVICES } from '@/data/design-services';
 
-const heroValues: Hero04Props = {
-    badge: 'CAPABILITY REF.004',
-    title: 'Obsessive',
-    titleLine2: (
-        <span className="italic text-primary">Architecture.</span>
-    ),
-    description:
-        'We don\'t just design websites; we engineer behavioral destiny. Every pixel is a calculated trigger designed to lead users to the ultimate objective.',
-    washImage: '/images/pastel-bg-3.jpg',
-    primaryImage: '/images/hero-web-design-laptop.jpg',
-    secondaryImage: '/images/hero-web-design-tablet.jpg',
-    primaryAlt: 'Editorial laptop presentation of modern agency website design on pastel linen',
-    secondaryAlt: 'Editorial tablet presentation of responsive mobile website on pastel linen',
-    animation: 'subtle',
-    primaryCTA: {
-        ctaEnabled: true,
-        text: 'Start your project',
-        link: '/contact',
-        variant: 'default',
-        size: 'lg',
-    },
-    secondaryCTA: {
-        ctaEnabled: true,
-        text: 'View our work',
-        link: '/work',
-        variant: 'link',
-    },
-};
+const SERVICE = DESIGN_SERVICES['web-design'];
 
 export default function WebDesignPage() {
-    return (
-        <main className="relative bg-background overflow-hidden">
-            {/* ── HERO SECTION — Hero04 Component with Editorial Imagery ── */}
-            <div className="pt-24 lg:pt-32">
-                <Hero04 {...heroValues} />
-            </div>
+  return (
+    <main className="relative bg-background overflow-hidden text-foreground">
+      {/* ── 1. ARC GALLERY HERO WITH LIVE METRICS ── */}
+      <DesignServiceHero service={SERVICE} />
 
-            {/* ── ORIGINAL PILLARS SECTION (UNTOUCHED) ── */}
-            <div className="container mx-auto px-6 py-20 lg:py-28">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-                    {[
-                        { title: 'Behavioral UX', icon: MousePointer2, desc: 'User journeys mapped against deep psychological archetypes to minimize bounce and maximize intent.' },
-                        { title: 'Structural Integrity', icon: Layers, desc: 'Clean, brutalist-editorial layouts that project authority and elite brand positioning.' },
-                        { title: 'Core Vitals', icon: Cpu, desc: 'High-velocity infrastructure that ensures zero-friction experiences across all global nodes.' }
-                    ].map((item, i) => (
-                        <motion.div 
-                            key={item.title}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: i * 0.1 }}
-                            className="flex flex-col gap-6"
-                        >
-                            <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                                <item.icon className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-foreground tracking-tight">{item.title}</h3>
-                            <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </main>
-    );
+      {/* ── 2. STRATEGIC ARCHITECTURE PILLARS ── */}
+      <DesignPillarsSection
+        pillars={SERVICE.pillars}
+        title="Engineering Conversion Architecture."
+        subtitle="Every layout, typography pairing, whitespace cadence, and interactive state is engineered to guide user intent toward high-value conversions."
+      />
+
+      {/* ── 3. SPECIALIZED WEB DESIGN CAPABILITIES ── */}
+      <DesignCapabilitiesGrid
+        capabilities={SERVICE.capabilities}
+        title="Comprehensive Web Deliverables."
+        subtitle="From enterprise corporate flagships and high-velocity SaaS landing pages to editorial e-commerce stores and complete atomic component systems."
+      />
+
+      {/* ── 4. 5-STAGE WEB DESIGN PROCESS ── */}
+      <DesignProcess
+        steps={SERVICE.process}
+        title="Our Web Design Cadence."
+        subtitle="A proven five-phase process progressing from user flow scoping to interactive prototyping and production-certified developer handoff."
+      />
+
+      {/* ── 5. CREATIVE TOOLING STACK ── */}
+      <DesignTools
+        tools={SERVICE.tools}
+        title="Web Interface & Prototyping Stack."
+        subtitle="Modern collaborative design tools, 3D engines, and component testing platforms ensuring design-to-code parity."
+      />
+
+      {/* ── 6. WEB DESIGN FAQS ── */}
+      <DesignFaq
+        faqs={SERVICE.faqs}
+        title="Web Design FAQs."
+        subtitle="Answers regarding responsive design viewports, developer handoffs, conversion optimization, and design system governance."
+      />
+
+      {/* ── 7. CLOSING CTA & CONTACT FORM ── */}
+      <CtaSection />
+      <ContactFormSection />
+    </main>
+  );
 }
