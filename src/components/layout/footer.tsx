@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { siteConfig } from '@/constants/site';
 import { GooeyCTA } from '@/components/shared/gooey-cta';
 import { Logo } from '@/components/layout/logo';
+import { VisitorCounter } from '@/components/shared/visitor-counter';
 
 export function Footer() {
     const currentYear = new Date().getFullYear();
@@ -166,6 +167,7 @@ export function Footer() {
 
                         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
                             <span className="xl:hidden">© Rapsora Technologies Pvt. Ltd. {currentYear}</span>
+                            <VisitorCounter />
                           
 
                             <div className="hidden xl:flex items-center gap-x-6">
