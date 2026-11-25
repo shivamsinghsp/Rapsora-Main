@@ -15,6 +15,7 @@ touch the components or CSS.
 | `hero.badge: 'Your text'` | Shows a small pill above the headline (`null` hides it, the default). |
 | `composition.pointerParallax: false` | Disables mouse-driven parallax/tilt. |
 | `hero.secondaryCta: null` | Hides the "Explore services" button. |
+| `palette.enabled: false` | Uses the regular brand violet in the hero instead of pastels. |
 
 Visitors with **reduced motion** enabled never see the intro or the motion
 loops, whatever these settings say.
@@ -51,9 +52,9 @@ Units are **su** (1 su = 1% of the stage width), so layouts scale fluidly.
   `desktop` and `mobile` placement (`w`, `x`, `y`, `z` depth, `ry` rotation;
   `mobile: null` hides that slot on phones) and a `parallax` strength.
 - `composition.cards[]`: the rotating browser cards. Each has a `kind`
-  (analytics, pipeline, website, chatbot, storefront), a `startSlot`, a
-  `designWidth` (its content scales from this, so it grows when it reaches
-  the centre), its own `float` motion (`y`, `x`, `rx`, `ry`, `duration`,
+  (analytics, pipeline, website, chatbot, storefront), a `startSlot`, a pastel
+  `tint`, an `aspect` and a `designWidth` (all cards share 37 / 1.45 so they
+  look identical in proportion in any slot; content scales with the slot), its own `float` motion (`y`, `x`, `rx`, `ry`, `duration`,
   `delay`) and an `order`: the order cards take turns at the centre.
 - `composition.rotation`: `interval` (time between swaps), `duration` (length
   of a swap), `pauseOnHover`, `centerSlot`, `firstSwapDelay` (extra wait after
@@ -69,6 +70,19 @@ Units are **su** (1 su = 1% of the stage width), so layouts scale fluidly.
 - `composition.links[]`: glowing SVG arcs between cards (`[]` removes them).
 - `motionScale`: lighter idle motion on tablets (`md`) and phones (`base`).
 - `tilt`, `perspective`, `height`, `stageWidth`: stage geometry.
+
+## Colours (pastel palette)
+
+`palette` re-tints the hero and intro with soft pastels while keeping the dark
+design. It overrides the brand tokens (`--primary`, `--brand-light`,
+`--brand-dark`) on the hero only, so the header, footer and other sections keep
+the regular brand colours.
+
+- `palette.primary` / `primaryLight` / `primaryDeep`: pastel versions of the
+  brand violet (buttons, glows, links, wordmark).
+- `palette.ink`: text colour on pastel buttons.
+- `palette.tints`: lavender, mint, peach, sky, pink. Each card, the phone and
+  each chip picks one with its `tint` field.
 
 ## Background
 

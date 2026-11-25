@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { Bot, Cloud, Code2, ShieldCheck } from 'lucide-react';
 import { HERO_CONFIG, type FloatMotion, type Placement, type Slot } from './hero-config';
 import { InterfaceCard } from './interface-mockups';
+import { tintVar } from './palette';
 import styles from './hero.module.css';
 
 const COMP = HERO_CONFIG.composition;
@@ -227,6 +228,7 @@ export function TechnologyComposition() {
                 const slot = COMP.slots[rotation.slotOf[i]];
                 return {
                     ...slotVars(slot, card.float),
+                    '--tint': tintVar(card.tint),
                     '--design-w': card.designWidth,
                     '--aspect': card.aspect,
                     '--order': card.order,
@@ -307,6 +309,7 @@ export function TechnologyComposition() {
                             style={
                                 {
                                     ...placementVars(card.desktop, card.mobile, card.parallax, card.float),
+                                    '--tint': tintVar(card.tint),
                                     '--design-w': card.desktop.w,
                                     '--aspect': card.aspect,
                                     '--order': card.order,
@@ -336,6 +339,7 @@ export function TechnologyComposition() {
                                 style={
                                     {
                                         ...placementVars(desk, mob, chip.parallax, chip.float),
+                                        '--tint': tintVar(chip.tint),
                                         '--order': COMP.cards.length + COMP.fixedCards.length + i,
                                     } as CSSProperties
                                 }

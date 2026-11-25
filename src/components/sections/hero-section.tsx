@@ -7,6 +7,7 @@ import { TechnologyComposition } from './hero/technology-composition';
 import { BackgroundEffects } from './hero/background-effects';
 import { HERO_CONFIG } from './hero/hero-config';
 import { useIntroStatus } from './hero/use-intro-status';
+import { paletteVars } from './hero/palette';
 import styles from './hero/hero.module.css';
 
 /**
@@ -57,6 +58,7 @@ export function HeroSection() {
             data-revealed={revealed ? 'true' : 'false'}
             style={
                 {
+                    ...paletteVars(),
                     '--reveal-duration': `${HERO_CONFIG.hero.revealDuration}ms`,
                     '--reveal-stagger': `${HERO_CONFIG.hero.revealStagger}ms`,
                     '--motion-md': motionScale.md,
