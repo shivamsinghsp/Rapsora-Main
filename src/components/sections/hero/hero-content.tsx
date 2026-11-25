@@ -13,19 +13,21 @@ const order = (i: number) => ({ '--i': i }) as CSSProperties;
 export function HeroContent() {
     return (
         <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-4 pt-28 text-center sm:px-6 sm:pt-32 lg:pt-32">
-            {/* Intro badge */}
-            <span
-                className={`${styles.reveal} inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[12px] font-medium tracking-wide text-white/80 sm:text-[13px]`}
-                style={order(0)}
-                data-rs-reveal=""
-            >
-                <span className={styles.badgeDot} aria-hidden="true" />
-                {HERO.badge}
-            </span>
+            {/* Optional intro badge (hero.badge: null hides it) */}
+            {HERO.badge && (
+                <span
+                    className={`${styles.reveal} mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[12px] font-medium tracking-wide text-white/80 sm:mb-7 sm:text-[13px]`}
+                    style={order(0)}
+                    data-rs-reveal=""
+                >
+                    <span className={styles.badgeDot} aria-hidden="true" />
+                    {HERO.badge}
+                </span>
+            )}
 
             {/* Headline */}
             <h1
-                className={`${styles.reveal} mt-6 font-heading text-[clamp(2.4rem,7vw,5.25rem)] font-medium leading-[1.02] tracking-[-0.035em] text-white sm:mt-7`}
+                className={`${styles.reveal} font-heading text-[clamp(2.4rem,7vw,5.25rem)] font-medium leading-[1.02] tracking-[-0.035em] text-white`}
                 style={order(1)}
                 data-rs-reveal=""
             >

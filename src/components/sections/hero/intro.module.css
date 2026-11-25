@@ -84,13 +84,11 @@
     animation: cameraExit var(--exit-duration) cubic-bezier(0.7, 0, 0.2, 1) forwards;
 }
 
-/* Slow dolly while the letters fly in, then a gentle sway that keeps the
-   extrusion visible and makes the wordmark read as a physical object. */
+/* Straight-on, slightly tilted back: readable, with the extrusion visible
+   as a dimensional underside. */
 .pose {
     transform-style: preserve-3d;
-    animation:
-        dolly var(--letters-done) cubic-bezier(0.16, 1, 0.3, 1) both,
-        sway 4.5s ease-in-out var(--letters-done) infinite alternate;
+    transform: rotateX(10deg);
 }
 
 .wordmark {
@@ -118,8 +116,25 @@
     position: relative;
     display: inline-block;
     transform-style: preserve-3d;
+    transform-origin: 50% 100%;
     opacity: 0;
-    animation: letterFly var(--letter-duration) linear both;
+    animation: letterFall var(--letter-duration) linear both;
+    animation-delay: calc(var(--initial-delay) + var(--i) * var(--letter-stagger));
+}
+
+/* Pool of light that flashes where the letter lands. */
+.impact {
+    position: absolute;
+    left: -18%;
+    right: -18%;
+    bottom: -0.08em;
+    height: 0.16em;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, color-mix(in oklch, var(--brand-light) 85%, #fff), color-mix(in oklch, var(--primary) 60%, transparent) 55%, transparent);
+    transform: translateZ(-0.05em) scaleX(0.4);
+    opacity: 0;
+    pointer-events: none;
+    animation: impactFlash var(--letter-duration) linear both;
     animation-delay: calc(var(--initial-delay) + var(--i) * var(--letter-stagger));
 }
 
@@ -274,25 +289,33 @@
 
 /* ---------- Keyframes ---------- */
 
-@keyframes letterFly {
+@keyframes letterFall {
     0% {
         opacity: 0;
-        transform: translate3d(var(--dx), var(--dy), var(--dz)) rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(var(--rz))
-            scale(0.6);
-        animation-timing-function: cubic-bezier(0.12, 0.7, 0.3, 1);
+        transform: translate3d(0, calc(var(--fall-height) * -1), 0) rotateX(-35deg);
+        /* gravity: accelerate into the landing */
+        animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
     }
-    35% {
+    14% {
         opacity: 1;
     }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotateX(0deg);
+        animation-timing-function: ease-out;
+    }
+    /* impact: squash */
     68% {
-        opacity: 1;
-        transform: translate3d(0, 0, 0.35em) rotateX(calc(var(--rx) * -0.05)) rotateY(calc(var(--ry) * -0.06)) rotateZ(0deg)
-            scale(1.03);
+        transform: translate3d(0, 0.02em, 0) scale(1.07, 0.86);
+        animation-timing-function: ease-out;
+    }
+    /* small rebound */
+    81% {
+        transform: translate3d(0, -0.08em, 0) scale(0.98, 1.04);
         animation-timing-function: ease-in-out;
     }
-    85% {
-        transform: translate3d(0, 0, -0.06em) rotateX(calc(var(--rx) * 0.015)) rotateY(calc(var(--ry) * 0.02)) scale(0.995);
-        animation-timing-function: ease-out;
+    92% {
+        transform: translate3d(0, 0, 0) scale(1.01, 0.99);
     }
     100% {
         opacity: 1;
@@ -300,38 +323,37 @@
     }
 }
 
-@keyframes dolly {
-    from {
-        transform: translateZ(-240px) rotateX(30deg) rotateY(-12deg);
+@keyframes impactFlash {
+    0%,
+    57% {
+        opacity: 0;
+        transform: translateZ(-0.05em) scaleX(0.4);
     }
-    to {
-        transform: rotateX(18deg) rotateY(-6deg);
+    64% {
+        opacity: 1;
+        transform: translateZ(-0.05em) scaleX(1.1);
     }
-}
-
-@keyframes sway {
-    from {
-        transform: rotateX(18deg) rotateY(-6deg);
-    }
-    to {
-        transform: rotateX(14deg) rotateY(6deg);
+    100% {
+        opacity: 0;
+        transform: translateZ(-0.05em) scaleX(1.5);
     }
 }
 
+/* Clean hand-off: the wordmark eases back and fades as the hero appears. */
 @keyframes cameraExit {
     0% {
         transform: none;
         opacity: 1;
     }
     100% {
-        transform: translateZ(520px) translateY(-4%);
+        transform: translateY(-4%) scale(0.94);
         opacity: 0;
     }
 }
 
 @keyframes overlayOut {
     0%,
-    25% {
+    20% {
         opacity: 1;
     }
     100% {

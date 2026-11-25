@@ -308,35 +308,79 @@
              > .enter (one-time entrance) > window
    -------------------------------------------------------------------------- */
 
+/* Registered so a slot change animates instead of jumping: width, position,
+   depth, angle, visibility, parallax strength and dimming all glide. */
+@property --cw { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --cx { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --cy { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --cz { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --cry { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --cvis { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --cdepth { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --cdim { syntax: '<number>'; inherits: true; initial-value: 0; }
+
 .card,
 .chip {
-    --cw: var(--dw);
-    --cx: var(--dx);
-    --cy: var(--dy);
-    --cz: var(--dz);
-    --cry: var(--dry);
+    --cw: var(--sw-d);
+    --cx: var(--sx-d);
+    --cy: var(--sy-d);
+    --cz: var(--sz-d);
+    --cry: var(--sry-d);
+    --cdim: var(--sdim-d);
+    --cvis: 1;
+    --cdepth: var(--sdepth);
     position: absolute;
     left: 50%;
     top: calc(var(--cy) * 1cqw);
+    opacity: var(--cvis);
     transform-style: preserve-3d;
-    transform: translateX(-50%) translate3d(calc(var(--cx) * 1cqw), 0, calc(var(--cz) * 1cqw)) rotateY(calc(var(--cry) * 1deg));
+    transform: translateX(-50%) translate3d(calc(var(--cx) * 1cqw), 0, calc(var(--cz) * 1cqw))
+        rotateY(calc(var(--cry) * 1deg)) scale(calc(0.85 + 0.15 * var(--cvis)));
 }
 
 .card {
     width: calc(var(--cw) * 1cqw);
     aspect-ratio: var(--aspect);
-    /* Content is designed in em at desktop size and scales with the card. */
-    font-size: calc(var(--cw) / var(--dw) * 1cqw);
+    /* Content is designed in em at its design width and scales with the card,
+       so a card that moves to the centre grows and becomes fully readable. */
+    font-size: calc(var(--cw) / var(--design-w) * 1cqw);
+    transition-property: --cw, --cx, --cy, --cz, --cry, --cvis, --cdepth, --cdim;
+    transition-duration: var(--swap-duration);
+    transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* During a swap the incoming card comes forward early and the outgoing card
+   sinks back first, so they pass one in front of the other, never through. */
+.card[data-move='in'] {
+    transition-timing-function:
+        cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1),
+        cubic-bezier(0.2, 0.8, 0.3, 1), cubic-bezier(0.65, 0, 0.35, 1), ease-out, ease, ease;
+}
+
+.card[data-move='out'] {
+    transition-timing-function:
+        cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1),
+        cubic-bezier(0.2, 0.9, 0.3, 1), cubic-bezier(0.65, 0, 0.35, 1), ease-in, ease, ease;
+}
+
+/* The incoming card glows slightly brighter while it travels forward. */
+.card[data-move='in'] .window {
+    box-shadow:
+        0 0 0 0.09em rgba(255, 255, 255, 0.6),
+        0 2.6em 4.5em -1em rgba(0, 0, 0, 0.75),
+        0 0 8em -1em color-mix(in oklch, var(--primary) 65%, transparent);
 }
 
 @media (max-width: 767px) {
     .card,
     .chip {
-        --cw: var(--mw);
-        --cx: var(--mx);
-        --cy: var(--my);
-        --cz: var(--mz);
-        --cry: var(--mry);
+        --cw: var(--sw-m);
+        --cx: var(--sx-m);
+        --cy: var(--sy-m);
+        --cz: var(--sz-m);
+        --cry: var(--sry-m);
+        --cdim: var(--sdim-m);
+        --cvis: var(--svis-m);
     }
 
     .card[data-mobile='hide'],
@@ -354,7 +398,7 @@
 }
 
 .parallax {
-    transform: translate3d(calc(var(--px, 0) * var(--depth) * 0.8cqw), calc(var(--py, 0) * var(--depth) * 0.5cqw), 0);
+    transform: translate3d(calc(var(--px, 0) * var(--cdepth) * 0.8cqw), calc(var(--py, 0) * var(--cdepth) * 0.5cqw), 0);
     transition: transform var(--pointer-ease) cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -396,7 +440,7 @@
     z-index: 5;
     pointer-events: none;
     border-radius: inherit;
-    background: linear-gradient(180deg, rgba(0, 0, 0, var(--dim)), rgba(0, 0, 0, calc(var(--dim) * 1.6)));
+    background: linear-gradient(180deg, rgba(0, 0, 0, var(--cdim)), rgba(0, 0, 0, calc(var(--cdim) * 1.6)));
 }
 
 /* Ambient highlight that glides across each surface on its own schedule. */
