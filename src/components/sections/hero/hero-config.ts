@@ -16,6 +16,7 @@
  *   composition.enabled          false → hide the 3D card composition
  *   composition.rotation.enabled false → cards stay in their starting slots
  *   composition.pointerParallax  false → no mouse-driven parallax
+ *   palette.enabled              false → regular brand colours instead of pastels
  */
 
 export type MockupKind = 'analytics' | 'pipeline' | 'website' | 'chatbot' | 'storefront' | 'mobile';
@@ -59,6 +60,8 @@ export interface FloatMotion {
     delay: number;
 }
 
+export type PastelTint = 'lavender' | 'mint' | 'peach' | 'sky' | 'pink';
+
 export interface RotatingCard {
     id: string;
     kind: Exclude<MockupKind, 'mobile'>;
@@ -70,6 +73,8 @@ export interface RotatingCard {
     designWidth: number;
     /** Slot the card starts in (index into `slots`). */
     startSlot: number;
+    /** Pastel surface tint of the window. */
+    tint: PastelTint;
     float: FloatMotion;
     /** Entrance order after the intro. */
     order: number;
@@ -80,6 +85,7 @@ export interface FixedCard {
     kind: MockupKind;
     label: string;
     aspect: number;
+    tint: PastelTint;
     desktop: Placement;
     mobile: Placement | null;
     float: FloatMotion;
@@ -91,6 +97,7 @@ export interface FloatingChip {
     id: string;
     icon: 'bot' | 'cloud' | 'shield' | 'code';
     label: string;
+    tint: PastelTint;
     desktop: { x: number; y: number; z: number };
     mobile: { x: number; y: number; z: number } | null;
     float: FloatMotion;
@@ -98,6 +105,29 @@ export interface FloatingChip {
 }
 
 export const HERO_CONFIG = {
+    /**
+     * Pastel palette for the hero and intro. It keeps the dark design and
+     * replaces the strong brand violet with soft pastel tones *inside the hero
+     * only* (the rest of the site keeps the regular brand tokens).
+     * Set `enabled: false` to use the regular brand colours in the hero too.
+     */
+    palette: {
+        enabled: true,
+        /** Pastel replacements for the brand tokens (--primary, --brand-light, --brand-dark). */
+        primary: 'oklch(0.78 0.11 300)',
+        primaryLight: 'oklch(0.89 0.06 300)',
+        primaryDeep: 'oklch(0.64 0.12 300)',
+        /** Text colour used on pastel buttons. */
+        ink: '#16121f',
+        tints: {
+            lavender: '#d3c4ff',
+            mint: '#bdeedb',
+            peach: '#ffd8c2',
+            sky: '#c2e0ff',
+            pink: '#ffcde6',
+        },
+    },
+
     intro: {
         /** Master switch for the cinematic intro. */
         enabled: true,
@@ -194,14 +224,15 @@ export const HERO_CONFIG = {
             firstSwapDelay: 2600,
         },
         /**
-         * Desktop only (≥1024px): shrink the composition on short screens so the
+         * Off by default (cards stay full size). Desktop only (≥1024px): when
+         * enabled, shrink the composition on short screens so the
          * cards always fit in the first screen under the headline instead of
          * being cut off at the bottom.
          *   reserve: vertical space taken by the header + headline block (px)
          *   ratio:   stage width per px of remaining height (≈ 1 / card height share)
          *   min:     never shrink the stage below this width (px)
          */
-        fitViewport: { enabled: true, reserve: 490, ratio: 2.75, min: 640 },
+        fitViewport: { enabled: false, reserve: 490, ratio: 2.75, min: 640 },
         /** Perspective (su). */
         perspective: 150,
         /** Stage height (su) on desktop/tablet and on phones. */
@@ -246,33 +277,37 @@ export const HERO_CONFIG = {
                 mobile: null,
             },
         ] satisfies Slot[],
-        /** Browser-window cards that rotate through the slots. */
+        /**
+         * Browser-window cards that rotate through the slots. All share one
+         * design width and aspect ratio, so every card looks identical in
+         * proportion in any slot and is simply scaled by the slot's width.
+         */
         cards: [
             {
-                id: 'analytics', kind: 'analytics', label: 'analytics', aspect: 1.4, designWidth: 22, startSlot: 0,
+                id: 'analytics', kind: 'analytics', label: 'analytics', aspect: 1.45, designWidth: 37, startSlot: 0, tint: 'sky',
                 float: { y: 1.1, x: 0.4, rx: 1.5, ry: -2.5, duration: 11, delay: -3 }, order: 4,
             },
             {
-                id: 'pipeline', kind: 'pipeline', label: 'crm', aspect: 1.42, designWidth: 29, startSlot: 1,
+                id: 'pipeline', kind: 'pipeline', label: 'crm', aspect: 1.45, designWidth: 37, startSlot: 1, tint: 'mint',
                 float: { y: 0.9, x: -0.3, rx: -1.2, ry: 2, duration: 9, delay: -6 }, order: 2,
             },
             {
-                id: 'website', kind: 'website', label: 'yourbrand.com', aspect: 1.45, designWidth: 37, startSlot: 2,
+                id: 'website', kind: 'website', label: 'yourbrand.com', aspect: 1.45, designWidth: 37, startSlot: 2, tint: 'lavender',
                 float: { y: 0.8, x: 0, rx: 1, ry: 0.8, duration: 8, delay: 0 }, order: 0,
             },
             {
-                id: 'chatbot', kind: 'chatbot', label: 'ai-assistant', aspect: 1.42, designWidth: 29, startSlot: 3,
+                id: 'chatbot', kind: 'chatbot', label: 'ai-assistant', aspect: 1.45, designWidth: 37, startSlot: 3, tint: 'pink',
                 float: { y: 1, x: 0.3, rx: 1.2, ry: -2, duration: 10, delay: -2 }, order: 1,
             },
             {
-                id: 'storefront', kind: 'storefront', label: 'store', aspect: 1.4, designWidth: 22, startSlot: 4,
+                id: 'storefront', kind: 'storefront', label: 'store', aspect: 1.45, designWidth: 37, startSlot: 4, tint: 'peach',
                 float: { y: 1.2, x: -0.4, rx: -1.5, ry: 2.5, duration: 12, delay: -7 }, order: 3,
             },
         ] satisfies RotatingCard[],
         /** Cards that keep a fixed position (in front of the rotation). */
         fixedCards: [
             {
-                id: 'mobile', kind: 'mobile', label: 'app', aspect: 0.5,
+                id: 'mobile', kind: 'mobile', label: 'app', aspect: 0.5, tint: 'lavender',
                 desktop: { w: 9.5, x: 17.5, y: 15, z: 8, ry: -8 },
                 mobile: { w: 25, x: 33, y: 42, z: 10, ry: -8 },
                 float: { y: 1.6, x: 0.2, rx: 2, ry: -4, duration: 7, delay: -1.5 },
@@ -281,22 +316,22 @@ export const HERO_CONFIG = {
         ] satisfies FixedCard[],
         chips: [
             {
-                id: 'ai', icon: 'bot', label: 'AI automation',
+                id: 'ai', icon: 'bot', label: 'AI automation', tint: 'mint',
                 desktop: { x: -29, y: 28, z: 12 }, mobile: { x: -26, y: 80, z: 12 },
                 float: { y: 1.4, x: 0.5, rx: 0, ry: 0, duration: 7.5, delay: -2 }, parallax: 2.3,
             },
             {
-                id: 'cloud', icon: 'cloud', label: 'Cloud & hosting',
+                id: 'cloud', icon: 'cloud', label: 'Cloud & hosting', tint: 'sky',
                 desktop: { x: 34, y: 0.5, z: 6 }, mobile: null,
                 float: { y: 1.1, x: -0.4, rx: 0, ry: 0, duration: 9, delay: -5 }, parallax: 2,
             },
             {
-                id: 'secure', icon: 'shield', label: 'Secure by default',
+                id: 'secure', icon: 'shield', label: 'Secure by default', tint: 'lavender',
                 desktop: { x: -15, y: 2, z: 5 }, mobile: { x: 18, y: 3, z: 8 },
                 float: { y: 1, x: 0.3, rx: 0, ry: 0, duration: 8, delay: -4 }, parallax: 1.8,
             },
             {
-                id: 'code', icon: 'code', label: 'Web development',
+                id: 'code', icon: 'code', label: 'Web development', tint: 'peach',
                 desktop: { x: 39, y: 29, z: 10 }, mobile: null,
                 float: { y: 1.3, x: -0.3, rx: 0, ry: 0, duration: 8.5, delay: -6.5 }, parallax: 2.2,
             },

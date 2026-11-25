@@ -51,7 +51,7 @@ export function HeroContent() {
                 style={order(3)}
                 data-rs-reveal=""
             >
-                <GooeyCTA href={HERO.primaryCta.href} text={HERO.primaryCta.label} />
+                <GooeyCTA href={HERO.primaryCta.href} text={HERO.primaryCta.label} textColorClass="text-[var(--pastel-ink)]" />
                 {HERO.secondaryCta && (
                     <Link
                         href={HERO.secondaryCta.href}

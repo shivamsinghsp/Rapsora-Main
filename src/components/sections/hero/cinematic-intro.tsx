@@ -6,11 +6,20 @@ import { CinematicStreaksCanvas } from '../motion-hero/cinematic-streaks-canvas'
 import { THEME_PRESETS } from '../motion-hero/presets';
 import { HERO_CONFIG, INTRO_TIMELINE } from './hero-config';
 import { completeIntro, markIntroStarted, type IntroStatus } from './use-intro-status';
+import { paletteVars } from './palette';
 import styles from './intro.module.css';
 
 const INTRO = HERO_CONFIG.intro;
-/** The project's violet preset matches the brand (#9061F9). */
-const STREAK_THEME = THEME_PRESETS['violet-cosmos'];
+/** The project's violet preset, softened to the pastel palette when enabled. */
+const PALETTE = HERO_CONFIG.palette;
+const STREAK_THEME = PALETTE.enabled
+    ? {
+          ...THEME_PRESETS['violet-cosmos'],
+          streakColor: PALETTE.tints.lavender,
+          streakHeadColor: '#ffffff',
+          accentGlow: PALETTE.tints.lavender,
+      }
+    : THEME_PRESETS['violet-cosmos'];
 
 /* ------------------------------------------------------------------ */
 /* Deterministic geometry (integer maths only → identical everywhere)  */
@@ -18,8 +27,8 @@ const STREAK_THEME = THEME_PRESETS['violet-cosmos'];
 
 /** Extrusion layer colours: brand violet fading to near-black with depth. */
 function extrusionColor(k: number, depth: number) {
-    const l = 0.47 - (0.33 * (k - 1)) / Math.max(1, depth - 1);
-    return `oklch(${l.toFixed(3)} 0.16 300)`;
+    const l = (PALETTE.enabled ? 0.62 : 0.47) - (0.38 * (k - 1)) / Math.max(1, depth - 1);
+    return `oklch(${l.toFixed(3)} ${PALETTE.enabled ? 0.1 : 0.16} 300)`;
 }
 
 const PARTICLES = Array.from({ length: INTRO.particles }, (_, i) => ({
@@ -128,6 +137,7 @@ export function CinematicIntro({ status, onExitStart }: CinematicIntroProps) {
     if (status !== 'play') return null;
 
     const vars = {
+        ...paletteVars(),
         '--perspective': `${INTRO.perspective}px`,
         '--initial-delay': `${INTRO.initialDelay}ms`,
         '--letter-duration': `${INTRO.letterDuration}ms`,
