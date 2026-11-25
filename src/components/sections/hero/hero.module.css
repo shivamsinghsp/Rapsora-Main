@@ -1,0 +1,712 @@
+/* ==========================================================================
+   RapSora hero + cinematic intro
+   Colours come from the global design tokens (--primary, --brand-light, …).
+   Timings and geometry come from hero-config.ts as custom properties.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CINEMATIC INTRO
+   -------------------------------------------------------------------------- */
+
+.intro {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    background: #000;
+    overflow: hidden;
+    perspective: var(--intro-perspective);
+    color: #fff;
+    animation: fadeIn 260ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .intro {
+        display: none;
+    }
+}
+
+.intro[data-phase='exit'] {
+    pointer-events: none;
+    animation: introExit var(--exit-duration) cubic-bezier(0.7, 0, 0.2, 1) forwards;
+}
+
+.introGlow {
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 45% 35% at 50% 48%, color-mix(in oklch, var(--primary) 30%, transparent), transparent 70%),
+        radial-gradient(ellipse 80% 60% at 50% 120%, color-mix(in oklch, var(--primary) 18%, transparent), transparent 70%);
+    opacity: 0;
+    animation: fadeIn 1600ms ease-out both;
+    animation-delay: calc(var(--initial-delay) * 0.6);
+}
+
+.letterStage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(10px, 2.2vw, 22px);
+    transform-style: preserve-3d;
+    animation: cameraDrift var(--sequence) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.intro[data-phase='exit'] .letterStage {
+    animation: cameraPush var(--exit-duration) cubic-bezier(0.7, 0, 0.2, 1) forwards;
+}
+
+.letterRow {
+    --gap: clamp(4px, 0.9vw, 12px);
+    display: flex;
+    gap: var(--gap);
+    transform-style: preserve-3d;
+}
+
+.letterRowPrimary {
+    --size: clamp(40px, 10.4vw, 104px);
+}
+
+.letterRowSecondary {
+    --size: min(70px, calc((100vw - 32px - 11 * var(--gap)) / 12));
+}
+
+/* --- Circular 3D letter card --- */
+
+.letter {
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    transform-style: preserve-3d;
+    opacity: 0;
+    animation: letterForm var(--letter-duration) cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--initial-delay) + var(--i) * var(--letter-stagger));
+}
+
+/* Card thickness: a darker disc sitting just behind the face. */
+.letterBack {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(160deg, color-mix(in oklch, var(--primary) 70%, #000), #0b0711);
+    transform: translateZ(calc(var(--size) * -0.09));
+    box-shadow: 0 calc(var(--size) * 0.22) calc(var(--size) * 0.4) rgba(0, 0, 0, 0.75);
+}
+
+.letterFace {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.2), transparent 42%),
+        radial-gradient(circle at 50% 125%, color-mix(in oklch, var(--primary) 60%, transparent), transparent 62%),
+        linear-gradient(160deg, #1e1830, #08070c 72%);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.35),
+        inset 0 calc(var(--size) * -0.08) calc(var(--size) * 0.18) rgba(0, 0, 0, 0.6),
+        0 0 calc(var(--size) * 0.45) color-mix(in oklch, var(--primary) 28%, transparent);
+}
+
+/* Gradient ring (circular frame). */
+.letterFace::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    padding: max(1.5px, calc(var(--size) * 0.034));
+    background: conic-gradient(
+        from 210deg,
+        var(--brand-light),
+        rgba(255, 255, 255, 0.9),
+        var(--primary),
+        rgba(255, 255, 255, 0.08),
+        var(--brand-light)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+/* Glassy specular highlight. */
+.letterFace::after {
+    content: '';
+    position: absolute;
+    inset: 7% 20% 54% 20%;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0));
+}
+
+.letterGlyph {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-gilroy), sans-serif;
+    font-weight: 700;
+    font-size: calc(var(--size) * 0.48);
+    line-height: 1;
+    background: linear-gradient(180deg, #fff 30%, color-mix(in oklch, var(--brand-light) 70%, #fff));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 calc(var(--size) * 0.03) calc(var(--size) * 0.04) rgba(0, 0, 0, 0.6));
+}
+
+/* One-time light sweep once the name has formed. */
+.letterShine {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: 50%;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
+    background-size: 260% 100%;
+    background-position: 160% 0;
+    animation: shine 900ms ease-in-out both;
+    animation-delay: calc(var(--sweep-start) + var(--i) * 28ms);
+}
+
+/* --- Brand reveal --- */
+
+.brand {
+    margin-top: clamp(28px, 6vh, 56px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+}
+
+.brandName {
+    font-family: var(--font-gilroy), sans-serif;
+    font-weight: 500;
+    font-size: clamp(20px, 2.6vw, 32px);
+    letter-spacing: 0.04em;
+    color: #fff;
+    animation: brandIn var(--brand-duration) cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--brand-start);
+}
+
+.brandTagline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-satoshi), sans-serif;
+    font-size: clamp(10px, 1.1vw, 12px);
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    white-space: nowrap;
+    animation: fadeUp var(--brand-duration) cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--brand-start) + 180ms);
+}
+
+.brandTagline::before,
+.brandTagline::after {
+    content: '';
+    width: clamp(16px, 4vw, 40px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary));
+}
+
+.brandTagline::after {
+    background: linear-gradient(90deg, var(--primary), transparent);
+}
+
+@media (max-width: 480px) {
+    .brandTagline {
+        font-size: 9px;
+        letter-spacing: 0.16em;
+    }
+
+    .brandTagline::before,
+    .brandTagline::after {
+        display: none;
+    }
+}
+
+/* --- Controls --- */
+
+.skip {
+    position: absolute;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--font-satoshi), sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease;
+    animation: fadeIn 500ms ease-out both;
+    animation-delay: 500ms;
+}
+
+.skip:hover {
+    color: #fff;
+    border-color: color-mix(in oklch, var(--primary) 70%, transparent);
+    background: color-mix(in oklch, var(--primary) 14%, transparent);
+}
+
+.skip:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+.progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--brand-light));
+    transform-origin: left;
+    animation: progress var(--sequence) linear both;
+}
+
+/* --------------------------------------------------------------------------
+   HERO SECTION
+   -------------------------------------------------------------------------- */
+
+.section {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    /* Centres the content when the viewport is taller than the hero (tablets). */
+    justify-content: center;
+    min-height: 100svh;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+}
+
+.bgGlow {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 55% 38% at 50% 14%, color-mix(in oklch, var(--primary) 26%, transparent), transparent 70%),
+        radial-gradient(ellipse 60% 30% at 50% 78%, color-mix(in oklch, var(--primary) 30%, transparent), transparent 72%),
+        radial-gradient(ellipse 30% 25% at 12% 40%, color-mix(in oklch, var(--brand-light) 10%, transparent), transparent 70%),
+        radial-gradient(ellipse 30% 25% at 88% 40%, color-mix(in oklch, var(--brand-light) 10%, transparent), transparent 70%);
+}
+
+.bgGrid {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: center top;
+    -webkit-mask-image: radial-gradient(ellipse 60% 45% at 50% 30%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 60% 45% at 50% 30%, #000 20%, transparent 75%);
+}
+
+.bgFade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 72px;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, #000);
+}
+
+/* --- Decorative glass circles --- */
+
+.bubble {
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: radial-gradient(
+        circle at 32% 26%,
+        rgba(255, 255, 255, 0.42),
+        rgba(255, 255, 255, 0.08) 38%,
+        color-mix(in oklch, var(--brand-light) 22%, transparent) 80%
+    );
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.22),
+        inset 0 -10px 24px color-mix(in oklch, var(--primary) 18%, transparent),
+        0 12px 32px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+}
+
+.section[data-revealed='true'] .bubble {
+    animation:
+        fadeIn 1200ms ease-out both,
+        float var(--float, 9s) ease-in-out infinite alternate;
+    animation-delay: calc(var(--i) * 120ms + 300ms), 0ms;
+}
+
+/* --- Text reveal --- */
+
+.reveal {
+    opacity: 0;
+}
+
+.section[data-revealed='true'] .reveal {
+    animation: rise var(--reveal-duration) cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i) * var(--reveal-stagger));
+}
+
+.headlineEmphasis {
+    font-style: italic;
+    font-weight: 300;
+    padding-right: 0.08em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    background: linear-gradient(90deg, var(--brand-light), var(--primary) 55%, var(--brand-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.badgeDot {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   3D TECHNOLOGY COMPOSITION
+   -------------------------------------------------------------------------- */
+
+.stageOuter {
+    position: relative;
+    left: 50%;
+    width: var(--stage-w-base);
+    max-width: var(--stage-max);
+    transform: translateX(-50%);
+    container-type: inline-size;
+}
+
+@media (min-width: 768px) {
+    .stageOuter {
+        width: var(--stage-w-md);
+    }
+}
+
+@media (min-width: 1024px) {
+    .stageOuter {
+        width: var(--stage-w-lg);
+    }
+}
+
+.stage {
+    position: relative;
+    height: calc(var(--stage-h) * 1cqw);
+    perspective: calc(var(--stage-perspective) * 1cqw);
+    perspective-origin: 50% 20%;
+}
+
+.stageTilt {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+}
+
+.card {
+    position: absolute;
+    left: 50%;
+    top: calc(var(--y) * 1cqw);
+    width: calc(var(--w) * 1cqw);
+    aspect-ratio: var(--aspect);
+    /* Everything inside a card is sized in em, so it scales with the stage. */
+    font-size: 1cqw;
+    transform: translateX(-50%) translateX(calc(var(--x) * 1cqw)) translateZ(calc(var(--z) * 1cqw))
+        rotateY(calc(var(--ry) * 1deg));
+    transform-style: preserve-3d;
+}
+
+.card[data-from='md'],
+.card[data-from='lg'] {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .card[data-from='md'] {
+        display: block;
+    }
+}
+
+@media (min-width: 1024px) {
+    .card[data-from='lg'] {
+        display: block;
+    }
+}
+
+.cardInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform-origin: 50% 100%;
+}
+
+.section[data-revealed='true'] .cardInner {
+    animation: cardIn var(--card-duration) cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--card-delay) + var(--order) * var(--card-stagger));
+}
+
+.window {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 1.1em;
+    background: #fff;
+    color: var(--foreground);
+    box-shadow:
+        0 0 0 0.09em rgba(255, 255, 255, 0.55),
+        0 2.6em 4.5em -1em rgba(0, 0, 0, 0.7),
+        0 0 7em -1.5em color-mix(in oklch, var(--primary) 45%, transparent);
+}
+
+/* Atmospheric depth: cards further back are slightly dimmed. */
+.window::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(0, 0, 0, var(--dim)), rgba(0, 0, 0, calc(var(--dim) * 1.6)));
+}
+
+.chrome {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.45em;
+    height: 2.3em;
+    padding: 0 0.9em;
+    border-bottom: 1px solid var(--border);
+    background: var(--muted);
+}
+
+.chromeDot {
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--foreground) 18%, transparent);
+}
+
+.chromeDot:first-child {
+    background: var(--primary);
+}
+
+.chromeUrl {
+    display: flex;
+    align-items: center;
+    gap: 0.35em;
+    margin: 0 auto;
+    height: 1.35em;
+    padding: 0 0.9em;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+}
+
+.phone {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 1.5em;
+    border: 0.38em solid #111116;
+    background: #fff;
+    color: var(--foreground);
+    box-shadow:
+        0 0 0 0.08em rgba(255, 255, 255, 0.35),
+        0 2.4em 4em -0.8em rgba(0, 0, 0, 0.75),
+        0 0 5em -1em color-mix(in oklch, var(--primary) 55%, transparent);
+}
+
+.phoneNotch {
+    position: absolute;
+    top: 0.45em;
+    left: 50%;
+    width: 32%;
+    height: 0.75em;
+    border-radius: 999px;
+    background: #111116;
+    transform: translateX(-50%);
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .cardInner,
+    .bubble {
+        opacity: 1 !important;
+        animation: none !important;
+        transform: none !important;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   KEYFRAMES
+   -------------------------------------------------------------------------- */
+
+@keyframes letterForm {
+    0% {
+        opacity: 0;
+        transform: translate3d(
+                calc(var(--sx) * var(--size)),
+                calc(var(--sy) * var(--size)),
+                calc(var(--sz) * var(--size))
+            )
+            rotateY(calc(var(--sr) * 1deg)) rotateX(40deg) scale(0.5);
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes cameraDrift {
+    from {
+        transform: translateZ(-160px) rotateX(14deg);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes cameraPush {
+    from {
+        transform: none;
+        opacity: 1;
+    }
+    to {
+        transform: translateZ(260px);
+        opacity: 0;
+    }
+}
+
+@keyframes introExit {
+    0% {
+        opacity: 1;
+    }
+    35% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes shine {
+    from {
+        background-position: 160% 0;
+    }
+    to {
+        background-position: -60% 0;
+    }
+}
+
+@keyframes brandIn {
+    from {
+        opacity: 0;
+        letter-spacing: 0.5em;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        letter-spacing: 0.04em;
+        transform: none;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes progress {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(26px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes float {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(0, -14px, 0);
+    }
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(16em) rotateX(-24deg) scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
