@@ -8,17 +8,19 @@
  * Units used for the composition: "su" (stage units) = 1% of the stage width.
  *
  * Quick switches (see README.md in this folder for a full customisation guide):
- *   intro.enabled              false → no intro, the hero shows immediately
- *   intro.playOncePerSession   false → the intro plays on every full page load
- *   ambient.enabled            false → no background glow / particles
- *   composition.enabled        false → hide the 3D card composition
- *   composition.pointerParallax false → no mouse-driven parallax
- *   hero.secondaryCta          null  → hide the secondary button
+ *   intro.enabled                false → no intro, the hero shows immediately
+ *   intro.playOncePerSession     false → the intro plays on every full page load
+ *   hero.badge                   null  → no badge above the headline
+ *   hero.secondaryCta            null  → hide the secondary button
+ *   ambient.enabled              false → no background glow / particles
+ *   composition.enabled          false → hide the 3D card composition
+ *   composition.rotation.enabled false → cards stay in their starting slots
+ *   composition.pointerParallax  false → no mouse-driven parallax
  */
 
 export type MockupKind = 'analytics' | 'pipeline' | 'website' | 'chatbot' | 'storefront' | 'mobile';
 
-/** Placement of a card in the 3D stage (all lengths in stage units). */
+/** A position in the 3D stage (all lengths in stage units). */
 export interface Placement {
     /** Card width. */
     w: number;
@@ -30,6 +32,15 @@ export interface Placement {
     z: number;
     /** Y-axis rotation (deg); positive turns the outer-left edge toward the viewer. */
     ry: number;
+}
+
+/** A slot cards travel between. `mobile: null` = the slot is hidden on phones. */
+export interface Slot {
+    id: string;
+    desktop: Placement;
+    mobile: Placement | null;
+    /** Pointer-parallax strength for whatever card sits here. */
+    parallax: number;
 }
 
 /** Continuous idle motion of a single card. Each card gets its own. */
@@ -48,20 +59,31 @@ export interface FloatMotion {
     delay: number;
 }
 
-export interface CompositionCard {
+export interface RotatingCard {
     id: string;
-    kind: MockupKind;
+    kind: Exclude<MockupKind, 'mobile'>;
     /** Decorative label in the window chrome. */
     label: string;
-    /** Width / height ratio. */
+    /** Width / height ratio (kept in every slot). */
+    aspect: number;
+    /** Width (su) the card's content was designed at; content scales from it. */
+    designWidth: number;
+    /** Slot the card starts in (index into `slots`). */
+    startSlot: number;
+    float: FloatMotion;
+    /** Entrance order after the intro. */
+    order: number;
+}
+
+export interface FixedCard {
+    id: string;
+    kind: MockupKind;
+    label: string;
     aspect: number;
     desktop: Placement;
-    /** Phone placement; `null` hides the card below 768px. */
     mobile: Placement | null;
     float: FloatMotion;
-    /** Pointer-parallax strength; deeper / closer cards move more than the centre. */
     parallax: number;
-    /** Entrance order after the intro. */
     order: number;
 }
 
@@ -92,34 +114,37 @@ export const HERO_CONFIG = {
         ],
         /** Extrusion distance between depth layers (em of the letter). */
         extrusionStep: 0.017,
-        /** Ambient-only stage before the first letter (ms). */
-        initialDelay: 650,
-        /** Single letter flight + spring settle (ms). */
-        letterDuration: 1250,
-        /** Delay between consecutive letters (ms). */
-        letterStagger: 60,
+        /** How far above its spot each letter starts falling (CSS length). */
+        fallHeight: '75vh',
+        /** Black screen before the first letter drops (ms). */
+        initialDelay: 300,
+        /** One letter's fall, impact and settle (ms). */
+        letterDuration: 820,
+        /** Delay between consecutive letters (ms) — letters fall one by one. */
+        letterStagger: 48,
         /** Pause between the last letter landing and the light sweep (ms). */
-        sweepDelay: 100,
-        /** Light sweep across the wordmark (ms). */
-        sweepDuration: 1100,
-        /** Hold after the sweep before the transition (ms). */
-        hold: 450,
+        sweepDelay: 60,
+        /** Light sweep across the finished wordmark (ms). */
+        sweepDuration: 650,
+        /** Hold on the finished wordmark before the transition (ms). */
+        hold: 380,
         /** Transition into the hero (ms). */
-        exitDuration: 1150,
+        exitDuration: 750,
         /** Transition when the visitor skips (ms). */
-        skipExitDuration: 550,
+        skipExitDuration: 450,
         /** Hard cap: the intro always ends by this time (ms). */
-        maxDuration: 8000,
+        maxDuration: 6000,
         /** Camera perspective (px). */
         perspective: 1100,
         /** Ambient particle count. */
-        particles: 34,
+        particles: 28,
         /** Light streak canvas settings (reuses CinematicStreaksCanvas). */
-        streaks: { count: 9, intensity: 0.85, speed: 1.1 },
+        streaks: { count: 8, intensity: 0.8, speed: 1.2 },
     },
 
     hero: {
-        badge: 'End-to-end digital solutions company',
+        /** Small pill above the headline; null hides it. */
+        badge: null as string | null,
         headline: {
             lead: 'We elevate brands to',
             /** Rendered with the contrasting light-italic, shimmering treatment. */
@@ -150,6 +175,33 @@ export const HERO_CONFIG = {
         enabled: true,
         /** Mouse-driven parallax and tilt (desktop with a fine pointer only). */
         pointerParallax: true,
+        /**
+         * Cards keep trading places: every `interval` ms the next card glides
+         * into the centre slot (full size, front, readable) and the previous
+         * centre card moves back into the slot it left.
+         */
+        rotation: {
+            enabled: true,
+            /** Time between swaps (ms). */
+            interval: 4200,
+            /** Duration of one swap (ms). */
+            duration: 1400,
+            /** Pause while the pointer is over the cards, so a card can be read. */
+            pauseOnHover: true,
+            /** Index of the front / centre slot in `slots`. */
+            centerSlot: 2,
+            /** Extra wait after the card entrance finishes before the first swap (ms). */
+            firstSwapDelay: 2600,
+        },
+        /**
+         * Desktop only (≥1024px): shrink the composition on short screens so the
+         * cards always fit in the first screen under the headline instead of
+         * being cut off at the bottom.
+         *   reserve: vertical space taken by the header + headline block (px)
+         *   ratio:   stage width per px of remaining height (≈ 1 / card height share)
+         *   min:     never shrink the stage below this width (px)
+         */
+        fitViewport: { enabled: true, reserve: 490, ratio: 2.75, min: 640 },
         /** Perspective (su). */
         perspective: 150,
         /** Stage height (su) on desktop/tablet and on phones. */
@@ -165,43 +217,60 @@ export const HERO_CONFIG = {
         motionScale: { md: 0.8, base: 0.6 },
         entranceDelay: 250,
         entranceStagger: 110,
-        entranceDuration: 1200,
-        cards: [
+        entranceDuration: 1000,
+        /** Positions the rotating cards move between (left → right). */
+        slots: [
             {
-                id: 'analytics', kind: 'analytics', label: 'analytics', aspect: 1.36,
+                id: 'far-left', parallax: 1.5,
                 desktop: { w: 22, x: -40, y: 4, z: -20, ry: 22 },
-                mobile: { w: 56, x: 24, y: 3, z: -22, ry: -10 },
-                float: { y: 1.1, x: 0.4, rx: 1.5, ry: -2.5, duration: 11, delay: -3 },
-                parallax: 1.5, order: 4,
-            },
-            {
-                id: 'pipeline', kind: 'pipeline', label: 'crm', aspect: 1.42,
-                desktop: { w: 29, x: -24.5, y: 6.5, z: -9, ry: 13 },
                 mobile: null,
-                float: { y: 0.9, x: -0.3, rx: -1.2, ry: 2, duration: 9, delay: -6 },
-                parallax: 1.1, order: 2,
             },
             {
-                id: 'website', kind: 'website', label: 'yourbrand.com', aspect: 1.45,
+                id: 'mid-left', parallax: 1.1,
+                desktop: { w: 29, x: -24.5, y: 6.5, z: -9, ry: 13 },
+                mobile: { w: 60, x: -22, y: 0, z: -16, ry: 10 },
+            },
+            {
+                id: 'center', parallax: 0.45,
                 desktop: { w: 37, x: 0, y: 9, z: 0, ry: 0 },
                 mobile: { w: 88, x: 0, y: 12, z: 0, ry: 0 },
-                float: { y: 0.8, x: 0, rx: 1, ry: 0.8, duration: 8, delay: 0 },
-                parallax: 0.45, order: 0,
             },
             {
-                id: 'chatbot', kind: 'chatbot', label: 'ai-assistant', aspect: 1.42,
+                id: 'mid-right', parallax: 1.1,
                 desktop: { w: 29, x: 24.5, y: 6.5, z: -9, ry: -13 },
-                mobile: { w: 60, x: -22, y: 0, z: -16, ry: 10 },
-                float: { y: 1, x: 0.3, rx: 1.2, ry: -2, duration: 10, delay: -2 },
-                parallax: 1.1, order: 1,
+                mobile: { w: 56, x: 24, y: 3, z: -22, ry: -10 },
             },
             {
-                id: 'storefront', kind: 'storefront', label: 'store', aspect: 1.36,
+                id: 'far-right', parallax: 1.5,
                 desktop: { w: 22, x: 40, y: 4, z: -20, ry: -22 },
                 mobile: null,
-                float: { y: 1.2, x: -0.4, rx: -1.5, ry: 2.5, duration: 12, delay: -7 },
-                parallax: 1.5, order: 3,
             },
+        ] satisfies Slot[],
+        /** Browser-window cards that rotate through the slots. */
+        cards: [
+            {
+                id: 'analytics', kind: 'analytics', label: 'analytics', aspect: 1.4, designWidth: 22, startSlot: 0,
+                float: { y: 1.1, x: 0.4, rx: 1.5, ry: -2.5, duration: 11, delay: -3 }, order: 4,
+            },
+            {
+                id: 'pipeline', kind: 'pipeline', label: 'crm', aspect: 1.42, designWidth: 29, startSlot: 1,
+                float: { y: 0.9, x: -0.3, rx: -1.2, ry: 2, duration: 9, delay: -6 }, order: 2,
+            },
+            {
+                id: 'website', kind: 'website', label: 'yourbrand.com', aspect: 1.45, designWidth: 37, startSlot: 2,
+                float: { y: 0.8, x: 0, rx: 1, ry: 0.8, duration: 8, delay: 0 }, order: 0,
+            },
+            {
+                id: 'chatbot', kind: 'chatbot', label: 'ai-assistant', aspect: 1.42, designWidth: 29, startSlot: 3,
+                float: { y: 1, x: 0.3, rx: 1.2, ry: -2, duration: 10, delay: -2 }, order: 1,
+            },
+            {
+                id: 'storefront', kind: 'storefront', label: 'store', aspect: 1.4, designWidth: 22, startSlot: 4,
+                float: { y: 1.2, x: -0.4, rx: -1.5, ry: 2.5, duration: 12, delay: -7 }, order: 3,
+            },
+        ] satisfies RotatingCard[],
+        /** Cards that keep a fixed position (in front of the rotation). */
+        fixedCards: [
             {
                 id: 'mobile', kind: 'mobile', label: 'app', aspect: 0.5,
                 desktop: { w: 9.5, x: 17.5, y: 15, z: 8, ry: -8 },
@@ -209,7 +278,7 @@ export const HERO_CONFIG = {
                 float: { y: 1.6, x: 0.2, rx: 2, ry: -4, duration: 7, delay: -1.5 },
                 parallax: 1.9, order: 5,
             },
-        ] satisfies CompositionCard[],
+        ] satisfies FixedCard[],
         chips: [
             {
                 id: 'ai', icon: 'bot', label: 'AI automation',
@@ -233,9 +302,9 @@ export const HERO_CONFIG = {
             },
         ] satisfies FloatingChip[],
         /**
-         * Use [] for chips or links to remove them; reorder / edit cards freely.
+         * Use [] for chips or links to remove them.
          *
-         * Glowing data links drawn above the cards (viewBox: 100 x 40 su).
+         * Glowing data links drawn above the slots (viewBox: 100 x 40 su).
          * Each has its own pulse duration so the flow never looks mechanical.
          */
         links: [

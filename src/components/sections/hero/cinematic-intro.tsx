@@ -22,25 +22,6 @@ function extrusionColor(k: number, depth: number) {
     return `oklch(${l.toFixed(3)} 0.16 300)`;
 }
 
-/**
- * Coordinated entry vectors: letters fan in from the outside edges, the two
- * rows arrive from opposite vertical directions, outer letters travel and
- * spin the most. Nothing is random.
- */
-function flightFor(row: number, j: number, n: number): CSSProperties {
-    const u = n > 1 ? (j - (n - 1) / 2) / ((n - 1) / 2) : 0;
-    const a = Math.abs(u);
-    const up = row === 0 ? -1 : 1;
-    return {
-        '--dx': `${(u * 3.4).toFixed(3)}em`,
-        '--dy': `${(up * (1.3 + a * 0.7)).toFixed(3)}em`,
-        '--dz': `${(-(6 + a * 5)).toFixed(3)}em`,
-        '--rx': `${up * -(55 + (j % 3) * 12)}deg`,
-        '--ry': `${(-u * 110).toFixed(2)}deg`,
-        '--rz': `${(-u * 24).toFixed(2)}deg`,
-    } as CSSProperties;
-}
-
 const PARTICLES = Array.from({ length: INTRO.particles }, (_, i) => ({
     left: `${(i * 37) % 100}%`,
     top: `${(i * 61 + 7) % 100}%`,
@@ -57,13 +38,17 @@ interface ExtrudedLetterProps {
     char: string;
     index: number;
     depth: number;
-    flight: CSSProperties;
 }
 
-/** One dimensional letterform: stacked extrusion layers + metallic face. */
-function ExtrudedLetter({ char, index, depth, flight }: ExtrudedLetterProps) {
+/**
+ * One dimensional letterform: stacked extrusion layers + metallic face.
+ * It drops from above, lands with a small squash-and-settle, and flashes a
+ * pool of light where it hits.
+ */
+function ExtrudedLetter({ char, index, depth }: ExtrudedLetterProps) {
     return (
-        <span className={styles.letter} style={{ '--i': index, ...flight } as CSSProperties}>
+        <span className={styles.letter} style={{ '--i': index } as CSSProperties}>
+            <span className={styles.impact} />
             {Array.from({ length: depth }, (_, d) => {
                 const k = depth - d; // render back-to-front
                 return (
@@ -147,6 +132,7 @@ export function CinematicIntro({ status, onExitStart }: CinematicIntroProps) {
         '--initial-delay': `${INTRO.initialDelay}ms`,
         '--letter-duration': `${INTRO.letterDuration}ms`,
         '--letter-stagger': `${INTRO.letterStagger}ms`,
+        '--fall-height': INTRO.fallHeight,
         '--extrusion-step': `${INTRO.extrusionStep}em`,
         '--letters-done': `${INTRO_TIMELINE.lettersDone}ms`,
         '--sweep-start': `${INTRO_TIMELINE.sweepStart}ms`,
@@ -194,11 +180,11 @@ export function CinematicIntro({ status, onExitStart }: CinematicIntroProps) {
                 ))}
             </div>
 
-            {/* Stages B–D: letter flight, assembly, light sweep */}
+            {/* Letters fall one by one, then the finished wordmark lights up */}
             <div className={styles.camera}>
                 <div className={styles.pose} aria-hidden="true">
                 <div className={styles.wordmark}>
-                    {INTRO.rows.map((row, r) => (
+                    {INTRO.rows.map((row) => (
                         <div
                             key={row.text}
                             className={styles.row}
@@ -212,7 +198,6 @@ export function CinematicIntro({ status, onExitStart }: CinematicIntroProps) {
                                         char={char}
                                         index={i}
                                         depth={row.depth}
-                                        flight={flightFor(r, j, row.text.length)}
                                     />
                                 );
                             })}
