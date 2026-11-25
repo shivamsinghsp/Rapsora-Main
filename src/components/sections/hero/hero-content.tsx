@@ -50,13 +50,15 @@ export function HeroContent() {
                 data-rs-reveal=""
             >
                 <GooeyCTA href={HERO.primaryCta.href} text={HERO.primaryCta.label} />
-                <Link
-                    href={HERO.secondaryCta.href}
-                    className="group inline-flex h-[56px] items-center gap-2 rounded-full border border-white/15 px-7 text-[15px] font-medium text-white/85 transition-colors duration-300 hover:border-white/35 hover:bg-white/[0.04] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                >
-                    {HERO.secondaryCta.label}
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
+                {HERO.secondaryCta && (
+                    <Link
+                        href={HERO.secondaryCta.href}
+                        className="group inline-flex h-[56px] items-center gap-2 rounded-full border border-white/15 px-7 text-[15px] font-medium text-white/85 transition-colors duration-300 hover:border-white/35 hover:bg-white/[0.04] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                    >
+                        {HERO.secondaryCta.label}
+                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                    </Link>
+                )}
             </div>
         </div>
     );

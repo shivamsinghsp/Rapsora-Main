@@ -17,14 +17,16 @@ import { HERO_CONFIG } from './hero-config';
  */
 export type IntroStatus = 'pending' | 'play' | 'skip';
 
-const { storageKey } = HERO_CONFIG.intro;
+const { storageKey, enabled, playOncePerSession } = HERO_CONFIG.intro;
 
 let status: Exclude<IntroStatus, 'pending'> | undefined;
 const listeners = new Set<() => void>();
 
 function resolveStatus(): Exclude<IntroStatus, 'pending'> {
     try {
+        if (!enabled) return 'skip';
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'skip';
+        if (!playOncePerSession) return 'play';
         return window.sessionStorage.getItem(storageKey) === null ? 'play' : 'skip';
     } catch {
         return 'skip';
