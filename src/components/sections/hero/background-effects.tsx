@@ -1,46 +1,51 @@
 import type { CSSProperties } from 'react';
+import { HERO_CONFIG } from './hero-config';
 import styles from './hero.module.css';
 
-/**
- * Glass bubbles placed around the headline and composition.
- * size in px; top/left in % of the hero; `mdOnly` hides the bubble on phones.
- */
-const BUBBLES: { size: number; top: string; left: string; float: string; mdOnly?: boolean }[] = [
-    { size: 54, top: '24%', left: '14%', float: '8s', mdOnly: true },
-    { size: 34, top: '20%', left: '19%', float: '10s', mdOnly: true },
-    { size: 26, top: '31%', left: '11%', float: '9s', mdOnly: true },
-    { size: 58, top: '23%', left: '82%', float: '9s', mdOnly: true },
-    { size: 32, top: '19%', left: '78%', float: '11s', mdOnly: true },
-    { size: 24, top: '33%', left: '87%', float: '8s', mdOnly: true },
-    { size: 40, top: '82%', left: '6%', float: '10s' },
-    { size: 26, top: '88%', left: '10%', float: '8s', mdOnly: true },
-    { size: 44, top: '84%', left: '90%', float: '9s' },
-    { size: 22, top: '78%', left: '94%', float: '11s', mdOnly: true },
-];
+const AMBIENT = HERO_CONFIG.ambient;
 
+/** Deterministic particle field (integer maths → identical on server and client). */
+const PARTICLES = Array.from({ length: AMBIENT.particles }, (_, i) => ({
+    left: `${(i * 41 + 5) % 100}%`,
+    size: 1 + (i % 3),
+    duration: `${14 + (i % 6) * 3}s`,
+    delay: `${-((i * 13) % 30)}s`,
+    drift: `${((i % 5) - 2) * 18}px`,
+}));
+
+/**
+ * Layer 1 — ambient motion: drifting aurora light, a pulsing floor glow under
+ * the cards, a faint grid and slowly rising particles. Transforms only.
+ */
 export function BackgroundEffects() {
+    const aurora = { '--adur': `${AMBIENT.auroraDuration}s` } as CSSProperties;
+    if (!AMBIENT.enabled) return <div className={styles.bottomFade} aria-hidden="true" />;
     return (
         <>
-            <div className={styles.bgGlow} aria-hidden="true" />
-            <div className={styles.bgGrid} aria-hidden="true" />
-            {BUBBLES.map((b, i) => (
-                <span
-                    key={i}
-                    aria-hidden="true"
-                    className={`${styles.bubble} ${b.mdOnly ? 'hidden md:block' : ''}`}
-                    style={
-                        {
-                            width: b.size,
-                            height: b.size,
-                            top: b.top,
-                            left: b.left,
-                            '--i': i,
-                            '--float': b.float,
-                        } as CSSProperties
-                    }
-                />
-            ))}
-            <div className={styles.bgFade} aria-hidden="true" />
+            <div className={styles.ambient} aria-hidden="true">
+                <span className={`${styles.aurora} ${styles.auroraA}`} style={aurora} />
+                <span className={`${styles.aurora} ${styles.auroraB}`} style={aurora} />
+                <span className={`${styles.aurora} ${styles.auroraC}`} style={aurora} />
+                <span className={`${styles.aurora} ${styles.auroraFloor}`} />
+                <div className={styles.grid} />
+                {PARTICLES.map((p, i) => (
+                    <span
+                        key={i}
+                        className={styles.particle}
+                        style={
+                            {
+                                left: p.left,
+                                width: p.size,
+                                height: p.size,
+                                '--pdur': p.duration,
+                                '--pdelay': p.delay,
+                                '--pdrift': p.drift,
+                            } as CSSProperties
+                        }
+                    />
+                ))}
+            </div>
+            <div className={styles.bottomFade} aria-hidden="true" />
         </>
     );
 }

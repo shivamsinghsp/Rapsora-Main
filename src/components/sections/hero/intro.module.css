@@ -1,0 +1,420 @@
+/* ==========================================================================
+   Cinematic intro — dimensional RAPSORA TECHNOLOGIES wordmark
+   Colours: global tokens (--primary, --brand-light). Timings: hero-config.ts.
+   ========================================================================== */
+
+.intro {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    overflow: hidden;
+    background: #030206;
+    color: #fff;
+    perspective: var(--perspective);
+    perspective-origin: 50% 45%;
+    cursor: pointer;
+    animation: fadeIn 280ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .intro {
+        display: none;
+    }
+}
+
+.intro[data-phase='exit'] {
+    pointer-events: none;
+    animation: overlayOut var(--exit-duration) cubic-bezier(0.65, 0, 0.25, 1) forwards;
+}
+
+/* ---------- Stage A: ambient ---------- */
+
+.ambient {
+    position: absolute;
+    inset: -10%;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 42% 30% at 50% 50%, color-mix(in oklch, var(--primary) 26%, transparent), transparent 70%),
+        radial-gradient(ellipse 70% 45% at 50% 115%, color-mix(in oklch, var(--primary) 20%, transparent), transparent 70%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.85));
+    animation:
+        fadeIn 1400ms ease-out both,
+        breathe 6s ease-in-out 1400ms infinite alternate;
+}
+
+.streaks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    animation: streaksIn 1600ms ease-out 150ms forwards;
+}
+
+.particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.particles span {
+    position: absolute;
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--brand-light) 70%, #fff);
+    box-shadow: 0 0 6px color-mix(in oklch, var(--primary) 80%, transparent);
+    opacity: 0;
+    animation: twinkle var(--dur) ease-in-out infinite;
+}
+
+/* ---------- Camera rig ---------- */
+
+.camera {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.intro[data-phase='exit'] .camera {
+    animation: cameraExit var(--exit-duration) cubic-bezier(0.7, 0, 0.2, 1) forwards;
+}
+
+/* Slow dolly while the letters fly in, then a gentle sway that keeps the
+   extrusion visible and makes the wordmark read as a physical object. */
+.pose {
+    transform-style: preserve-3d;
+    animation:
+        dolly var(--letters-done) cubic-bezier(0.16, 1, 0.3, 1) both,
+        sway 4.5s ease-in-out var(--letters-done) infinite alternate;
+}
+
+.wordmark {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.18em;
+    font-family: var(--font-gilroy), sans-serif;
+    font-weight: 800;
+    line-height: 0.9;
+    transform-style: preserve-3d;
+    user-select: none;
+}
+
+.row {
+    display: flex;
+    gap: var(--tracking);
+    transform-style: preserve-3d;
+}
+
+/* ---------- Dimensional letterform ---------- */
+
+.letter {
+    position: relative;
+    display: inline-block;
+    transform-style: preserve-3d;
+    opacity: 0;
+    animation: letterFly var(--letter-duration) linear both;
+    animation-delay: calc(var(--initial-delay) + var(--i) * var(--letter-stagger));
+}
+
+/* Stacked layers behind the face create real depth when the letter turns. */
+.extrude {
+    position: absolute;
+    inset: 0;
+    transform: translateZ(calc(var(--k) * var(--extrusion-step) * -1));
+}
+
+/* Soft volumetric glow behind the face. */
+.glow {
+    position: absolute;
+    inset: 0;
+    color: var(--primary);
+    filter: blur(0.12em);
+    transform: translateZ(-0.03em);
+    opacity: 0;
+    animation: glowIn 1600ms ease-out var(--letters-done) both;
+}
+
+/* Metallic face with a one-time light sweep. */
+.face {
+    position: relative;
+    display: block;
+    background:
+        linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.95) 50%, transparent 60%) 160% 0 / 300% 100% no-repeat,
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f1ecff 32%,
+            var(--brand-light) 55%,
+            color-mix(in oklch, var(--primary) 70%, #1b1030) 70%,
+            #ece5ff 100%
+        );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: sweep var(--sweep-duration) ease-in-out both;
+    animation-delay: calc(var(--sweep-start) + var(--i) * 28ms);
+}
+
+/* Bevel / rim light on the letter edge. */
+.rim {
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    -webkit-text-stroke: max(0.6px, 0.01em) rgba(255, 255, 255, 0.4);
+    transform: translateZ(0.004em);
+    pointer-events: none;
+}
+
+/* Light pooling on the "floor" beneath the wordmark. */
+.floor {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    bottom: -60px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, color-mix(in oklch, var(--primary) 45%, transparent), transparent 70%);
+    transform: rotateX(78deg);
+    opacity: 0;
+    animation: fadeIn 1400ms ease-out var(--letters-done) both;
+    pointer-events: none;
+}
+
+.tagline {
+    margin-top: clamp(28px, 5vh, 48px);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-satoshi), sans-serif;
+    font-size: clamp(9px, 1.05vw, 12px);
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.55);
+    animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) var(--sweep-start) both;
+}
+
+.tagline::before,
+.tagline::after {
+    content: '';
+    width: clamp(16px, 4vw, 44px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary));
+}
+
+.tagline::after {
+    background: linear-gradient(90deg, var(--primary), transparent);
+}
+
+@media (max-width: 480px) {
+    .tagline {
+        letter-spacing: 0.16em;
+    }
+
+    .tagline::before,
+    .tagline::after {
+        display: none;
+    }
+}
+
+/* ---------- Controls ---------- */
+
+.skip {
+    position: absolute;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    z-index: 30;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--font-satoshi), sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease;
+    animation: fadeIn 500ms ease-out 500ms both;
+}
+
+.skip:hover {
+    color: #fff;
+    border-color: color-mix(in oklch, var(--primary) 70%, transparent);
+    background: color-mix(in oklch, var(--primary) 14%, transparent);
+}
+
+.skip:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+.progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--brand-light));
+    transform-origin: left;
+    animation: progress var(--sequence) linear both;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes letterFly {
+    0% {
+        opacity: 0;
+        transform: translate3d(var(--dx), var(--dy), var(--dz)) rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(var(--rz))
+            scale(0.6);
+        animation-timing-function: cubic-bezier(0.12, 0.7, 0.3, 1);
+    }
+    35% {
+        opacity: 1;
+    }
+    68% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0.35em) rotateX(calc(var(--rx) * -0.05)) rotateY(calc(var(--ry) * -0.06)) rotateZ(0deg)
+            scale(1.03);
+        animation-timing-function: ease-in-out;
+    }
+    85% {
+        transform: translate3d(0, 0, -0.06em) rotateX(calc(var(--rx) * 0.015)) rotateY(calc(var(--ry) * 0.02)) scale(0.995);
+        animation-timing-function: ease-out;
+    }
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes dolly {
+    from {
+        transform: translateZ(-240px) rotateX(30deg) rotateY(-12deg);
+    }
+    to {
+        transform: rotateX(18deg) rotateY(-6deg);
+    }
+}
+
+@keyframes sway {
+    from {
+        transform: rotateX(18deg) rotateY(-6deg);
+    }
+    to {
+        transform: rotateX(14deg) rotateY(6deg);
+    }
+}
+
+@keyframes cameraExit {
+    0% {
+        transform: none;
+        opacity: 1;
+    }
+    100% {
+        transform: translateZ(520px) translateY(-4%);
+        opacity: 0;
+    }
+}
+
+@keyframes overlayOut {
+    0%,
+    25% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes sweep {
+    from {
+        background-position: 160% 0, 0 0;
+    }
+    to {
+        background-position: -60% 0, 0 0;
+    }
+}
+
+@keyframes glowIn {
+    0% {
+        opacity: 0;
+    }
+    45% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0.4;
+    }
+}
+
+@keyframes breathe {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(1.08);
+        opacity: 0.8;
+    }
+}
+
+@keyframes streaksIn {
+    to {
+        opacity: 0.75;
+    }
+}
+
+@keyframes twinkle {
+    0%,
+    100% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translate3d(0, -14px, 0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes progress {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
