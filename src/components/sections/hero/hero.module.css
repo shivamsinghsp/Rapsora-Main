@@ -216,6 +216,11 @@
     .stageOuter {
         width: var(--stage-w-lg);
     }
+
+    /* Fit the composition in the first screen under the headline. */
+    .stageOuter[data-fit='true'] {
+        max-width: min(var(--stage-max), max(var(--fit-min), calc((100svh - var(--fit-reserve)) * var(--fit-ratio))));
+    }
 }
 
 @media (max-width: 767px) {
@@ -711,7 +716,7 @@
 @keyframes cardIn {
     from {
         opacity: 0;
-        transform: translateY(14cqw) rotateX(-24deg) scale(0.92);
+        transform: translateY(5cqw) rotateX(-10deg) scale(0.96);
     }
     to {
         opacity: 1;

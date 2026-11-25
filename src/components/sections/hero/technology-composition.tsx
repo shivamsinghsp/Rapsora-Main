@@ -26,7 +26,16 @@ const stageVars = {
     '--card-stagger': `${COMP.entranceStagger}ms`,
     '--card-duration': `${COMP.entranceDuration}ms`,
     '--swap-duration': `${ROT.duration}ms`,
+    '--fit-reserve': `${COMP.fitViewport.reserve}px`,
+    '--fit-ratio': COMP.fitViewport.ratio,
+    '--fit-min': `${COMP.fitViewport.min}px`,
 } as CSSProperties;
+
+/** Time from the hero reveal until every card has finished entering (ms). */
+const ENTRANCE_TOTAL =
+    COMP.entranceDelay +
+    (COMP.cards.length + COMP.fixedCards.length + COMP.chips.length) * COMP.entranceStagger +
+    COMP.entranceDuration;
 
 /** Where a hidden-on-phones slot parks its card: faded out, behind the centre. */
 function parkedMobile(slot: Slot): Placement {
@@ -181,14 +190,33 @@ export function TechnologyComposition() {
         if (!ROT.enabled || COMP.cards.length < 2) return;
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         const section = rootRef.current?.closest('section');
+        const gap = Math.max(ROT.interval, ROT.duration + 400);
+        // A light 250ms check decides when to swap. The first swap waits until
+        // the entrance has fully finished (cards never enter and trade places
+        // at the same time); later swaps are spaced by `interval`. Paused time
+        // (hover, off-screen, hidden tab) does not count toward the next swap.
+        let revealedAt = 0;
+        let waited = 0;
+        let last = performance.now();
 
         const id = window.setInterval(() => {
+            const now = performance.now();
+            const delta = now - last;
+            last = now;
+            if (section && section.getAttribute('data-revealed') !== 'true') return;
+            if (!revealedAt) {
+                revealedAt = now;
+                waited = gap - (ENTRANCE_TOTAL + ROT.firstSwapDelay);
+                return;
+            }
             if (document.hidden) return;
             if (ROT.pauseOnHover && hoverRef.current) return;
             if (section?.getAttribute('data-inview') === 'false') return;
-            if (section && section.getAttribute('data-revealed') !== 'true') return;
+            waited += delta;
+            if (waited < gap) return;
+            waited = 0;
             setRotation(nextRotation);
-        }, Math.max(ROT.interval, ROT.duration + 400));
+        }, 250);
 
         return () => window.clearInterval(id);
     }, []);
@@ -208,7 +236,13 @@ export function TechnologyComposition() {
     );
 
     return (
-        <div ref={rootRef} className={styles.stageOuter} style={stageVars} aria-hidden="true">
+        <div
+            ref={rootRef}
+            className={styles.stageOuter}
+            style={stageVars}
+            data-fit={COMP.fitViewport.enabled ? 'true' : undefined}
+            aria-hidden="true"
+        >
             <div
                 className={styles.stage}
                 onPointerEnter={() => (hoverRef.current = true)}

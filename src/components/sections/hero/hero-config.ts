@@ -190,7 +190,18 @@ export const HERO_CONFIG = {
             pauseOnHover: true,
             /** Index of the front / centre slot in `slots`. */
             centerSlot: 2,
+            /** Extra wait after the card entrance finishes before the first swap (ms). */
+            firstSwapDelay: 2600,
         },
+        /**
+         * Desktop only (≥1024px): shrink the composition on short screens so the
+         * cards always fit in the first screen under the headline instead of
+         * being cut off at the bottom.
+         *   reserve: vertical space taken by the header + headline block (px)
+         *   ratio:   stage width per px of remaining height (≈ 1 / card height share)
+         *   min:     never shrink the stage below this width (px)
+         */
+        fitViewport: { enabled: true, reserve: 490, ratio: 2.75, min: 640 },
         /** Perspective (su). */
         perspective: 150,
         /** Stage height (su) on desktop/tablet and on phones. */
@@ -206,7 +217,7 @@ export const HERO_CONFIG = {
         motionScale: { md: 0.8, base: 0.6 },
         entranceDelay: 250,
         entranceStagger: 110,
-        entranceDuration: 1200,
+        entranceDuration: 1000,
         /** Positions the rotating cards move between (left → right). */
         slots: [
             {

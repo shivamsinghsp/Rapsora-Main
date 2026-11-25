@@ -56,8 +56,14 @@ Units are **su** (1 su = 1% of the stage width), so layouts scale fluidly.
   the centre), its own `float` motion (`y`, `x`, `rx`, `ry`, `duration`,
   `delay`) and an `order`: the order cards take turns at the centre.
 - `composition.rotation`: `interval` (time between swaps), `duration` (length
-  of a swap), `pauseOnHover`, `centerSlot`. Rotation also pauses off-screen,
+  of a swap), `pauseOnHover`, `centerSlot`, `firstSwapDelay` (extra wait after
+  the card entrance before the first swap). Rotation also pauses off-screen,
   in a background tab, and never runs with reduced motion.
+- `composition.fitViewport` (desktop only): keeps the cards inside the first
+  screen under the headline on short laptop screens. `reserve` is the height
+  of the header + headline block, `ratio` how wide the stage may be per pixel
+  of remaining height, `min` the smallest stage width. Set `enabled: false`
+  to always use the full width.
 - `composition.fixedCards[]`: cards that keep their position (the phone).
 - `composition.chips[]`: floating capability pills (`[]` removes them).
 - `composition.links[]`: glowing SVG arcs between cards (`[]` removes them).
